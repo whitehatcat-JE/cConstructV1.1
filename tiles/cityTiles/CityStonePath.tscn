@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://tiles/cityTiles/CityStonePath.gd" type="Script" id=1]
+[ext_resource path="res://assets/cityTiles/CityStonePath.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://assets/cityTiles/CityTexture.png" type="Texture" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 4.8, 0.5, 4.8 )
+
+[node name="CityStonePath" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="CityStonePath-0" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 0 )
+mesh = ExtResource( 2 )
+material/0 = SubResource( 1 )
+
+[node name="StaticBody" type="StaticBody" parent="CityStonePath-0"]
+
+[node name="CollisionShape" type="CollisionShape" parent="CityStonePath-0/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.5, 0 )
+shape = SubResource( 2 )

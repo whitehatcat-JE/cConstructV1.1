@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/CityMarblePathCorner.obj-fb046547e832c37a328a5817ab694cae.mesh"
+
+[deps]
+
+files=[ "res://.import/CityMarblePathCorner.obj-fb046547e832c37a328a5817ab694cae.mesh" ]
+
+source_file="res://assets/cityTiles/CityMarblePathCorner.obj"
+dest_files=[ "res://.import/CityMarblePathCorner.obj-fb046547e832c37a328a5817ab694cae.mesh", "res://.import/CityMarblePathCorner.obj-fb046547e832c37a328a5817ab694cae.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/decRocks.obj-53f5c914e583506f8d1e336055ec1828.mesh"
+
+[deps]
+
+files=[ "res://.import/decRocks.obj-53f5c914e583506f8d1e336055ec1828.mesh" ]
+
+source_file="res://assets/genericForest/decRocks.obj"
+dest_files=[ "res://.import/decRocks.obj-53f5c914e583506f8d1e336055ec1828.mesh", "res://.import/decRocks.obj-53f5c914e583506f8d1e336055ec1828.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

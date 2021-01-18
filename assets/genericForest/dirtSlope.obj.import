@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/dirtSlope.obj-eba8d3eb39a85b9ad5e585fe674c09be.mesh"
+
+[deps]
+
+files=[ "res://.import/dirtSlope.obj-eba8d3eb39a85b9ad5e585fe674c09be.mesh" ]
+
+source_file="res://assets/genericForest/dirtSlope.obj"
+dest_files=[ "res://.import/dirtSlope.obj-eba8d3eb39a85b9ad5e585fe674c09be.mesh", "res://.import/dirtSlope.obj-eba8d3eb39a85b9ad5e585fe674c09be.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

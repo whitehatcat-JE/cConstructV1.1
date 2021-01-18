@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/appleTree1.obj-d6bb83c7c6b52632e2502c25fa13363d.mesh"
+
+[deps]
+
+files=[ "res://.import/appleTree1.obj-d6bb83c7c6b52632e2502c25fa13363d.mesh" ]
+
+source_file="res://assets/genericForest/appleTree1.obj"
+dest_files=[ "res://.import/appleTree1.obj-d6bb83c7c6b52632e2502c25fa13363d.mesh", "res://.import/appleTree1.obj-d6bb83c7c6b52632e2502c25fa13363d.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

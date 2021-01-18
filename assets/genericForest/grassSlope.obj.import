@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/grassSlope.obj-45583dd0c53a19a8f0b0c8238624029a.mesh"
+
+[deps]
+
+files=[ "res://.import/grassSlope.obj-45583dd0c53a19a8f0b0c8238624029a.mesh" ]
+
+source_file="res://assets/genericForest/grassSlope.obj"
+dest_files=[ "res://.import/grassSlope.obj-45583dd0c53a19a8f0b0c8238624029a.mesh", "res://.import/grassSlope.obj-45583dd0c53a19a8f0b0c8238624029a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

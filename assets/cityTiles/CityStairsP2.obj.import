@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/CityStairsP2.obj-8c3da29a8c5f1c2dc9c31610fa801116.mesh"
+
+[deps]
+
+files=[ "res://.import/CityStairsP2.obj-8c3da29a8c5f1c2dc9c31610fa801116.mesh" ]
+
+source_file="res://assets/cityTiles/CityStairsP2.obj"
+dest_files=[ "res://.import/CityStairsP2.obj-8c3da29a8c5f1c2dc9c31610fa801116.mesh", "res://.import/CityStairsP2.obj-8c3da29a8c5f1c2dc9c31610fa801116.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

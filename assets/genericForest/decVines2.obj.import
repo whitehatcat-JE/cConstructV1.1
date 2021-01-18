@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/decVines2.obj-14514c467525d7df5f7048ef8d4bacd0.mesh"
+
+[deps]
+
+files=[ "res://.import/decVines2.obj-14514c467525d7df5f7048ef8d4bacd0.mesh" ]
+
+source_file="res://assets/genericForest/decVines2.obj"
+dest_files=[ "res://.import/decVines2.obj-14514c467525d7df5f7048ef8d4bacd0.mesh", "res://.import/decVines2.obj-14514c467525d7df5f7048ef8d4bacd0.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

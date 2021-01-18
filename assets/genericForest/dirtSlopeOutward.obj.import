@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/dirtSlopeOutward.obj-5f67342480795a1aa3ff7a375ac8567e.mesh"
+
+[deps]
+
+files=[ "res://.import/dirtSlopeOutward.obj-5f67342480795a1aa3ff7a375ac8567e.mesh" ]
+
+source_file="res://assets/genericForest/dirtSlopeOutward.obj"
+dest_files=[ "res://.import/dirtSlopeOutward.obj-5f67342480795a1aa3ff7a375ac8567e.mesh", "res://.import/dirtSlopeOutward.obj-5f67342480795a1aa3ff7a375ac8567e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

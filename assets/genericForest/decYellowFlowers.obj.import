@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/decYellowFlowers.obj-fa77f2fe5b4e67cd48ec2a57932967c9.mesh"
+
+[deps]
+
+files=[ "res://.import/decYellowFlowers.obj-fa77f2fe5b4e67cd48ec2a57932967c9.mesh" ]
+
+source_file="res://assets/genericForest/decYellowFlowers.obj"
+dest_files=[ "res://.import/decYellowFlowers.obj-fa77f2fe5b4e67cd48ec2a57932967c9.mesh", "res://.import/decYellowFlowers.obj-fa77f2fe5b4e67cd48ec2a57932967c9.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

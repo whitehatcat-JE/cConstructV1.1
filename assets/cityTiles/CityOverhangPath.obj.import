@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/CityOverhangPath.obj-445bc3b398fabed1e5a8dc670c08b93e.mesh"
+
+[deps]
+
+files=[ "res://.import/CityOverhangPath.obj-445bc3b398fabed1e5a8dc670c08b93e.mesh" ]
+
+source_file="res://assets/cityTiles/CityOverhangPath.obj"
+dest_files=[ "res://.import/CityOverhangPath.obj-445bc3b398fabed1e5a8dc670c08b93e.mesh", "res://.import/CityOverhangPath.obj-445bc3b398fabed1e5a8dc670c08b93e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

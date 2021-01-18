@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/decBushFull.obj-6f3827cf972974beee67f2bbac0c9565.mesh"
+
+[deps]
+
+files=[ "res://.import/decBushFull.obj-6f3827cf972974beee67f2bbac0c9565.mesh" ]
+
+source_file="res://assets/genericForest/decBushFull.obj"
+dest_files=[ "res://.import/decBushFull.obj-6f3827cf972974beee67f2bbac0c9565.mesh", "res://.import/decBushFull.obj-6f3827cf972974beee67f2bbac0c9565.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

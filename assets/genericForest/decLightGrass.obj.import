@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/decLightGrass.obj-da61a9f4b740bfaa89dcfd5c632e45e1.mesh"
+
+[deps]
+
+files=[ "res://.import/decLightGrass.obj-da61a9f4b740bfaa89dcfd5c632e45e1.mesh" ]
+
+source_file="res://assets/genericForest/decLightGrass.obj"
+dest_files=[ "res://.import/decLightGrass.obj-da61a9f4b740bfaa89dcfd5c632e45e1.mesh", "res://.import/decLightGrass.obj-da61a9f4b740bfaa89dcfd5c632e45e1.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

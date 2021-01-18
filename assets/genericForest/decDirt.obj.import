@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/decDirt.obj-9a5d9d731df35b7f91ceb456bd6ad9f9.mesh"
+
+[deps]
+
+files=[ "res://.import/decDirt.obj-9a5d9d731df35b7f91ceb456bd6ad9f9.mesh" ]
+
+source_file="res://assets/genericForest/decDirt.obj"
+dest_files=[ "res://.import/decDirt.obj-9a5d9d731df35b7f91ceb456bd6ad9f9.mesh", "res://.import/decDirt.obj-9a5d9d731df35b7f91ceb456bd6ad9f9.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

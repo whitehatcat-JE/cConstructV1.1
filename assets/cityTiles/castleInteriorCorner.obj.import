@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/castleInteriorCorner.obj-581cca2c58351071e3a98d0d99a31ce1.mesh"
+
+[deps]
+
+files=[ "res://.import/castleInteriorCorner.obj-581cca2c58351071e3a98d0d99a31ce1.mesh" ]
+
+source_file="res://assets/cityTiles/castleInteriorCorner.obj"
+dest_files=[ "res://.import/castleInteriorCorner.obj-581cca2c58351071e3a98d0d99a31ce1.mesh", "res://.import/castleInteriorCorner.obj-581cca2c58351071e3a98d0d99a31ce1.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

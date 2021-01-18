@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/CityEntranceTower.obj-cf8e39a0aad782c843830ecd189415a1.mesh"
+
+[deps]
+
+files=[ "res://.import/CityEntranceTower.obj-cf8e39a0aad782c843830ecd189415a1.mesh" ]
+
+source_file="res://assets/cityTiles/CityEntranceTower.obj"
+dest_files=[ "res://.import/CityEntranceTower.obj-cf8e39a0aad782c843830ecd189415a1.mesh", "res://.import/CityEntranceTower.obj-cf8e39a0aad782c843830ecd189415a1.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
