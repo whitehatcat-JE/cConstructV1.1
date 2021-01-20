@@ -45,6 +45,8 @@ onready var items = {
 
 var itemHotbar = ["GREENCUBE", "REDCUBE", "BLUEBALL", "MISSILEROBOT"]
 
+var plrLoc = Vector3()
+
 func _process(delta):
 	if Input.is_action_just_pressed("world"):
 		get_tree().change_scene("res://worldEngine.tscn")

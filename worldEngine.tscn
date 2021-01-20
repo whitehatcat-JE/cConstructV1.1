@@ -8,23 +8,8 @@
 [ext_resource path="res://displayedTiles.gd" type="Script" id=6]
 [ext_resource path="res://worldEngine.gd" type="Script" id=7]
 [ext_resource path="res://menu/crosshair.png" type="Texture" id=8]
-
-[sub_resource type="ProceduralSky" id=1]
-sky_top_color = Color( 0.85098, 0.85098, 0.85098, 1 )
-sky_horizon_color = Color( 0.85098, 0.85098, 0.85098, 1 )
-ground_bottom_color = Color( 0.85098, 0.85098, 0.85098, 1 )
-ground_horizon_color = Color( 0.85098, 0.85098, 0.85098, 1 )
-sun_color = Color( 0.85098, 0.85098, 0.85098, 1 )
-sun_latitude = 90.0
-
-[sub_resource type="Environment" id=2]
-background_mode = 2
-background_sky = SubResource( 1 )
-ambient_light_color = Color( 0.435294, 0.435294, 0.435294, 1 )
-ambient_light_sky_contribution = 0.6
-fog_enabled = true
-fog_color = Color( 0.827451, 0.827451, 0.827451, 1 )
-fog_depth_end = 0.0
+[ext_resource path="res://weather/water/rain.gd" type="Script" id=9]
+[ext_resource path="res://assets/skies/sky_4.tres" type="Environment" id=10]
 
 [sub_resource type="CubeMesh" id=3]
 
@@ -1375,7 +1360,7 @@ transform = Transform( 0.896169, -0.216895, 0.387088, 0, 0.872385, 0.488819, -0.
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
+environment = ExtResource( 10 )
 
 [node name="currentBlock" type="Spatial" parent="."]
 
@@ -2725,6 +2710,10 @@ __meta__ = {
 [node name="crosshair" type="Sprite" parent="GUI"]
 position = Vector2( 507.812, 296 )
 texture = ExtResource( 8 )
+
+[node name="rain" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 40, 0 )
+script = ExtResource( 9 )
 [connection signal="button_down" from="GUI/tileSelection/upButton" to="GUI/tileSelection/displayedTiles" method="_on_upButton_button_down"]
 [connection signal="text_changed" from="GUI/tileSelection/searchInput" to="GUI/tileSelection/displayedTiles" method="_on_searchInput_text_changed"]
 [connection signal="text_entered" from="GUI/tileSelection/spaceInput" to="." method="_on_spaceInput_text_entered"]

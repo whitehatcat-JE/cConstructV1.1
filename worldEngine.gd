@@ -170,8 +170,9 @@ func update_items(items):
 	original_ids = tempID
  
 func _process(delta):
-	if delta > 0.1:
-		$GUI/FPS.text = str(delta)
+	$GUI/FPS.text = str(Engine.get_frames_per_second())
+	
+	GV.plrLoc = $Camera.translation
 	
 	if pow(camLoc.x - $Camera.translation.x, 2) > 6 or pow(camLoc.y - $Camera.translation.z, 2) > 6:
 		camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
@@ -276,6 +277,11 @@ func _process(delta):
 		$DirectionalLight.light_energy = 0.3
 		$DirectionalLight.light_indirect_energy = 0.3
 		$DirectionalLight.rotation_degrees = Vector3(90, 90, 90)
+	elif Input.is_action_just_pressed("sky_4"):
+		$WorldEnvironment.environment = load("res://assets/skies/sky_4.tres")
+		$DirectionalLight.light_energy = 0.5
+		$DirectionalLight.light_indirect_energy = 1
+		$DirectionalLight.rotation_degrees = Vector3(-30, 26, 0)
 	
 	
 	if Input.is_action_pressed("exit"):
