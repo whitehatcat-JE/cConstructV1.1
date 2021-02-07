@@ -6,8 +6,9 @@ var shift = false
 var cntr = false
 var selectedTile = 0
 
+var renderPause = 3
 var renderDis = 100
-var renderLeeway = 1 #Extra distance before tiles unload
+var renderLeeway = 0 #Extra distance before tiles unload
 var camLoc = Vector2()
 var preLoc = Vector2(1000000, 1000000)
 
@@ -60,26 +61,29 @@ func _ready():
 func add_item(item):
 	#Converts the dbs entries into usable values
 	var Bposition = Vector3(item["posX"], item["posY"], item["posZ"]) #Gets the translation
-	#Gets scale
-	var Bscale = Vector3(1, 1, 1)
-	if item["invert"] == 1:
-		Bscale = Vector3(-1, -1, -1)
-	#Converts db rotation into an actual rotation vector
-	var currentNum = str("")
-	var rotValues = []
-	for l in str(item["rotation"]):
-		if l == ",":
-			rotValues.append(float(currentNum))
-			currentNum = str("")
-		else:
-			currentNum += l
-	var Brot = Vector3(rotValues[0], rotValues[1], rotValues[2])
 	
-	#Gets matrix positions
-	var xPos = Bposition.x
-	var zPos = Bposition.z
+	#Checks if item exists
+	var exists = false
+	if Bposition in xMatrix:
+		if item["ID"] in xMatrix[Bposition.x]:
+			exists = true
 	
-	if !(xPos in xMatrix and item["ID"] in xMatrix[xPos]):
+	if !exists:
+		#Gets scale
+		var Bscale = Vector3(1, 1, 1)
+		if item["invert"] == 1:
+			Bscale = Vector3(-1, -1, -1)
+		#Converts db rotation into an actual rotation vector
+		var currentNum = str("")
+		var rotValues = []
+		for l in str(item["rotation"]):
+			if l == ",":
+				rotValues.append(float(currentNum))
+				currentNum = str("")
+			else:
+				currentNum += l
+		var Brot = Vector3(rotValues[0], rotValues[1], rotValues[2])
+		
 		#Creates tile
 		var tile2create = GV.tiles[item["tileID"]][0].instance()
 		self.add_child(tile2create)
@@ -89,15 +93,15 @@ func add_item(item):
 		tile2create.scale = Bscale
 		
 		#Appends to xMatrix
-		if xPos in xMatrix:
-			xMatrix[xPos][item["ID"]] = tile2create
+		if Bposition.x in xMatrix:
+			xMatrix[Bposition.x][item["ID"]] = tile2create
 		else:
-			xMatrix[xPos] = {item["ID"]:tile2create}
+			xMatrix[Bposition.x] = {item["ID"]:tile2create}
 		#Appends to zMatrix
-		if zPos in zMatrix:
-			zMatrix[zPos][item["ID"]] = tile2create
+		if Bposition.z in zMatrix:
+			zMatrix[Bposition.z][item["ID"]] = tile2create
 		else:
-			zMatrix[zPos] = {item["ID"]:tile2create}
+			zMatrix[Bposition.z] = {item["ID"]:tile2create}
 		
 		return {"pos":Bposition, "scale":Bscale, "rot":Brot, "id":item["ID"], "obj":tile2create}
 
@@ -132,7 +136,7 @@ func get_items(loc = Vector2()):
 		else:
 			retrieveRegionZ[2] = camLoc.y - renderDis - disLoc.y
 			retrieveRegionZ[3] = camLoc.y - renderDis
-
+	
 	
 	#Retrieves the regions tiles
 	var xdb = db.fetch_array_with_args(
@@ -144,7 +148,6 @@ func get_items(loc = Vector2()):
 		"SELECT * FROM terrainData WHERE terrainData.posX <= ? and terrainData.posX >= ? and terrainData.posZ <= ? and terrainData.posZ >= ?;", 
 		retrieveRegionZ
 	)
-	
 	return xdb + zdb
 
 #Adds new tiles and removes old tiles from world
@@ -172,47 +175,6 @@ func update_items(items):
 			if !("eleted" in str(loc[item])):
 				loc[item].queue_free()
 
-#Saves tiles
-func save():
-	var add = []
-	var amt = len(terrain_entities)
-
-	for x in original_entities:
-		if x in terrain_entities:
-			amt -= 1 
-	
-	for item in terrain_entities:
-		if !(item in original_entities):
-			add.append(item)
-	
-	for item in add:
-		var x = item.translation.x
-		var y = item.translation.y
-		var z = item.translation.z
-		
-		var Rx = item.rotation_degrees.x
-		var Ry = item.rotation_degrees.y
-		var Rz = item.rotation_degrees.z
-		
-		var rot = str(Rx) + "," + str(Ry) + "," + str(Rz) + ","
-		
-		var invert = 0
-		if item.scale.x == -1:
-			invert = 1
-		
-		var tileID = item.tile
-		
-		db.query_with_args("INSERT INTO terrainData (posX, posY, posZ, rotation, invert, tileID) VALUES (?,?,?,?,?,?);", [x, y, z, rot, invert, tileID])
-		var id = db.query("SELECT * FROM terrainData WHERE id=(SELECT max(tileID) FROM terrainData);")
-	
-	original_entities = []
-	for item in terrain_entities: original_entities.append(item);
-	
-	var items = get_items(Vector2($Camera.translation.x, $Camera.translation.z));
-	
-	original_ids = []
-	for item in items: original_ids.append(item["ID"]);
-
 #Refreshes the hotbar
 func update_hotbar():
 	for slot in range(len(GV.hotbar)):
@@ -224,7 +186,7 @@ func _process(delta):
 	
 	GV.plrLoc = $Camera.translation
 	
-	if pow(camLoc.x - $Camera.translation.x, 2) > 6 or pow(camLoc.y - $Camera.translation.z, 2) > 6:
+	if pow(camLoc.x - $Camera.translation.x, 2) > renderPause or pow(camLoc.y - $Camera.translation.z, 2) > renderPause:
 		camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
 		update_items(get_items(camLoc))
 		$GUI/tileSelection/xCoordInput.placeholder_text = str(int($Camera.translation.x))
@@ -259,13 +221,6 @@ func _process(delta):
 	else:
 		if $GUI/tileSelection.visible:
 			$GUI/tileSelection.visible = false
-		
-		if !hidden:
-			for slot in range(len(GV.hotbar)):
-				if slot == 9 and Input.is_action_just_pressed("slot0") or Input.is_action_just_pressed("slot" + str(slot + 1)):
-					selectedTile = slot
-					reload_tile()
-					break
 
 		shift = Input.is_action_pressed("shift")
 		cntr = Input.is_action_pressed("tab")
@@ -276,43 +231,54 @@ func _process(delta):
 			$y_collider.translate(Vector3(0, -boxDistance, 0))
 		
 		if !hidden:
-			if Input.is_action_just_pressed("rotate_x"):
-				if shift:
-					tile.rotate_x(deg2rad(-90))
-				else:
-					tile.rotate_x(deg2rad(90))
-				
-			if Input.is_action_just_pressed("rotate_y"):
-				if shift:
-					tile.rotate_y(deg2rad(-90))
-				else:
-					tile.rotate_y(deg2rad(90))
-				
-			if Input.is_action_just_pressed("rotate_z"):
-				if shift:
-					tile.rotate_z(deg2rad(-90))
-				else:
-					tile.rotate_z(deg2rad(90))
-		
-			if Input.is_action_just_pressed("invert"):
-				if tile.scale.z == -1:
-					tile.scale = Vector3(1, 1, 1)
-				else:
-					tile.scale = Vector3(-1, -1, -1)
-				
+			for slot in range(len(GV.hotbar)):
+				if slot == 9 and Input.is_action_just_pressed("slot0") or Input.is_action_just_pressed("slot" + str(slot + 1)):
+					selectedTile = slot
+					reload_tile()
+					break
+			
 			goTo = $Camera.goTo
-			goTo.x = round(goTo.x / boxDistance) * boxDistance
-			goTo.y = round(goTo.y / boxDistance) * boxDistance
-			goTo.z = round(goTo.z / boxDistance) * boxDistance
+			
+			if goTo.x != 10000000:
+				$currentBlock.visible = true
+				if Input.is_action_just_pressed("rotate_x"):
+					if shift:
+						tile.rotate_x(deg2rad(-90))
+					else:
+						tile.rotate_x(deg2rad(90))
+					
+				if Input.is_action_just_pressed("rotate_y"):
+					if shift:
+						tile.rotate_y(deg2rad(-90))
+					else:
+						tile.rotate_y(deg2rad(90))
+					
+				if Input.is_action_just_pressed("rotate_z"):
+					if shift:
+						tile.rotate_z(deg2rad(-90))
+					else:
+						tile.rotate_z(deg2rad(90))
+			
+				if Input.is_action_just_pressed("invert"):
+					if tile.scale.z == -1:
+						tile.scale = Vector3(1, 1, 1)
+					else:
+						tile.scale = Vector3(-1, -1, -1)
+					
+				goTo.x = round(goTo.x / boxDistance) * boxDistance
+				goTo.y = round(goTo.y / boxDistance) * boxDistance
+				goTo.z = round(goTo.z / boxDistance) * boxDistance
+			
+				if goTo != $currentBlock.translation:
+					$currentBlock.translate(goTo - $currentBlock.translation)
 		
-			if goTo != $currentBlock.translation:
-				$currentBlock.translate(goTo - $currentBlock.translation)
-	
-			if Input.is_action_just_pressed("place"):
-				if cntr:
-					break_tile()
-				else:
-					place_tile()
+				if Input.is_action_just_pressed("place"):
+					if cntr:
+						break_tile()
+					else:
+						place_tile()
+			else:
+				$currentBlock.visible = false
 	
 	if Input.is_action_just_pressed("sky_1"):
 		$WorldEnvironment.environment = load("res://assets/skies/sky_1.tres")
@@ -358,6 +324,9 @@ func reload_tile():
 
 func place_tile():
 	var Bposition = $currentBlock.translation
+	Bposition.x = round(Bposition.x * 100)/100
+	Bposition.y = round(Bposition.y * 100)/100
+	Bposition.z = round(Bposition.z * 100)/100
 	var Brot = tile.rotation_degrees
 	var Bscale = tile.scale
 	
@@ -399,7 +368,6 @@ func place_tile():
 		zMatrix[zPos][ID] = tile2add
 	else:
 		zMatrix[zPos] = {ID:tile2add}
-	
 
 func break_tile():
 	var Bpos = $currentBlock.translation
@@ -412,6 +380,8 @@ func break_tile():
 				break
 		db.query_with_args("DELETE FROM terrainData WHERE terrainData.posX = ? and terrainData.posZ = ?;", [Bpos.x, Bpos.z])
 
+
+#Just GUI stuff
 func _on_spaceInput_text_entered(new_text):
 	var dec = false
 	var error = false

@@ -69,6 +69,8 @@ func _process(delta):
 		shift = Input.is_action_pressed("shift")
 		if $posCast.is_colliding():
 			goTo = $posCast.get_collision_point()
+		else:
+			goTo = Vector3(1000000, 0, 0)
 
 # Updates camera movement
 func _update_movement(delta):
