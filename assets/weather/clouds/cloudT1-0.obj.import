@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/cloudT1-0.obj-ca4fe1d38ff5e40d28b702f3217e387e.mesh"
+
+[deps]
+
+files=[ "res://.import/cloudT1-0.obj-ca4fe1d38ff5e40d28b702f3217e387e.mesh" ]
+
+source_file="res://assets/weather/clouds/cloudT1-0.obj"
+dest_files=[ "res://.import/cloudT1-0.obj-ca4fe1d38ff5e40d28b702f3217e387e.mesh", "res://.import/cloudT1-0.obj-ca4fe1d38ff5e40d28b702f3217e387e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

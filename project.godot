@@ -289,7 +289,8 @@ duplicate={
 
 3d_physics/layer_2="entity"
 3d_physics/layer_3="item"
-3d_physics/layer_4="Stasis"
+3d_physics/layer_4="stasis"
+3d_physics/layer_5="cloud"
 
 [physics]
 

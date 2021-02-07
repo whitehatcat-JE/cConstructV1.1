@@ -46,6 +46,7 @@ onready var items = {
 var itemHotbar = ["GREENCUBE", "REDCUBE", "BLUEBALL", "MISSILEROBOT"]
 
 var plrLoc = Vector3()
+var raining = false
 
 func _process(delta):
 	if Input.is_action_just_pressed("world"):
