@@ -8,7 +8,6 @@ var selectedTile = 0
 
 var renderPause = 3
 var renderDis = 100
-var renderLeeway = 0 #Extra distance before tiles unload
 var camLoc = Vector2()
 var preLoc = Vector2(1000000, 1000000)
 
@@ -102,8 +101,6 @@ func add_item(item):
 			zMatrix[Bposition.z][item["ID"]] = tile2create
 		else:
 			zMatrix[Bposition.z] = {item["ID"]:tile2create}
-		
-		return {"pos":Bposition, "scale":Bscale, "rot":Brot, "id":item["ID"], "obj":tile2create}
 
 #Fetches new tiles from db
 func get_items(loc = Vector2()):
@@ -158,14 +155,13 @@ func update_items(items):
 	
 	#Finds the tiles it needs to delete
 	var delItems = []
-	
 	for xPos in xMatrix:
-		if xPos > camLoc.x + renderDis + renderLeeway or xPos < camLoc.x - renderDis - renderLeeway: #Checks if out of range on x
+		if xPos > camLoc.x + renderDis or xPos < camLoc.x - renderDis: #Checks if out of range on x
 			delItems.append(xMatrix[xPos])
 			xMatrix.erase(xPos)
 	
 	for zPos in zMatrix:
-		if zPos > camLoc.y + renderDis + renderLeeway or zPos < camLoc.y - renderDis - renderLeeway: #Checks if out of range on z
+		if zPos > camLoc.y + renderDis or zPos < camLoc.y - renderDis: #Checks if out of range on z
 			delItems.append(zMatrix[zPos])
 			zMatrix.erase(zPos)
 	

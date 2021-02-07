@@ -300,4 +300,5 @@ duplicate={
 
 quality/driver/driver_name="GLES2"
 threads/thread_model=2
+quality/shadows/filter_mode=2
 environment/default_environment="res://default_env.tres"

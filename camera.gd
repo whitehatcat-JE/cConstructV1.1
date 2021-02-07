@@ -36,10 +36,10 @@ func _input(event):
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed and !GV.paused else Input.MOUSE_MODE_VISIBLE)
 			BUTTON_WHEEL_UP: # Increases max velocity
 				if !shift:
-					_vel_multiplier = clamp(_vel_multiplier * 1.1, 0.2, 50)
+					_vel_multiplier = clamp(_vel_multiplier * 1.1, 0.2, 100)
 			BUTTON_WHEEL_DOWN: # Decereases max velocity
 				if !shift:
-					_vel_multiplier = clamp(_vel_multiplier / 1.1, 0.2, 50)
+					_vel_multiplier = clamp(_vel_multiplier / 1.1, 0.2, 100)
 
 	# Receives key input
 	if event is InputEventKey:
