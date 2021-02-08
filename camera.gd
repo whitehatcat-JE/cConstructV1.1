@@ -23,6 +23,7 @@ var _e = false
 
 var goTo = Vector3()
 var shift = false
+var cntr = false
 
 func _input(event):
 	# Receives mouse motion
@@ -35,10 +36,10 @@ func _input(event):
 			BUTTON_RIGHT: # Only allows rotation if right click down
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed and !GV.paused else Input.MOUSE_MODE_VISIBLE)
 			BUTTON_WHEEL_UP: # Increases max velocity
-				if !shift:
+				if !shift and !cntr:
 					_vel_multiplier = clamp(_vel_multiplier * 1.1, 0.2, 100)
 			BUTTON_WHEEL_DOWN: # Decereases max velocity
-				if !shift:
+				if !shift and !cntr:
 					_vel_multiplier = clamp(_vel_multiplier / 1.1, 0.2, 100)
 
 	# Receives key input
@@ -67,6 +68,7 @@ func _process(delta):
 		_update_mouselook()
 		_update_movement(delta)
 		shift = Input.is_action_pressed("shift")
+		cntr = Input.is_action_pressed("control")
 		if $posCast.is_colliding():
 			goTo = $posCast.get_collision_point()
 		else:

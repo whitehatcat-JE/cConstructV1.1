@@ -1,100 +1,92 @@
 extends Control
 
+signal greyTop
+signal greyBottom
+signal allowTop
+signal allowBottom
 
-var selectedTile = false
+var selectedTile = 0
 
-var tilePortions = [[]]
-var savedPortions = [[]]
+var tileLocs = [] #Converts the tile dictionary to a list
+var masterTileLocs = []
+
 var page = 0
+const PAGESIZE = 20
 
 var portionLocations = []
 var searched = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var num = 0
-	savedPortions = GV.tiles
+	#Converts the tile dictionary into a list so it can sort by index
+	var tileCount = 0
 	
-	for tile in GV.tiles:
-		if len(tilePortions[num]) < 20:
-			tilePortions[num].append(tile)
-		else:
-			num += 1
-			tilePortions.append([tile])
+	for tile in GV.tileList:
+		masterTileLocs.append(tile)
+	tileLocs = masterTileLocs
 	
-	display(tilePortions[page])
+	#Displays the first page of tiles
+	display()
 	
-	
-func display(tiles):
-	if page == 0 and len(tilePortions) > 1:
-		$buttonInteractions.play("greyTopButton")
-	elif page == 0 and len(tilePortions) <= 1:
-		$buttonInteractions.play("greyBoth")
-	elif page == len(tilePortions) - 1:
-		$buttonInteractions.play_backwards("greyTopButton")
+#Displays the given pages tiles
+func display():
+	#Prevents user from going past the valid pages
+	if page == 0:
+		emit_signal("greyTop")
 	else:
-		$buttonInteractions.play_backwards("greyBoth")
-		
-	for tile in range(len(tiles)):
-		get_node("tile" + str(tile + 1) + "/icon").texture = tiles[tile][1]
-		get_node("tile" + str(tile + 1) + "/name").text = tiles[tile][2]
+		emit_signal("allowTop")
+	
+	if len(tileLocs) / PAGESIZE < page + 1:
+		emit_signal("greyBottom")
+	else:
+		emit_signal("allowBottom")
+	
+	#Updates the page with the different tiles
+	for tile in range(clamp(len(tileLocs) - PAGESIZE * page, 0, 20)):
+		get_node("tile" + str(tile + 1) + "/icon").texture = GV.tileList[tileLocs[tile + PAGESIZE * page]][1] #Changes tiles png
+		get_node("tile" + str(tile + 1) + "/name").text = tileLocs[tile + PAGESIZE * page] #Changes tiles name
 		get_node("tile" + str(tile + 1)).visible = true
 	
-	for tile in range(20-len(tiles)):
+	#Hides parts of the page not used (For last page)
+	for tile in range(20-(len(tileLocs) - PAGESIZE * page)):
 		get_node("tile" + str(20-tile)).visible = false
 	
-
+#Selects the tile the user is clicking on
 func down(tile):
 	selectedTile = tile + 20 * page
 
+#Changes the given slots tile
 func selectedSlot(slot):
-	if !(selectedTile in [false]):
-		if len(GV.hotbar) > slot:
-			if searched:
-				GV.hotbar[slot] = portionLocations[selectedTile]
-			else:
-				GV.hotbar[slot] = selectedTile
-		else:
-			if searched:
-				GV.hotbar.append(portionLocations[selectedTile])
-			else:
-				GV.hotbar.append(selectedTile)
+	if len(GV.hotbar) > slot:
+		GV.hotbar[slot] = tileLocs[selectedTile]
+	else:
+		GV.hotbar.append(tileLocs[selectedTile])
 
+#Switches to the previous page
 func _on_upButton_button_down():
 	page -= 1
-	display(tilePortions[page])
+	display()
 
-
+#Switches to the next page
 func _on_downButton_button_down():
 	page += 1
-	display(tilePortions[page])
+	display()
 
+#Removes tiles that don't have the given text in their name
 func _on_searchInput_text_changed(new_text):
-	var tempPortions = []
-	portionLocations = []
-	if len(new_text) != 0:
-		searched = true
-		for tile in range(len(savedPortions)):
-			if new_text.to_lower() in savedPortions[tile][2].to_lower():
-				tempPortions.append(savedPortions[tile])
-				portionLocations.append(tile)
+	if len(new_text) > 0:
+		tileLocs = []
+		for tile in masterTileLocs:
+			if new_text.to_lower() in tile.to_lower():
+				tileLocs.append(tile)
 	else:
-		searched = false
-		tempPortions = savedPortions
+		tileLocs = masterTileLocs
 	
 	page = 0
-	var num = 0
-	tilePortions = [[]]
-	
-	for tile in tempPortions:
-		if len(tilePortions[num]) < 20:
-			tilePortions[num].append(tile)
-		else:
-			num += 1
-			tilePortions.append([tile])
-	
-	display(tilePortions[page])
+	#Updates the page
+	display()
 
+#Button inputs
 func tile1Down(): down(0);
 
 func tile2Down(): down(1);

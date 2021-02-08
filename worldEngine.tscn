@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://GV.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://displayedTiles.gd" type="Script" id=6]
 [ext_resource path="res://worldEngineV2.gd" type="Script" id=7]
 [ext_resource path="res://menu/crosshair.png" type="Texture" id=8]
+[ext_resource path="res://tileSelection.gd" type="Script" id=9]
 [ext_resource path="res://assets/skies/sky_2.tres" type="Environment" id=10]
 
 [sub_resource type="CubeMesh" id=1]
@@ -1285,62 +1286,6 @@ size = 64
 use_filter = true
 font_data = ExtResource( 1 )
 
-[sub_resource type="Animation" id=22]
-length = 0.05
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("../upButton:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../downButton:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.05 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
-}
-
-[sub_resource type="Animation" id=23]
-length = 0.05
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("../upButton:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../downButton:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.05 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
-
 [sub_resource type="DynamicFont" id=24]
 size = 32
 outline_size = 3
@@ -1541,6 +1486,7 @@ margin_left = 507.812
 margin_top = 195.998
 margin_right = 547.812
 margin_bottom = 235.998
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1565,6 +1511,22 @@ margin_bottom = 138.002
 rect_scale = Vector2( 0.12, 0.09 )
 focus_mode = 1
 disabled = true
+enabled_focus_mode = 1
+icon = ExtResource( 5 )
+flat = true
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="downButton" type="Button" parent="GUI/tileSelection"]
+margin_left = -323.652
+margin_top = 396.002
+margin_right = -55.652
+margin_bottom = 658.002
+rect_rotation = -180.0
+rect_scale = Vector2( 0.12, 0.09 )
+focus_mode = 1
 enabled_focus_mode = 1
 icon = ExtResource( 5 )
 flat = true
@@ -1718,22 +1680,6 @@ text = "Z"
 align = 1
 valign = 1
 autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="downButton" type="Button" parent="GUI/tileSelection"]
-margin_left = -323.652
-margin_top = 396.002
-margin_right = -55.6523
-margin_bottom = 658.002
-rect_rotation = -180.0
-rect_scale = Vector2( 0.12, 0.09 )
-focus_mode = 1
-enabled_focus_mode = 1
-icon = ExtResource( 5 )
-flat = true
-clip_text = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -2430,10 +2376,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="buttonInteractions" type="AnimationPlayer" parent="GUI/tileSelection/displayedTiles"]
-anims/greyBoth = SubResource( 22 )
-anims/greyTopButton = SubResource( 23 )
-
 [node name="hotbar" type="Node2D" parent="GUI/tileSelection"]
 position = Vector2( -115.812, 140.002 )
 
@@ -2711,13 +2653,17 @@ __meta__ = {
 position = Vector2( 507.812, 296 )
 texture = ExtResource( 8 )
 [connection signal="button_down" from="GUI/tileSelection/upButton" to="GUI/tileSelection/displayedTiles" method="_on_upButton_button_down"]
+[connection signal="button_down" from="GUI/tileSelection/downButton" to="GUI/tileSelection/displayedTiles" method="_on_downButton_button_down"]
 [connection signal="text_changed" from="GUI/tileSelection/searchInput" to="GUI/tileSelection/displayedTiles" method="_on_searchInput_text_changed"]
 [connection signal="text_entered" from="GUI/tileSelection/spaceInput" to="." method="_on_spaceInput_text_entered"]
 [connection signal="text_entered" from="GUI/tileSelection/renderInput" to="." method="_on_renderInput_text_entered"]
 [connection signal="text_entered" from="GUI/tileSelection/zCoordInput" to="." method="_on_zCoordInput_text_entered"]
 [connection signal="text_entered" from="GUI/tileSelection/yCoordInput" to="." method="_on_yCoordInput_text_entered"]
 [connection signal="text_entered" from="GUI/tileSelection/xCoordInput" to="." method="_on_xCoordInput_text_entered"]
-[connection signal="button_down" from="GUI/tileSelection/downButton" to="GUI/tileSelection/displayedTiles" method="_on_downButton_button_down"]
+[connection signal="allowBottom" from="GUI/tileSelection/displayedTiles" to="GUI/tileSelection" method="_on_displayedTiles_allowBottom"]
+[connection signal="allowTop" from="GUI/tileSelection/displayedTiles" to="GUI/tileSelection" method="_on_displayedTiles_allowTop"]
+[connection signal="greyBottom" from="GUI/tileSelection/displayedTiles" to="GUI/tileSelection" method="_on_displayedTiles_greyBottom"]
+[connection signal="greyTop" from="GUI/tileSelection/displayedTiles" to="GUI/tileSelection" method="_on_displayedTiles_greyTop"]
 [connection signal="button_down" from="GUI/tileSelection/displayedTiles/tile1/selectButton" to="GUI/tileSelection/displayedTiles" method="tile1Down"]
 [connection signal="button_down" from="GUI/tileSelection/displayedTiles/tile2/selectButton" to="GUI/tileSelection/displayedTiles" method="tile2Down"]
 [connection signal="button_down" from="GUI/tileSelection/displayedTiles/tile3/selectButton" to="GUI/tileSelection/displayedTiles" method="tile3Down"]

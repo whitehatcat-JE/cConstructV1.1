@@ -43,7 +43,7 @@ func _ready():
 	camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
 	# Open item database
 	db.open("user://worldData.db");
-	var query = 'CREATE TABLE IF NOT EXISTS "terrainData" ("ID" INTEGER UNIQUE, "posX" INTEGER, "posY" INTEGER, "posZ" INTEGER, "rotation" TEXT, "invert" INTEGER, "tileID" INTEGER, PRIMARY KEY("ID" AUTOINCREMENT));'
+	var query = 'CREATE TABLE IF NOT EXISTS "terrainData" ("ID" INTEGER UNIQUE, "posX" INTEGER, "posY" INTEGER, "posZ" INTEGER, "rotation" TEXT, "invert" INTEGER, "tile" TEXT, "priority" NUMERIC, PRIMARY KEY("ID" AUTOINCREMENT));'
 	db.query(query)
 	
 	#Retrieves items from db
@@ -55,6 +55,7 @@ func _ready():
 	
 	#Refreshes the currently placing tile
 	reload_tile()
+	update_hotbar()
 
 #Adds a tile to the world
 func add_item(item):
@@ -66,6 +67,7 @@ func add_item(item):
 	if Bposition in xMatrix:
 		if item["ID"] in xMatrix[Bposition.x]:
 			exists = true
+
 	
 	if !exists:
 		#Gets scale
@@ -84,7 +86,7 @@ func add_item(item):
 		var Brot = Vector3(rotValues[0], rotValues[1], rotValues[2])
 		
 		#Creates tile
-		var tile2create = GV.tiles[item["tileID"]][0].instance()
+		var tile2create = GV.tileList[item["tile"]][0].instance()
 		self.add_child(tile2create)
 		#Applies db values to tile
 		tile2create.translate(Bposition)
@@ -157,25 +159,25 @@ func update_items(items):
 	var delItems = []
 	for xPos in xMatrix:
 		if xPos > camLoc.x + renderDis or xPos < camLoc.x - renderDis: #Checks if out of range on x
-			delItems.append(xMatrix[xPos])
+			var remTiles = xMatrix[xPos]
+			for item in remTiles:
+				if !("eleted" in str(remTiles[item])):
+					remTiles[item].queue_free()
 			xMatrix.erase(xPos)
 	
 	for zPos in zMatrix:
 		if zPos > camLoc.y + renderDis or zPos < camLoc.y - renderDis: #Checks if out of range on z
-			delItems.append(zMatrix[zPos])
+			var remTiles = zMatrix[zPos]
+			for item in remTiles:
+				if !("eleted" in str(remTiles[item])):
+					remTiles[item].queue_free()
 			zMatrix.erase(zPos)
-	
-	#Deletes tiles from world
-	for loc in delItems:
-		for item in loc:
-			if !("eleted" in str(loc[item])):
-				loc[item].queue_free()
 
 #Refreshes the hotbar
 func update_hotbar():
 	for slot in range(len(GV.hotbar)):
-		$GUI/hotbar.get_child(slot).get_child(0).texture = GV.tiles[GV.hotbar[slot]][1]
-		$GUI/tileSelection/hotbar.get_child(slot).icon = GV.tiles[GV.hotbar[slot]][1]
+		$GUI/hotbar.get_child(slot).get_child(0).texture = GV.tileList[GV.hotbar[slot]][1]
+		$GUI/tileSelection/hotbar.get_child(slot).icon = GV.tileList[GV.hotbar[slot]][1]
  
 func _process(delta):
 	$GUI/FPS.text = str(Engine.get_frames_per_second())
@@ -185,6 +187,7 @@ func _process(delta):
 	if pow(camLoc.x - $Camera.translation.x, 2) > renderPause or pow(camLoc.y - $Camera.translation.z, 2) > renderPause:
 		camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
 		update_items(get_items(camLoc))
+		print(len(xMatrix) + len(zMatrix))
 		$GUI/tileSelection/xCoordInput.placeholder_text = str(int($Camera.translation.x))
 		$GUI/tileSelection/yCoordInput.placeholder_text = str(int($Camera.translation.y))
 		$GUI/tileSelection/zCoordInput.placeholder_text = str(int($Camera.translation.z))
@@ -217,14 +220,22 @@ func _process(delta):
 	else:
 		if $GUI/tileSelection.visible:
 			$GUI/tileSelection.visible = false
-
+	
 		shift = Input.is_action_pressed("shift")
 		cntr = Input.is_action_pressed("tab")
-	
-		if Input.is_action_just_released("scroll_up") and shift:
-			$y_collider.translate(Vector3(0, boxDistance, 0))
-		if Input.is_action_just_released("scroll_down") and shift:
-			$y_collider.translate(Vector3(0, -boxDistance, 0))
+		
+		if Input.is_action_just_released("scroll_up"):
+			if shift:
+				$y_collider.translate(Vector3(0, boxDistance, 0))
+			elif Input.is_action_pressed("control") and selectedTile > 0:
+				selectedTile -= 1
+				reload_tile()
+		if Input.is_action_just_released("scroll_down"):
+			if shift:
+				$y_collider.translate(Vector3(0, -boxDistance, 0))
+			elif Input.is_action_pressed("control") and selectedTile < len(GV.hotbar) - 1:
+				selectedTile += 1
+				reload_tile()
 		
 		if !hidden:
 			for slot in range(len(GV.hotbar)):
@@ -306,9 +317,9 @@ func reload_tile():
 	var Bscale = tile.scale
 	
 	tile.queue_free()
-	tile = GV.tiles[GV.hotbar[selectedTile]][0].instance()
+	tile = GV.tileList[GV.hotbar[selectedTile]][0].instance()
 	
-	tile = GV.tiles[GV.hotbar[selectedTile]][0].instance()
+	tile = GV.tileList[GV.hotbar[selectedTile]][0].instance()
 	$currentBlock.add_child(tile)
 	tile.rotation_degrees = Brot
 	tile.scale = Bscale
@@ -316,7 +327,7 @@ func reload_tile():
 	var animNames = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 	$GUI/hotbar/slotSelections.play("slot" + str(animNames[selectedTile]))
 	
-	$GUI/hotbar/name.text = GV.tiles[GV.hotbar[selectedTile]][2]
+	$GUI/hotbar/name.text = GV.hotbar[selectedTile]
 
 func place_tile():
 	var Bposition = $currentBlock.translation
@@ -327,14 +338,14 @@ func place_tile():
 	var Bscale = tile.scale
 	
 	tile.queue_free()
-	var tile2add = GV.tiles[GV.hotbar[selectedTile]][0].instance()
+	var tile2add = GV.tileList[GV.hotbar[selectedTile]][0].instance()
 	
 	self.add_child(tile2add)
 	tile2add.translate(Bposition)
 	tile2add.rotation_degrees = Brot
 	tile2add.scale = Bscale
 	
-	tile = GV.tiles[GV.hotbar[selectedTile]][0].instance()
+	tile = GV.tileList[GV.hotbar[selectedTile]][0].instance()
 	$currentBlock.add_child(tile)
 	tile.rotation_degrees = Brot
 	tile.scale = Bscale
@@ -344,9 +355,9 @@ func place_tile():
 	if Bscale.x == -1:
 		invert = 1
 	
-	var queryData = [Bposition.x, Bposition.y, Bposition.z, rot, invert, GV.hotbar[selectedTile]]
+	var queryData = [Bposition.x, Bposition.y, Bposition.z, rot, invert, GV.hotbar[selectedTile], GV.tileList[GV.hotbar[selectedTile]][2]]
 	
-	db.query_with_args("INSERT INTO terrainData (posX, posY, posZ, rotation, invert, tileID) VALUES (?,?,?,?,?,?);", queryData)
+	db.query_with_args("INSERT INTO terrainData (posX, posY, posZ, rotation, invert, tile, priority) VALUES (?,?,?,?,?,?,?);", queryData)
 	var IDdb = db.fetch_array("SELECT ID FROM terrainData WHERE ID=(SELECT max(ID) FROM terrainData);")
 	var ID = IDdb[0]["ID"]
 	print(ID)
@@ -367,6 +378,9 @@ func place_tile():
 
 func break_tile():
 	var Bpos = $currentBlock.translation
+	Bpos.x = round(Bpos.x * 100)/100
+	Bpos.y = round(Bpos.y * 100)/100
+	Bpos.z = round(Bpos.z * 100)/100
 	if Bpos.x in xMatrix and Bpos.z in zMatrix:
 		for tileEntity in xMatrix[Bpos.x]:
 			if tileEntity in zMatrix[Bpos.z]:
@@ -406,6 +420,7 @@ func _on_renderInput_text_entered(new_text):
 	
 	$GUI/tileSelection/renderInput.text = ""
 	$GUI/tileSelection/renderInput.placeholder_text = str(renderDis)
+	preLoc = Vector2(1000000, 1000000)
 
 func _on_zCoordInput_text_entered(new_text):
 	var dec = false
