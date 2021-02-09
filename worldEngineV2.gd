@@ -14,10 +14,6 @@ var preLoc = Vector2(1000000, 1000000)
 var xMatrix = {}
 var zMatrix = {}
 
-var terrain_entities = []
-var original_entities = []
-var original_ids = []
-
 onready var tile = $currentBlock/tile
 
 # SQLite module
@@ -187,7 +183,6 @@ func _process(delta):
 	if pow(camLoc.x - $Camera.translation.x, 2) > renderPause or pow(camLoc.y - $Camera.translation.z, 2) > renderPause:
 		camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
 		update_items(get_items(camLoc))
-		print(len(xMatrix) + len(zMatrix))
 		$GUI/tileSelection/xCoordInput.placeholder_text = str(int($Camera.translation.x))
 		$GUI/tileSelection/yCoordInput.placeholder_text = str(int($Camera.translation.y))
 		$GUI/tileSelection/zCoordInput.placeholder_text = str(int($Camera.translation.z))

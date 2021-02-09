@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=118 format=2]
 
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://GV.gd" type="Script" id=2]
@@ -10,6 +10,88 @@
 [ext_resource path="res://menu/crosshair.png" type="Texture" id=8]
 [ext_resource path="res://tileSelection.gd" type="Script" id=9]
 [ext_resource path="res://assets/skies/sky_2.tres" type="Environment" id=10]
+[ext_resource path="res://weather/fog/barrier/rune/rune33.png" type="Texture" id=11]
+[ext_resource path="res://weather/fog/barrier/rune/rune28.png" type="Texture" id=12]
+[ext_resource path="res://weather/fog/barrier/rune/rune30.png" type="Texture" id=13]
+[ext_resource path="res://weather/fog/barrier/rune/rune31.png" type="Texture" id=14]
+[ext_resource path="res://weather/fog/barrier/rune/rune32.png" type="Texture" id=15]
+[ext_resource path="res://weather/fog/barrier/rune/rune34.png" type="Texture" id=16]
+[ext_resource path="res://weather/fog/barrier/rune/rune36.png" type="Texture" id=17]
+[ext_resource path="res://weather/fog/barrier/rune/rune39.png" type="Texture" id=18]
+[ext_resource path="res://weather/fog/barrier/rune/rune35.png" type="Texture" id=19]
+[ext_resource path="res://weather/fog/barrier/rune/rune37.png" type="Texture" id=20]
+[ext_resource path="res://weather/fog/barrier/rune/rune38.png" type="Texture" id=21]
+[ext_resource path="res://weather/fog/barrier/rune/rune29.png" type="Texture" id=22]
+[ext_resource path="res://weather/fog/barrier/rune/rune25.png" type="Texture" id=23]
+[ext_resource path="res://weather/fog/barrier/rune/rune26.png" type="Texture" id=24]
+[ext_resource path="res://weather/fog/barrier/rune/rune27.png" type="Texture" id=25]
+[ext_resource path="res://weather/fog/barrier/rune/rune12.png" type="Texture" id=26]
+[ext_resource path="res://weather/fog/barrier/line/line4.png" type="Texture" id=27]
+[ext_resource path="res://weather/fog/barrier/line/line5.png" type="Texture" id=28]
+[ext_resource path="res://weather/fog/barrier/rune/rune1.png" type="Texture" id=29]
+[ext_resource path="res://weather/fog/barrier/rune/rune14.png" type="Texture" id=30]
+[ext_resource path="res://weather/fog/barrier/line/line7.png" type="Texture" id=31]
+[ext_resource path="res://weather/fog/barrier/rune/rune17.png" type="Texture" id=32]
+[ext_resource path="res://weather/fog/barrier/line/line6.png" type="Texture" id=33]
+[ext_resource path="res://weather/fog/barrier/rune/rune9.png" type="Texture" id=34]
+[ext_resource path="res://weather/fog/barrier/rune/rune5.png" type="Texture" id=35]
+[ext_resource path="res://weather/fog/barrier/rune/rune6.png" type="Texture" id=36]
+[ext_resource path="res://weather/fog/barrier/rune/rune8.png" type="Texture" id=37]
+[ext_resource path="res://weather/fog/barrier/rune/rune13.png" type="Texture" id=38]
+[ext_resource path="res://weather/fog/barrier/rune/rune18.png" type="Texture" id=39]
+[ext_resource path="res://weather/fog/barrier/line/line1.png" type="Texture" id=40]
+[ext_resource path="res://weather/fog/barrier/rune/rune15.png" type="Texture" id=41]
+[ext_resource path="res://weather/fog/barrier/line/line9.png" type="Texture" id=42]
+[ext_resource path="res://weather/fog/barrier/rune/rune10.png" type="Texture" id=43]
+[ext_resource path="res://weather/fog/barrier/rune/rune2.png" type="Texture" id=44]
+[ext_resource path="res://weather/fog/barrier/rune/rune3.png" type="Texture" id=45]
+[ext_resource path="res://weather/fog/barrier/line/line11.png" type="Texture" id=46]
+[ext_resource path="res://weather/fog/barrier/rune/rune16.png" type="Texture" id=47]
+[ext_resource path="res://weather/fog/barrier/line/line2.png" type="Texture" id=48]
+[ext_resource path="res://weather/fog/barrier/line/line3.png" type="Texture" id=49]
+[ext_resource path="res://weather/fog/barrier/rune/rune7.png" type="Texture" id=50]
+[ext_resource path="res://weather/fog/barrier/line/line8.png" type="Texture" id=51]
+[ext_resource path="res://weather/fog/barrier/line/line10.png" type="Texture" id=52]
+[ext_resource path="res://weather/fog/barrier/rune/rune4.png" type="Texture" id=53]
+[ext_resource path="res://weather/fog/barrier/rune/rune11.png" type="Texture" id=54]
+[ext_resource path="res://weather/fog/barrier/rune/rune19.png" type="Texture" id=55]
+[ext_resource path="res://weather/fog/barrier/rune/rune22.png" type="Texture" id=56]
+[ext_resource path="res://weather/fog/barrier/rune/rune23.png" type="Texture" id=57]
+[ext_resource path="res://weather/fog/barrier/rune/rune21.png" type="Texture" id=58]
+[ext_resource path="res://weather/fog/barrier/rune/rune24.png" type="Texture" id=59]
+[ext_resource path="res://weather/fog/barrier/rune/rune20.png" type="Texture" id=60]
+[ext_resource path="res://weather/fog/barrier/rune/rune58.png" type="Texture" id=61]
+[ext_resource path="res://weather/fog/barrier/rune/rune56.png" type="Texture" id=62]
+[ext_resource path="res://weather/fog/barrier/rune/rune61.png" type="Texture" id=63]
+[ext_resource path="res://weather/fog/barrier/rune/rune62.png" type="Texture" id=64]
+[ext_resource path="res://weather/fog/barrier/rune/rune45.png" type="Texture" id=65]
+[ext_resource path="res://weather/fog/barrier/rune/rune63.png" type="Texture" id=66]
+[ext_resource path="res://weather/fog/barrier/rune/rune48.png" type="Texture" id=67]
+[ext_resource path="res://weather/fog/barrier/rune/rune57.png" type="Texture" id=68]
+[ext_resource path="res://weather/fog/barrier/rune/rune47.png" type="Texture" id=69]
+[ext_resource path="res://weather/fog/barrier/rune/rune44.png" type="Texture" id=70]
+[ext_resource path="res://weather/fog/barrier/rune/rune65.png" type="Texture" id=71]
+[ext_resource path="res://weather/fog/barrier/rune/rune66.png" type="Texture" id=72]
+[ext_resource path="res://weather/fog/barrier/rune/rune68.png" type="Texture" id=73]
+[ext_resource path="res://weather/fog/barrier/rune/rune51.png" type="Texture" id=74]
+[ext_resource path="res://weather/fog/barrier/rune/rune52.png" type="Texture" id=75]
+[ext_resource path="res://weather/fog/barrier/rune/rune59.png" type="Texture" id=76]
+[ext_resource path="res://weather/fog/barrier/rune/rune71.png" type="Texture" id=77]
+[ext_resource path="res://weather/fog/barrier/rune/rune41.png" type="Texture" id=78]
+[ext_resource path="res://weather/fog/barrier/rune/rune50.png" type="Texture" id=79]
+[ext_resource path="res://weather/fog/barrier/rune/rune69.png" type="Texture" id=80]
+[ext_resource path="res://weather/fog/barrier/rune/rune64.png" type="Texture" id=81]
+[ext_resource path="res://weather/fog/barrier/rune/rune42.png" type="Texture" id=82]
+[ext_resource path="res://weather/fog/barrier/rune/rune53.png" type="Texture" id=83]
+[ext_resource path="res://weather/fog/barrier/rune/rune40.png" type="Texture" id=84]
+[ext_resource path="res://weather/fog/barrier/rune/rune70.png" type="Texture" id=85]
+[ext_resource path="res://weather/fog/barrier/rune/rune43.png" type="Texture" id=86]
+[ext_resource path="res://weather/fog/barrier/rune/rune60.png" type="Texture" id=87]
+[ext_resource path="res://weather/fog/barrier/rune/rune49.png" type="Texture" id=88]
+[ext_resource path="res://weather/fog/barrier/rune/rune55.png" type="Texture" id=89]
+[ext_resource path="res://weather/fog/barrier/rune/rune67.png" type="Texture" id=90]
+[ext_resource path="res://weather/fog/barrier/rune/rune54.png" type="Texture" id=91]
+[ext_resource path="res://weather/fog/barrier/rune/rune46.png" type="Texture" id=92]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -1286,12 +1368,93 @@ size = 64
 use_filter = true
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=24]
+[sub_resource type="DynamicFont" id=22]
 size = 32
 outline_size = 3
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 1 )
+
+[sub_resource type="SpriteFrames" id=23]
+animations = [ {
+"frames": [ ExtResource( 29 ), ExtResource( 44 ), ExtResource( 45 ), ExtResource( 53 ), ExtResource( 35 ), ExtResource( 36 ), ExtResource( 50 ), ExtResource( 37 ), ExtResource( 34 ), ExtResource( 43 ), ExtResource( 54 ), ExtResource( 26 ), ExtResource( 38 ), ExtResource( 30 ), ExtResource( 41 ), ExtResource( 47 ), ExtResource( 32 ), ExtResource( 39 ), ExtResource( 55 ), ExtResource( 60 ), ExtResource( 58 ), ExtResource( 56 ), ExtResource( 57 ), ExtResource( 59 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 12 ), ExtResource( 22 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 84 ), ExtResource( 78 ), ExtResource( 82 ), ExtResource( 86 ), ExtResource( 70 ), ExtResource( 65 ), ExtResource( 92 ), ExtResource( 69 ), ExtResource( 67 ), ExtResource( 88 ), ExtResource( 79 ), ExtResource( 74 ), ExtResource( 75 ), ExtResource( 83 ), ExtResource( 91 ), ExtResource( 89 ), ExtResource( 62 ), ExtResource( 68 ), ExtResource( 61 ), ExtResource( 76 ), ExtResource( 87 ), ExtResource( 63 ), ExtResource( 64 ), ExtResource( 66 ), ExtResource( 81 ), ExtResource( 71 ), ExtResource( 72 ), ExtResource( 90 ), ExtResource( 73 ), ExtResource( 80 ), ExtResource( 85 ), ExtResource( 77 ) ],
+"loop": false,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="Animation" id=24]
+resource_name = "barrier"
+length = 10.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("line:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("line:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 5, 10 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 90, 0, 0 ), Vector3( 90, 180, 0 ), Vector3( 90, 360, 0 ) ]
+}
+
+[sub_resource type="SpriteFrames" id=25]
+animations = [ {
+"frames": [ null, ExtResource( 40 ), ExtResource( 48 ), ExtResource( 49 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 33 ), ExtResource( 31 ), ExtResource( 51 ), ExtResource( 42 ), ExtResource( 52 ), ExtResource( 46 ), null ],
+"loop": false,
+"name": "default",
+"speed": 10.0
+} ]
 
 [node name="worldEngine" type="Spatial"]
 script = ExtResource( 7 )
@@ -1327,6 +1490,7 @@ collide_with_bodies = false
 
 [node name="y_collider" type="Area" parent="."]
 transform = Transform( 500, 0, 0, 0, 1, 0, 0, 0, 500, 0, 0, 0 )
+visible = false
 
 [node name="CollisionShape" type="CollisionShape" parent="y_collider"]
 shape = SubResource( 5 )
@@ -2399,7 +2563,7 @@ margin_left = 32.0
 margin_right = 64.0
 margin_bottom = 64.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 22 )
 text = "1"
 valign = 1
 __meta__ = {
@@ -2426,7 +2590,7 @@ margin_left = 32.0
 margin_right = 64.0
 margin_bottom = 64.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 22 )
 text = "2"
 valign = 1
 __meta__ = {
@@ -2453,7 +2617,7 @@ margin_left = 32.0
 margin_right = 64.0
 margin_bottom = 64.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 22 )
 text = "3"
 valign = 1
 __meta__ = {
@@ -2480,7 +2644,7 @@ margin_left = 32.0
 margin_right = 64.0
 margin_bottom = 64.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 22 )
 text = "4"
 valign = 1
 __meta__ = {
@@ -2507,7 +2671,7 @@ margin_left = 32.0
 margin_right = 64.0
 margin_bottom = 64.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 22 )
 text = "5"
 valign = 1
 __meta__ = {
@@ -2534,7 +2698,7 @@ margin_left = 32.0
 margin_right = 64.0
 margin_bottom = 64.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 22 )
 text = "6"
 valign = 1
 __meta__ = {
@@ -2561,7 +2725,7 @@ margin_left = 32.0
 margin_right = 64.0
 margin_bottom = 64.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 22 )
 text = "7"
 valign = 1
 __meta__ = {
@@ -2588,7 +2752,7 @@ margin_left = 32.0
 margin_right = 64.0
 margin_bottom = 64.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 22 )
 text = "8"
 valign = 1
 __meta__ = {
@@ -2615,7 +2779,7 @@ margin_left = 32.0
 margin_right = 64.0
 margin_bottom = 64.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 22 )
 text = "9"
 valign = 1
 __meta__ = {
@@ -2642,7 +2806,7 @@ margin_left = 32.0
 margin_right = 64.0
 margin_bottom = 64.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 22 )
 text = "0"
 valign = 1
 __meta__ = {
@@ -2652,6 +2816,29 @@ __meta__ = {
 [node name="crosshair" type="Sprite" parent="GUI"]
 position = Vector2( 507.812, 296 )
 texture = ExtResource( 8 )
+
+[node name="fogSystem" type="Spatial" parent="."]
+
+[node name="rune" type="AnimatedSprite3D" parent="fogSystem"]
+transform = Transform( -0.943054, -0.332641, 5.41941e-08, 0, -1.62921e-07, -1, 0.332641, -0.943054, 1.53643e-07, 0, 3.41168, 4.8 )
+pixel_size = 0.1
+frames = SubResource( 23 )
+frame = 47
+playing = true
+
+[node name="TempBarrier" type="AnimationPlayer" parent="fogSystem/rune"]
+anims/barrier = SubResource( 24 )
+
+[node name="line" type="AnimatedSprite3D" parent="fogSystem/rune"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 1.6 )
+pixel_size = 0.1
+billboard = 2
+transparent = false
+double_sided = false
+alpha_cut = 1
+frames = SubResource( 25 )
+frame = 12
+playing = true
 [connection signal="button_down" from="GUI/tileSelection/upButton" to="GUI/tileSelection/displayedTiles" method="_on_upButton_button_down"]
 [connection signal="button_down" from="GUI/tileSelection/downButton" to="GUI/tileSelection/displayedTiles" method="_on_downButton_button_down"]
 [connection signal="text_changed" from="GUI/tileSelection/searchInput" to="GUI/tileSelection/displayedTiles" method="_on_searchInput_text_changed"]
