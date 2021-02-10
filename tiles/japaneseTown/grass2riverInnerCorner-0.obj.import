@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/grass2riverInnerCorner-0.obj-7995d319015cd08e454a2eda10a5e154.mesh"
+
+[deps]
+
+files=[ "res://.import/grass2riverInnerCorner-0.obj-7995d319015cd08e454a2eda10a5e154.mesh" ]
+
+source_file="res://tiles/japaneseTown/grass2riverInnerCorner-0.obj"
+dest_files=[ "res://.import/grass2riverInnerCorner-0.obj-7995d319015cd08e454a2eda10a5e154.mesh", "res://.import/grass2riverInnerCorner-0.obj-7995d319015cd08e454a2eda10a5e154.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

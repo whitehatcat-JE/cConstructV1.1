@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/villaRedLowerDoor-0.obj-8a3d3b4244fd3f21d6194ab73344110c.mesh"
+
+[deps]
+
+files=[ "res://.import/villaRedLowerDoor-0.obj-8a3d3b4244fd3f21d6194ab73344110c.mesh" ]
+
+source_file="res://tiles/japaneseTown/villaRedLowerDoor-0.obj"
+dest_files=[ "res://.import/villaRedLowerDoor-0.obj-8a3d3b4244fd3f21d6194ab73344110c.mesh", "res://.import/villaRedLowerDoor-0.obj-8a3d3b4244fd3f21d6194ab73344110c.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

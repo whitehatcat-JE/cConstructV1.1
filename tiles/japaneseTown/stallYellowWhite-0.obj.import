@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/stallYellowWhite-0.obj-84854df69afcd9ac82596d6b9b7dbfc7.mesh"
+
+[deps]
+
+files=[ "res://.import/stallYellowWhite-0.obj-84854df69afcd9ac82596d6b9b7dbfc7.mesh" ]
+
+source_file="res://tiles/japaneseTown/stallYellowWhite-0.obj"
+dest_files=[ "res://.import/stallYellowWhite-0.obj-84854df69afcd9ac82596d6b9b7dbfc7.mesh", "res://.import/stallYellowWhite-0.obj-84854df69afcd9ac82596d6b9b7dbfc7.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
