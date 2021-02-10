@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/stoneWallCorner-0.obj-ca8b6d0c22e7f95a55a12b43f536df41.mesh"
+
+[deps]
+
+files=[ "res://.import/stoneWallCorner-0.obj-ca8b6d0c22e7f95a55a12b43f536df41.mesh" ]
+
+source_file="res://assets/japaneseTown/stoneWallCorner-0.obj"
+dest_files=[ "res://.import/stoneWallCorner-0.obj-ca8b6d0c22e7f95a55a12b43f536df41.mesh", "res://.import/stoneWallCorner-0.obj-ca8b6d0c22e7f95a55a12b43f536df41.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

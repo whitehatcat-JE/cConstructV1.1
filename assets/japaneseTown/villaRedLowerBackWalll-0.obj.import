@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/villaRedLowerBackWalll-0.obj-775f88a87b9e91e1ba25558af0b5209b.mesh"
+
+[deps]
+
+files=[ "res://.import/villaRedLowerBackWalll-0.obj-775f88a87b9e91e1ba25558af0b5209b.mesh" ]
+
+source_file="res://assets/japaneseTown/villaRedLowerBackWalll-0.obj"
+dest_files=[ "res://.import/villaRedLowerBackWalll-0.obj-775f88a87b9e91e1ba25558af0b5209b.mesh", "res://.import/villaRedLowerBackWalll-0.obj-775f88a87b9e91e1ba25558af0b5209b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

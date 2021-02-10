@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/miniTemple-0.obj-7cccb719732e84e7ee0e7c1eb241f342.mesh"
+
+[deps]
+
+files=[ "res://.import/miniTemple-0.obj-7cccb719732e84e7ee0e7c1eb241f342.mesh" ]
+
+source_file="res://assets/japaneseTown/miniTemple-0.obj"
+dest_files=[ "res://.import/miniTemple-0.obj-7cccb719732e84e7ee0e7c1eb241f342.mesh", "res://.import/miniTemple-0.obj-7cccb719732e84e7ee0e7c1eb241f342.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

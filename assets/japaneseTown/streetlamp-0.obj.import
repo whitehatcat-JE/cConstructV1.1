@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/streetlamp-0.obj-97f26f7216850dc7f7d418d020f3f11b.mesh"
+
+[deps]
+
+files=[ "res://.import/streetlamp-0.obj-97f26f7216850dc7f7d418d020f3f11b.mesh" ]
+
+source_file="res://assets/japaneseTown/streetlamp-0.obj"
+dest_files=[ "res://.import/streetlamp-0.obj-97f26f7216850dc7f7d418d020f3f11b.mesh", "res://.import/streetlamp-0.obj-97f26f7216850dc7f7d418d020f3f11b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/riverbed-0.obj-c96d3b22b0c0ab3c79e62f354de7e6dd.mesh"
+
+[deps]
+
+files=[ "res://.import/riverbed-0.obj-c96d3b22b0c0ab3c79e62f354de7e6dd.mesh" ]
+
+source_file="res://assets/japaneseTown/riverbed-0.obj"
+dest_files=[ "res://.import/riverbed-0.obj-c96d3b22b0c0ab3c79e62f354de7e6dd.mesh", "res://.import/riverbed-0.obj-c96d3b22b0c0ab3c79e62f354de7e6dd.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

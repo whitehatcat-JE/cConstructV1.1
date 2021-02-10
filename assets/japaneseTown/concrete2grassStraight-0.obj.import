@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/concrete2grassStraight-0.obj-49dc7d5262d794c1f14baa534f4f0186.mesh"
+
+[deps]
+
+files=[ "res://.import/concrete2grassStraight-0.obj-49dc7d5262d794c1f14baa534f4f0186.mesh" ]
+
+source_file="res://assets/japaneseTown/concrete2grassStraight-0.obj"
+dest_files=[ "res://.import/concrete2grassStraight-0.obj-49dc7d5262d794c1f14baa534f4f0186.mesh", "res://.import/concrete2grassStraight-0.obj-49dc7d5262d794c1f14baa534f4f0186.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

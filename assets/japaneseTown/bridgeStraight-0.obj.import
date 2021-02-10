@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/bridgeStraight-0.obj-643cce4fdc2a3541fa62490d6ee7f762.mesh"
+
+[deps]
+
+files=[ "res://.import/bridgeStraight-0.obj-643cce4fdc2a3541fa62490d6ee7f762.mesh" ]
+
+source_file="res://assets/japaneseTown/bridgeStraight-0.obj"
+dest_files=[ "res://.import/bridgeStraight-0.obj-643cce4fdc2a3541fa62490d6ee7f762.mesh", "res://.import/bridgeStraight-0.obj-643cce4fdc2a3541fa62490d6ee7f762.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

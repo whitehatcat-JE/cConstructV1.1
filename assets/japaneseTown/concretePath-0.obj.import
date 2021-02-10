@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/concretePath-0.obj-6886fe52742f03532f0bc96bea6f23ff.mesh"
+
+[deps]
+
+files=[ "res://.import/concretePath-0.obj-6886fe52742f03532f0bc96bea6f23ff.mesh" ]
+
+source_file="res://assets/japaneseTown/concretePath-0.obj"
+dest_files=[ "res://.import/concretePath-0.obj-6886fe52742f03532f0bc96bea6f23ff.mesh", "res://.import/concretePath-0.obj-6886fe52742f03532f0bc96bea6f23ff.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

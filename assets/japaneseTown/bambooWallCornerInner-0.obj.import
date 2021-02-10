@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/bambooWallCornerInner-0.obj-5f533083f38530d89d7976cbc8be92cf.mesh"
+
+[deps]
+
+files=[ "res://.import/bambooWallCornerInner-0.obj-5f533083f38530d89d7976cbc8be92cf.mesh" ]
+
+source_file="res://assets/japaneseTown/bambooWallCornerInner-0.obj"
+dest_files=[ "res://.import/bambooWallCornerInner-0.obj-5f533083f38530d89d7976cbc8be92cf.mesh", "res://.import/bambooWallCornerInner-0.obj-5f533083f38530d89d7976cbc8be92cf.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
