@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/oceanBottomOuterCorner-0.obj-5288fee9b1f220b2a0300b4961e243a9.mesh"
+
+[deps]
+
+files=[ "res://.import/oceanBottomOuterCorner-0.obj-5288fee9b1f220b2a0300b4961e243a9.mesh" ]
+
+source_file="res://assets/japaneseTown/oceanBottomOuterCorner-0.obj"
+dest_files=[ "res://.import/oceanBottomOuterCorner-0.obj-5288fee9b1f220b2a0300b4961e243a9.mesh", "res://.import/oceanBottomOuterCorner-0.obj-5288fee9b1f220b2a0300b4961e243a9.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

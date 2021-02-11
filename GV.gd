@@ -57,7 +57,13 @@ onready var tileList = {
 	"VILLAREDUPPERWALL":[preload("res://tiles/japaneseTiles/villaRedUpperWall.tscn"), preload("res://genericIcon.png"), 1],
 	"VILLAREDUPPERCORNER":[preload("res://tiles/japaneseTiles/villaRedUpperCorner.tscn"), preload("res://genericIcon.png"), 1],
 	"VILLAREDUPPERBACKWALL":[preload("res://tiles/japaneseTiles/villaRedUpperBackWall.tscn"), preload("res://genericIcon.png"), 1],
-	"VILLAREDLOWERWALL":[preload("res://tiles/japaneseTiles/villaRedLowerWall.tscn"), preload("res://genericIcon.png"), 1]
+	"VILLAREDLOWERWALL":[preload("res://tiles/japaneseTiles/villaRedLowerWall.tscn"), preload("res://genericIcon.png"), 1],
+	"OCEANBOTTOM":[preload("res://tiles/japaneseTiles/oceanBottom.tscn"), preload("res://genericIcon.png"), 1],
+	"OCEANBOTTOMINNERCORNER":[preload("res://tiles/japaneseTiles/oceanBottomInnerCorner.tscn"), preload("res://genericIcon.png"), 1],
+	"OCEANBOTTOMOUTERCORNER":[preload("res://tiles/japaneseTiles/oceanBottomOuterCorner.tscn"), preload("res://genericIcon.png"), 1],
+	"OCEANBOTTOMSTRAIGHT":[preload("res://tiles/japaneseTiles/oceanBottomStraight.tscn"), preload("res://genericIcon.png"), 1],
+	"VILLAGREYUPPERROOF":[preload("res://tiles/japaneseTiles/villaGreyUpperRoof.tscn"), preload("res://genericIcon.png"), 1],
+	"VILLAREDUPPERROOF":[preload("res://tiles/japaneseTiles/villaRedUpperRoof.tscn"), preload("res://genericIcon.png"), 1]
 }
 
 var hotbar = ["MINITEMPLE", "JAPANESEGATE", "GRASS"]

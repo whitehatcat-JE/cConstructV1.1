@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/villaRedUpperRoof-0.obj-e0fc4f5594b21a7d0ad2e940931689ad.mesh"
+
+[deps]
+
+files=[ "res://.import/villaRedUpperRoof-0.obj-e0fc4f5594b21a7d0ad2e940931689ad.mesh" ]
+
+source_file="res://assets/japaneseTown/villaRedUpperRoof-0.obj"
+dest_files=[ "res://.import/villaRedUpperRoof-0.obj-e0fc4f5594b21a7d0ad2e940931689ad.mesh", "res://.import/villaRedUpperRoof-0.obj-e0fc4f5594b21a7d0ad2e940931689ad.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
