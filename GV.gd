@@ -63,7 +63,9 @@ onready var tileList = {
 	"OCEANBOTTOMOUTERCORNER":[preload("res://tiles/japaneseTiles/oceanBottomOuterCorner.tscn"), preload("res://genericIcon.png"), 1],
 	"OCEANBOTTOMSTRAIGHT":[preload("res://tiles/japaneseTiles/oceanBottomStraight.tscn"), preload("res://genericIcon.png"), 1],
 	"VILLAGREYUPPERROOF":[preload("res://tiles/japaneseTiles/villaGreyUpperRoof.tscn"), preload("res://genericIcon.png"), 1],
-	"VILLAREDUPPERROOF":[preload("res://tiles/japaneseTiles/villaRedUpperRoof.tscn"), preload("res://genericIcon.png"), 1]
+	"VILLAREDUPPERROOF":[preload("res://tiles/japaneseTiles/villaRedUpperRoof.tscn"), preload("res://genericIcon.png"), 1],
+	"CHERRYBLOSSOM1":[preload("res://tiles/japaneseTiles/cherryBlossom1.tscn"), preload("res://genericIcon.png"), 1],
+	"CHERRYBLOSSOM2":[preload("res://tiles/japaneseTiles/cherryBlossom2.tscn"), preload("res://genericIcon.png"), 1]
 }
 
 var hotbar = ["MINITEMPLE", "JAPANESEGATE", "GRASS"]
@@ -79,6 +81,7 @@ var itemHotbar = ["GREENCUBE", "REDCUBE", "BLUEBALL", "MISSILEROBOT"]
 
 var plrLoc = Vector3()
 var raining = false
+var canRain = false
 
 func _process(delta):
 	if Input.is_action_just_pressed("world"):

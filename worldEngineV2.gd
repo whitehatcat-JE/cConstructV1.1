@@ -208,9 +208,11 @@ func _process(delta):
 		if hidden: 
 			hidden = false
 			tile.visible = true
+			$y_collider.visible = true
 		else:
 			hidden = true
 			tile.visible = false
+			$y_collider.visible = false
 	
 	if GV.paused:
 		if !$GUI/tileSelection.visible:
@@ -286,19 +288,23 @@ func _process(delta):
 				$currentBlock.visible = false
 	
 	if Input.is_action_just_pressed("sky_1"):
+		GV.canRain = false
 		$WorldEnvironment.environment = load("res://assets/skies/sky_1.tres")
 		$DirectionalLight.light_energy = 1
 		$DirectionalLight.rotation_degrees = Vector3(-30, 26, 0)
 	elif Input.is_action_just_pressed("sky_2"):
+		GV.canRain = false
 		$WorldEnvironment.environment = load("res://assets/skies/sky_2.tres")
 		$DirectionalLight.light_energy = 1
 		$DirectionalLight.rotation_degrees = Vector3(-30, 26, 0)
 	elif Input.is_action_just_pressed("sky_3"):
+		GV.canRain = false
 		$WorldEnvironment.environment = load("res://assets/skies/sky_3.tres")
 		$DirectionalLight.light_energy = 0.3
 		$DirectionalLight.light_indirect_energy = 0.3
 		$DirectionalLight.rotation_degrees = Vector3(90, 90, 90)
 	elif Input.is_action_just_pressed("sky_4"):
+		GV.canRain = true
 		$WorldEnvironment.environment = load("res://assets/skies/sky_4.tres")
 		$DirectionalLight.light_energy = 0.5
 		$DirectionalLight.light_indirect_energy = 1

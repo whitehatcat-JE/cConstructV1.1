@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://GV.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://menu/crosshair.png" type="Texture" id=8]
 [ext_resource path="res://tileSelection.gd" type="Script" id=9]
 [ext_resource path="res://assets/skies/sky_2.tres" type="Environment" id=10]
+[ext_resource path="res://weather/weatherSystem.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -2652,6 +2653,8 @@ __meta__ = {
 [node name="crosshair" type="Sprite" parent="GUI"]
 position = Vector2( 507.812, 296 )
 texture = ExtResource( 8 )
+
+[node name="weatherSystem" parent="." instance=ExtResource( 11 )]
 [connection signal="button_down" from="GUI/tileSelection/upButton" to="GUI/tileSelection/displayedTiles" method="_on_upButton_button_down"]
 [connection signal="button_down" from="GUI/tileSelection/downButton" to="GUI/tileSelection/displayedTiles" method="_on_downButton_button_down"]
 [connection signal="text_changed" from="GUI/tileSelection/searchInput" to="GUI/tileSelection/displayedTiles" method="_on_searchInput_text_changed"]

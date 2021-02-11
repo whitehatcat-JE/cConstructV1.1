@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/cherryBlossom2-0.obj-52ec6bb996ac5561758293abec1a8d84.mesh"
+
+[deps]
+
+files=[ "res://.import/cherryBlossom2-0.obj-52ec6bb996ac5561758293abec1a8d84.mesh" ]
+
+source_file="res://assets/japaneseTown/cherryBlossom2-0.obj"
+dest_files=[ "res://.import/cherryBlossom2-0.obj-52ec6bb996ac5561758293abec1a8d84.mesh", "res://.import/cherryBlossom2-0.obj-52ec6bb996ac5561758293abec1a8d84.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
