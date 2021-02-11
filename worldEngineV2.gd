@@ -60,7 +60,7 @@ func add_item(item):
 	
 	#Checks if item exists
 	var exists = false
-	if Bposition in xMatrix:
+	if Bposition.x in xMatrix:
 		if item["ID"] in xMatrix[Bposition.x]:
 			exists = true
 
@@ -84,6 +84,7 @@ func add_item(item):
 		#Creates tile
 		var tile2create = GV.tileList[item["tile"]][0].instance()
 		self.add_child(tile2create)
+		
 		#Applies db values to tile
 		tile2create.translate(Bposition)
 		tile2create.rotation_degrees = Brot
@@ -158,6 +159,7 @@ func update_items(items):
 			var remTiles = xMatrix[xPos]
 			for item in remTiles:
 				if !("eleted" in str(remTiles[item])):
+					zMatrix[remTiles[item].translation.z].erase(item)
 					remTiles[item].queue_free()
 			xMatrix.erase(xPos)
 	
@@ -166,6 +168,7 @@ func update_items(items):
 			var remTiles = zMatrix[zPos]
 			for item in remTiles:
 				if !("eleted" in str(remTiles[item])):
+					xMatrix[remTiles[item].translation.x].erase(item)
 					remTiles[item].queue_free()
 			zMatrix.erase(zPos)
 
