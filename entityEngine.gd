@@ -34,6 +34,10 @@ var entityRenderDis = renderDis / 3
 var entityRenderUpdate = 1
 var entityCamLoc = Vector2()
 var entities = []
+var preLoc = Vector2(1000000, 1000000)
+
+var xMatrix = {}
+var zMatrix = {}
 
 # SQLite module
 const SQLite = preload("res://lib/gdsqlite.gdns");
@@ -61,33 +65,7 @@ func _ready():
 	var items = getItems(camLoc)
 	
 	for item in items:
-		originalIDs.append(item["ID"])
-		var Bposition = Vector3(item["posX"], item["posY"], item["posZ"])
-		var Bscale = Vector3(1, 1, 1)
-		
-		if item["invert"] == 1:
-			Bscale = Vector3(-1, -1, -1)
-		
-		var currentNum = str("")
-		var rotValues = []
-		
-		for l in str(item["rotation"]):
-			if l == ",":
-				rotValues.append(float(currentNum))
-				currentNum = str("")
-			else:
-				currentNum += l
-		
-		var Brot = Vector3(rotValues[0], rotValues[1], rotValues[2])
-		
-		var tile2create = GV.tiles[item["tileID"]][0].instance()
-		
-		self.add_child(tile2create)
-		tile2create.translate(Bposition)
-		tile2create.rotation_degrees = Brot
-		tile2create.scale = Bscale
-		terrainTiles.append(tile2create)
-		originalTiles.append(tile2create)
+		add_item(item)
 	
 	var newEntities = getEntities(entityCamLoc)
 	
@@ -122,14 +100,97 @@ func _ready():
 		
 		entities.append([newEntity, entity["ID"], newEntity.translation, newEntity.rotation_degrees])
 
-func getItems(loc = Vector2()):
-	var maX = loc.x + renderDis
-	var miX = loc.x - renderDis
-	var maY = loc.y + renderDis
-	var miY = loc.y - renderDis
+func add_item(item):
+	#Converts the dbs entries into usable values
+	var Bposition = Vector3(item["posX"], item["posY"], item["posZ"]) #Gets the translation
 	
-	return db.fetch_array_with_args("SELECT * FROM terrainData WHERE terrainData.posX >= ? and terrainData.posX <= ? and terrainData.posZ >= ? and terrainData.posZ <= ?;", [miX, maX, miY, maY]);
+	#Checks if item exists
+	var exists = false
+	if Bposition.x in xMatrix:
+		if item["ID"] in xMatrix[Bposition.x]:
+			exists = true
 
+	
+	if !exists:
+		#Gets scale
+		var Bscale = Vector3(1, 1, 1)
+		if item["invert"] == 1:
+			Bscale = Vector3(-1, -1, -1)
+		#Converts db rotation into an actual rotation vector
+		var currentNum = str("")
+		var rotValues = []
+		for l in str(item["rotation"]):
+			if l == ",":
+				rotValues.append(float(currentNum))
+				currentNum = str("")
+			else:
+				currentNum += l
+		var Brot = Vector3(rotValues[0], rotValues[1], rotValues[2])
+		
+		#Creates tile
+		var tile2create = GV.tileList[item["tile"]][0].instance()
+		self.add_child(tile2create)
+		
+		#Applies db values to tile
+		tile2create.translate(Bposition)
+		tile2create.rotation_degrees = Brot
+		tile2create.scale = Bscale
+		
+		#Appends to xMatrix
+		if Bposition.x in xMatrix:
+			xMatrix[Bposition.x][item["ID"]] = tile2create
+		else:
+			xMatrix[Bposition.x] = {item["ID"]:tile2create}
+		#Appends to zMatrix
+		if Bposition.z in zMatrix:
+			zMatrix[Bposition.z][item["ID"]] = tile2create
+		else:
+			zMatrix[Bposition.z] = {item["ID"]:tile2create}
+
+#Fetches new tiles from db
+func getItems(loc = Vector2()):
+	#Gets the distance travelled since func was last called
+	var disLoc = Vector2(camLoc.x - preLoc.x, camLoc.y - preLoc.y)
+	preLoc = camLoc
+	
+	if disLoc.x == 0: disLoc.x += 0.00001
+	if disLoc.y == 0: disLoc.y += 0.00001
+	
+	#Finds the region the db needs to retrieve info on
+	var retrieveRegionX = [0, 0, camLoc.y + renderDis, camLoc.y - renderDis]
+	var retrieveRegionZ = [camLoc.x + renderDis, camLoc.x - renderDis, 0, 0]
+	
+	#Creates the reqiured region checking
+	if sqrt(pow(disLoc.x, 2)) > renderDis or sqrt(pow(disLoc.y, 2)) > renderDis:
+		retrieveRegionX = [camLoc.x + renderDis, camLoc.x - renderDis, camLoc.y + renderDis, camLoc.y - renderDis]
+		retrieveRegionZ = [1000000, 1000000, 1000000, 1000000]
+	else:
+		if disLoc.x > 0:
+			retrieveRegionX[0] = camLoc.x + renderDis
+			retrieveRegionX[1] = camLoc.x + renderDis - disLoc.x
+		else:
+			retrieveRegionX[0] = camLoc.x - renderDis - disLoc.x
+			retrieveRegionX[1] = camLoc.x - renderDis
+		
+		if disLoc.y > 0:
+			retrieveRegionZ[2] = camLoc.y + renderDis
+			retrieveRegionZ[3] = camLoc.y + renderDis - disLoc.y
+		else:
+			retrieveRegionZ[2] = camLoc.y - renderDis - disLoc.y
+			retrieveRegionZ[3] = camLoc.y - renderDis
+	
+	
+	#Retrieves the regions tiles
+	var xdb = db.fetch_array_with_args(
+		"SELECT * FROM terrainData WHERE terrainData.posX <= ? and terrainData.posX >= ? and terrainData.posZ <= ? and terrainData.posZ >= ?;", 
+		retrieveRegionX
+	)
+	
+	var zdb = db.fetch_array_with_args(
+		"SELECT * FROM terrainData WHERE terrainData.posX <= ? and terrainData.posX >= ? and terrainData.posZ <= ? and terrainData.posZ >= ?;", 
+		retrieveRegionZ
+	)
+	return xdb + zdb
 
 func getEntities(loc = Vector2()):
 	var maX = loc.x + entityRenderDis
@@ -141,48 +202,29 @@ func getEntities(loc = Vector2()):
 
 
 func updateItems(items):
-	var tempID = []
+	#Addes new tiles
 	for item in items:
-		if !(item["ID"] in originalIDs):
-			var Bposition = Vector3(item["posX"], item["posY"], item["posZ"])
-			var Bscale = Vector3(1, 1, 1)
-			
-			if item["invert"] == 1:
-				Bscale = Vector3(-1, -1, -1)
-			
-			var currentNum = str("")
-			var rotValues = []
-			
-			for l in str(item["rotation"]):
-				if l == ",":
-					rotValues.append(float(currentNum))
-					currentNum = str("")
-				else:
-					currentNum += l
-			
-			var Brot = Vector3(rotValues[0], rotValues[1], rotValues[2])
-			var tile2create = GV.tiles[item["tileID"]][0].instance()
-			
-			self.add_child(tile2create)
-			tile2create.translate(Bposition)
-			tile2create.rotation_degrees = Brot
-			tile2create.scale = Bscale
-			terrainTiles.append(tile2create)
-			originalTiles.append(tile2create)
-		tempID.append(item["ID"])
+		add_item(item)
 	
-	for entity in terrainTiles:
-		var eT = entity.translation #To shrink if/else statement
-		if eT.x > camLoc.x + renderDis or eT.x < camLoc.x - renderDis or eT.z > camLoc.y + renderDis or eT.z < camLoc.y - renderDis:
-			terrainTiles.erase(entity)
-			
-	for entity in originalTiles:
-		var eT = entity.translation
-		if eT.x > camLoc.x + renderDis or eT.x < camLoc.x - renderDis or eT.z > camLoc.y + renderDis or eT.z < camLoc.y - renderDis:
-			entity.queue_free()
-			originalTiles.erase(entity)
+	#Finds the tiles it needs to delete
+	var delItems = []
+	for xPos in xMatrix:
+		if xPos > camLoc.x + renderDis or xPos < camLoc.x - renderDis: #Checks if out of range on x
+			var remTiles = xMatrix[xPos]
+			for item in remTiles:
+				if !("eleted" in str(remTiles[item])):
+					zMatrix[remTiles[item].translation.z].erase(item)
+					remTiles[item].queue_free()
+			xMatrix.erase(xPos)
 	
-	originalIDs = tempID
+	for zPos in zMatrix:
+		if zPos > camLoc.y + renderDis or zPos < camLoc.y - renderDis: #Checks if out of range on z
+			var remTiles = zMatrix[zPos]
+			for item in remTiles:
+				if !("eleted" in str(remTiles[item])):
+					xMatrix[remTiles[item].translation.x].erase(item)
+					remTiles[item].queue_free()
+			zMatrix.erase(zPos)
 
 
 func updateEntities():
