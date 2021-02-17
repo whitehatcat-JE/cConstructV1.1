@@ -71,13 +71,10 @@ onready var tileList = {
 var hotbar = ["MINITEMPLE", "JAPANESEGATE", "GRASS"]
 
 onready var items = {
-	"GREENCUBE":[preload("res://items/generic/greenCube.tscn"), preload("res://genericIcon.png")],
-	"REDCUBE":[preload("res://items/generic/redCube.tscn"), preload("res://assets/genericForest/icons/decGrass.png")],
-	"BLUEBALL":[preload("res://items/generic/blueBall.tscn"), preload("res://genericIcon.png")],
-	"MISSILEROBOT":[preload("res://items/enemies/missileRobot.tscn"), preload("res://genericIcon.png")]
+	"FLAMETURRET":[preload("res://items/enemies/flameTurret.tscn"), preload("res://genericIcon.png")]
 }
 
-var itemHotbar = ["GREENCUBE", "REDCUBE", "BLUEBALL", "MISSILEROBOT"]
+var itemHotbar = ["FLAMETURRET"]
 
 var plrLoc = Vector3()
 var raining = false
