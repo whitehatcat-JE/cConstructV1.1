@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/iceDude.obj-4ec7a35e2e54763063b32127912af578.mesh"
+
+[deps]
+
+files=[ "res://.import/iceDude.obj-4ec7a35e2e54763063b32127912af578.mesh" ]
+
+source_file="res://assets/characters/iceDude.obj"
+dest_files=[ "res://.import/iceDude.obj-4ec7a35e2e54763063b32127912af578.mesh", "res://.import/iceDude.obj-4ec7a35e2e54763063b32127912af578.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

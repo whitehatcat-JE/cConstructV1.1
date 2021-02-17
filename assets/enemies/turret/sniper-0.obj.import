@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/sniper-0.obj-d39182d63a6ad36f82cdb2c1243c4832.mesh"
+
+[deps]
+
+files=[ "res://.import/sniper-0.obj-d39182d63a6ad36f82cdb2c1243c4832.mesh" ]
+
+source_file="res://assets/enemies/turret/sniper-0.obj"
+dest_files=[ "res://.import/sniper-0.obj-d39182d63a6ad36f82cdb2c1243c4832.mesh", "res://.import/sniper-0.obj-d39182d63a6ad36f82cdb2c1243c4832.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

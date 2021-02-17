@@ -43,18 +43,18 @@ func _ready():
 	db.query(query)
 	
 	#Retrieves items from db
-	var items = get_items(camLoc)
+	var items = getItems(camLoc)
 	
 	#Sorts through all items and adds them to the world
 	for item in items:
-		add_item(item)
+		addItem(item)
 	
 	#Refreshes the currently placing tile
-	reload_tile()
-	update_hotbar()
+	reloadTile()
+	updateHotbar()
 
 #Adds a tile to the world
-func add_item(item):
+func addItem(item):
 	#Converts the dbs entries into usable values
 	var Bposition = Vector3(item["posX"], item["posY"], item["posZ"]) #Gets the translation
 	
@@ -102,7 +102,7 @@ func add_item(item):
 			zMatrix[Bposition.z] = {item["ID"]:tile2create}
 
 #Fetches new tiles from db
-func get_items(loc = Vector2()):
+func getItems(loc = Vector2()):
 	#Gets the distance travelled since func was last called
 	var disLoc = Vector2(camLoc.x - preLoc.x, camLoc.y - preLoc.y)
 	preLoc = camLoc
@@ -147,10 +147,10 @@ func get_items(loc = Vector2()):
 	return xdb + zdb
 
 #Adds new tiles and removes old tiles from world
-func update_items(items):
+func updateItems(items):
 	#Addes new tiles
 	for item in items:
-		add_item(item)
+		addItem(item)
 	
 	#Finds the tiles it needs to delete
 	var delItems = []
@@ -173,7 +173,7 @@ func update_items(items):
 			zMatrix.erase(zPos)
 
 #Refreshes the hotbar
-func update_hotbar():
+func updateHotbar():
 	for slot in range(len(GV.hotbar)):
 		$GUI/hotbar.get_child(slot).get_child(0).texture = GV.tileList[GV.hotbar[slot]][1]
 		$GUI/tileSelection/hotbar.get_child(slot).icon = GV.tileList[GV.hotbar[slot]][1]
@@ -185,13 +185,13 @@ func _process(delta):
 	
 	if pow(camLoc.x - $Camera.translation.x, 2) > renderPause or pow(camLoc.y - $Camera.translation.z, 2) > renderPause:
 		camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
-		update_items(get_items(camLoc))
+		updateItems(getItems(camLoc))
 		$GUI/tileSelection/xCoordInput.placeholder_text = str(int($Camera.translation.x))
 		$GUI/tileSelection/yCoordInput.placeholder_text = str(int($Camera.translation.y))
 		$GUI/tileSelection/zCoordInput.placeholder_text = str(int($Camera.translation.z))
 	
 	if GV.hotbar != saved_hotbar:
-		update_hotbar()
+		updateHotbar()
 	
 	if Input.is_action_just_pressed("menu"):
 		if GV.paused:
@@ -229,19 +229,19 @@ func _process(delta):
 				$y_collider.translate(Vector3(0, boxDistance, 0))
 			elif Input.is_action_pressed("control") and selectedTile > 0:
 				selectedTile -= 1
-				reload_tile()
+				reloadTile()
 		if Input.is_action_just_released("scroll_down"):
 			if shift:
 				$y_collider.translate(Vector3(0, -boxDistance, 0))
 			elif Input.is_action_pressed("control") and selectedTile < len(GV.hotbar) - 1:
 				selectedTile += 1
-				reload_tile()
+				reloadTile()
 		
 		if !hidden:
 			for slot in range(len(GV.hotbar)):
 				if slot == 9 and Input.is_action_just_pressed("slot0") or Input.is_action_just_pressed("slot" + str(slot + 1)):
 					selectedTile = slot
-					reload_tile()
+					reloadTile()
 					break
 			
 			goTo = $Camera.goTo
@@ -281,9 +281,9 @@ func _process(delta):
 		
 				if Input.is_action_just_pressed("place"):
 					if cntr:
-						break_tile()
+						breakTile()
 					else:
-						place_tile()
+						placeTile()
 			else:
 				$currentBlock.visible = false
 	
@@ -315,7 +315,7 @@ func _process(delta):
 		db.close()
 		get_tree().quit()
 
-func reload_tile():
+func reloadTile():
 	var Bposition = $currentBlock.translation
 	var Brot = tile.rotation_degrees
 	var Bscale = tile.scale
@@ -333,7 +333,7 @@ func reload_tile():
 	
 	$GUI/hotbar/name.text = GV.hotbar[selectedTile]
 
-func place_tile():
+func placeTile():
 	var Bposition = $currentBlock.translation
 	Bposition.x = round(Bposition.x * 100)/100
 	Bposition.y = round(Bposition.y * 100)/100
@@ -380,7 +380,7 @@ func place_tile():
 	else:
 		zMatrix[zPos] = {ID:tile2add}
 
-func break_tile():
+func breakTile():
 	var Bpos = $currentBlock.translation
 	Bpos.x = round(Bpos.x * 100)/100
 	Bpos.y = round(Bpos.y * 100)/100
