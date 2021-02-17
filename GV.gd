@@ -71,7 +71,8 @@ onready var tileList = {
 var hotbar = ["MINITEMPLE", "JAPANESEGATE", "GRASS"]
 
 onready var items = {
-	"FLAMETURRET":[preload("res://items/enemies/flameTurret.tscn"), preload("res://genericIcon.png")]
+	"FLAMETURRET":[preload("res://items/enemies/flameTurret.tscn"), preload("res://genericIcon.png")],
+	"GREENCUBE":[preload("res://items/generic/greenCube.tscn"), preload("res://genericIcon.png")]
 }
 
 var itemHotbar = ["FLAMETURRET"]

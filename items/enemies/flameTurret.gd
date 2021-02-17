@@ -18,4 +18,4 @@ func _on_hitbox_area_entered(area):
 	health -= area.damage
 	if health <= 0:
 		$attackPlayer.stop()
-	$turretMovement.play("die")
+		$turretMovement.play("die")
