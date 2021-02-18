@@ -72,10 +72,10 @@ var hotbar = ["MINITEMPLE", "JAPANESEGATE", "GRASS"]
 
 onready var items = {
 	"FLAMETURRET":[preload("res://items/enemies/flameTurret.tscn"), preload("res://genericIcon.png")],
-	"GREENCUBE":[preload("res://items/generic/greenCube.tscn"), preload("res://genericIcon.png")]
+	"LASERTURRET":[preload("res://items/enemies/laserTurret.tscn"), preload("res://genericIcon.png")]
 }
 
-var itemHotbar = ["FLAMETURRET"]
+var itemHotbar = ["FLAMETURRET", "LASERTURRET"]
 
 var plrLoc = Vector3()
 var raining = false
