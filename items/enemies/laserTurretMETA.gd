@@ -1,3 +1,3 @@
 extends Node
 
-var item = "LASERTURRET"
+var item = "SNIPERTURRET"
