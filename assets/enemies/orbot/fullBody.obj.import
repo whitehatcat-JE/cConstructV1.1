@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/fullBody.obj-f9cc81a64457089673679f334ddf852b.mesh"
+
+[deps]
+
+files=[ "res://.import/fullBody.obj-f9cc81a64457089673679f334ddf852b.mesh" ]
+
+source_file="res://assets/enemies/orbot/fullBody.obj"
+dest_files=[ "res://.import/fullBody.obj-f9cc81a64457089673679f334ddf852b.mesh", "res://.import/fullBody.obj-f9cc81a64457089673679f334ddf852b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
