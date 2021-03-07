@@ -74,10 +74,11 @@ onready var items = {
 	"FLAMETURRET":[preload("res://items/enemies/flameTurret.tscn"), preload("res://genericIcon.png")],
 	"SNIPERTURRET":[preload("res://items/enemies/sniperTurret.tscn"), preload("res://genericIcon.png")],
 	"TESBOT":[preload("res://items/enemies/tesbot.tscn"), preload("res://genericIcon.png")],
-	"ORBOT":[preload("res://items/enemies/orbot.tscn"), preload("res://genericIcon.png")]
+	"ORBOT":[preload("res://items/enemies/orbot.tscn"), preload("res://genericIcon.png")],
+	"EGG":[preload("res://items/enemies/egg.tscn"), preload("res://genericIcon.png")]
 }
 
-var itemHotbar = ["FLAMETURRET", "SNIPERTURRET", "TESBOT", "ORBOT"]
+var itemHotbar = ["FLAMETURRET", "SNIPERTURRET", "TESBOT", "ORBOT", "EGG"]
 
 var plrLoc = Vector3()
 var raining = false
