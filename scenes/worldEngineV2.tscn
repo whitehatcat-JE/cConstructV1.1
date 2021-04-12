@@ -122,11 +122,13 @@ flags_transparent = true
 params_cull_mode = 2
 albedo_texture = ExtResource( 12 )
 
-[sub_resource type="PlaneMesh" id=16]
+[sub_resource type="PlaneMesh" id=12]
 
 [sub_resource type="MultiMesh" id=13]
 transform_format = 1
-mesh = SubResource( 16 )
+instance_count = 1
+mesh = SubResource( 12 )
+transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="worldEngineV2" type="Spatial"]
 script = ExtResource( 6 )

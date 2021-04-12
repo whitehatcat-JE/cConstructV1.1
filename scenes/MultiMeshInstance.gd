@@ -12,4 +12,4 @@ func _ready():
 	self.multimesh.instance_count = 9000000
 	for x in range(3000):
 		for y in range(3000):
-			self.multimesh.set_instance_transform(x*3000+y, Transform(Basis(), Vector3(x*2, 0, y*2)))
+			self.multimesh.set_instance_transform(x*3000+y, Transform(Basis().x, Basis().y, Basis().z, Vector3(x*2, 0, y*2)))
