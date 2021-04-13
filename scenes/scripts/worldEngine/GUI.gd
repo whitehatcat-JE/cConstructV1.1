@@ -1,8 +1,8 @@
 extends Control
 
 #Ready Variables
-onready var navHidden = ($navigation.rect_scale.x == 0)
-onready var tileHidden = ($tileMenu.rect_scale.x == 0)
+onready var navHidden = ($options/hideButton.text == ">")
+onready var tileHidden = ($options/tileButton.text == ">")
 #Node connections
 onready var o = $output
 onready var tileMenu = $tileMenu

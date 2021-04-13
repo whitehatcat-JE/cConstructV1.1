@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/transBV2.obj-7500ff984253b1eee2b252c984e36046.mesh"
+
+[deps]
+
+files=[ "res://.import/transBV2.obj-7500ff984253b1eee2b252c984e36046.mesh" ]
+
+source_file="res://assets/worldEngine/terrain/transBV2.obj"
+dest_files=[ "res://.import/transBV2.obj-7500ff984253b1eee2b252c984e36046.mesh", "res://.import/transBV2.obj-7500ff984253b1eee2b252c984e36046.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,18 +1,18 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://GV.gd" type="Script" id=1]
+[ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/GUI/baseSquare.png" type="Texture" id=3]
 [ext_resource path="res://scenes/scripts/worldEngine/GUI.gd" type="Script" id=4]
 [ext_resource path="res://scenes/scripts/outputWindow.gd" type="Script" id=5]
 [ext_resource path="res://scenes/scripts/worldEngine/main.gd" type="Script" id=6]
 [ext_resource path="res://scenes/scripts/camera.gd" type="Script" id=7]
-[ext_resource path="res://assets/GUI/editIcon.png" type="Texture" id=8]
+[ext_resource path="res://assets/GUI/earthIcon.png" type="Texture" id=8]
 [ext_resource path="res://assets/GUI/reloadIcon.png" type="Texture" id=9]
 [ext_resource path="res://assets/GUI/arrow.png" type="Texture" id=10]
 [ext_resource path="res://scenes/scripts/worldEngine/tileMenu.gd" type="Script" id=11]
-[ext_resource path="res://assets/japaneseTown/grass/grassT1.png" type="Texture" id=12]
-[ext_resource path="res://scenes/MultiMeshInstance.gd" type="Script" id=13]
+[ext_resource path="res://assets/GUI/plantIcon.png" type="Texture" id=12]
+[ext_resource path="res://assets/GUI/objectIcon.png" type="Texture" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 2 )
@@ -34,7 +34,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 2, 1 ),
 "update": 0,
-"values": [ Vector2( -4, 0 ), Vector2( -4, -38.664 ) ]
+"values": [ Vector2( 20, 0 ), Vector2( 20, -38.664 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("hideOutput:text")
@@ -117,23 +117,10 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="SpatialMaterial" id=11]
-flags_transparent = true
-params_cull_mode = 2
-albedo_texture = ExtResource( 12 )
-
-[sub_resource type="PlaneMesh" id=12]
-
-[sub_resource type="MultiMesh" id=13]
-transform_format = 1
-instance_count = 1
-mesh = SubResource( 12 )
-transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-
 [node name="worldEngineV2" type="Spatial"]
 script = ExtResource( 6 )
 
-[node name="GV" type="Node" parent="."]
+[node name="WorldEngineGLOBAL" type="Node" parent="."]
 script = ExtResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
@@ -155,9 +142,10 @@ __meta__ = {
 }
 
 [node name="exitButton" type="Button" parent="GUI/options"]
-margin_left = 999.0
-margin_right = 1021.0
-margin_bottom = 27.0
+margin_left = 996.0
+margin_top = -0.25
+margin_right = 1018.0
+margin_bottom = 26.75
 rect_pivot_offset = Vector2( 88, 16 )
 custom_fonts/font = SubResource( 1 )
 text = "X"
@@ -166,11 +154,11 @@ __meta__ = {
 }
 
 [node name="reloadButton" type="Button" parent="GUI/options"]
-margin_left = 976.0
-margin_top = -0.249997
-margin_right = 999.0
+margin_left = 968.0
+margin_top = -0.25
+margin_right = 991.0
 margin_bottom = 26.75
-rect_pivot_offset = Vector2( 88, 16 )
+rect_pivot_offset = Vector2( 16, 16.25 )
 custom_fonts/font = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -180,22 +168,6 @@ __meta__ = {
 position = Vector2( 12, 13.25 )
 scale = Vector2( 0.08, 0.08 )
 texture = ExtResource( 9 )
-
-[node name="editButton" type="Button" parent="GUI/options"]
-margin_left = 952.0
-margin_top = -0.249997
-margin_right = 975.0
-margin_bottom = 26.75
-rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="editIcon" type="Sprite" parent="GUI/options/editButton"]
-position = Vector2( 12, 13.25 )
-scale = Vector2( 0.013, 0.013 )
-texture = ExtResource( 8 )
 
 [node name="hideButton" type="Button" parent="GUI/options"]
 margin_left = 44.0
@@ -207,7 +179,7 @@ focus_mode = 0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
-text = "<"
+text = ">"
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -222,14 +194,65 @@ focus_mode = 0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
-text = "<"
+text = ">"
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="terrainMode" type="Button" parent="GUI/options"]
+margin_left = 996.0
+margin_top = 36.0
+margin_right = 1019.0
+margin_bottom = 63.0
+rect_pivot_offset = Vector2( 16, 16.25 )
+custom_fonts/font = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="terrainIcon" type="Sprite" parent="GUI/options/terrainMode"]
+position = Vector2( 11.813, 13.8729 )
+scale = Vector2( 0.136014, 0.136014 )
+texture = ExtResource( 8 )
+
+[node name="plantMode" type="Button" parent="GUI/options"]
+margin_left = 968.0
+margin_top = 36.18
+margin_right = 991.0
+margin_bottom = 63.18
+rect_pivot_offset = Vector2( 16, 16.25 )
+custom_fonts/font = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="plantIcon" type="Sprite" parent="GUI/options/plantMode"]
+position = Vector2( 11.4887, 13.6929 )
+scale = Vector2( 0.169099, 0.169099 )
+texture = ExtResource( 12 )
+
+[node name="objectMode" type="Button" parent="GUI/options"]
+margin_left = 938.579
+margin_top = 36.18
+margin_right = 961.579
+margin_bottom = 63.18
+rect_pivot_offset = Vector2( 16, 16.25 )
+custom_fonts/font = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="objectIcon" type="Sprite" parent="GUI/options/objectMode"]
+position = Vector2( 11.6875, 13.5524 )
+scale = Vector2( 0.0725731, 0.0725731 )
+texture = ExtResource( 13 )
+
 [node name="output" type="Control" parent="GUI"]
-margin_left = -4.0
+margin_left = 20.0
+margin_top = -38.664
+margin_right = 24.0
+margin_bottom = -38.664
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -292,7 +315,7 @@ focus_mode = 0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
-text = ">"
+text = "<"
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -333,6 +356,7 @@ margin_left = 60.0
 margin_top = 13.0
 margin_right = 60.0
 margin_bottom = 13.0
+rect_scale = Vector2( 1e-05, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -433,8 +457,10 @@ __meta__ = {
 }
 
 [node name="objMenu" type="Control" parent="GUI"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = 980.0
+margin_top = 250.0
+margin_right = 1020.0
+margin_bottom = 290.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -451,6 +477,7 @@ margin_left = -16.0
 margin_top = 68.0
 margin_right = 12.0
 margin_bottom = 72.0
+rect_scale = Vector2( 1e-05, 1 )
 script = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -514,14 +541,12 @@ align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
-material_override = SubResource( 11 )
-multimesh = SubResource( 13 )
-script = ExtResource( 13 )
 [connection signal="button_down" from="GUI/options/exitButton" to="GUI" method="_on_exitButton_button_down"]
 [connection signal="button_down" from="GUI/options/reloadButton" to="GUI" method="_on_reloadButton_button_down"]
 [connection signal="button_down" from="GUI/options/hideButton" to="GUI" method="_on_hideButton_button_down"]
 [connection signal="button_down" from="GUI/options/tileButton" to="GUI" method="_on_tileButton_button_down"]
+[connection signal="button_down" from="GUI/options/terrainMode" to="." method="_on_terrainMode_button_down"]
+[connection signal="button_down" from="GUI/options/plantMode" to="." method="_on_plantMode_button_down"]
+[connection signal="button_down" from="GUI/options/objectMode" to="." method="_on_objectMode_button_down"]
 [connection signal="button_down" from="GUI/output/hideOutput" to="GUI/output" method="_on_hideOutput_button_down"]
 [connection signal="changeSort" from="GUI/tileMenu" to="GUI" method="_on_tileMenu_changeSort"]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/ledgeV2.obj-8eac20fde8a94066fa811ecfeb080fbb.mesh"
+
+[deps]
+
+files=[ "res://.import/ledgeV2.obj-8eac20fde8a94066fa811ecfeb080fbb.mesh" ]
+
+source_file="res://assets/worldEngine/terrain/ledgeV2.obj"
+dest_files=[ "res://.import/ledgeV2.obj-8eac20fde8a94066fa811ecfeb080fbb.mesh", "res://.import/ledgeV2.obj-8eac20fde8a94066fa811ecfeb080fbb.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

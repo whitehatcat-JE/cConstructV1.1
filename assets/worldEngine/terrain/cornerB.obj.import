@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/cornerB.obj-072e5188596fb2f7c5355b91681082d8.mesh"
+
+[deps]
+
+files=[ "res://.import/cornerB.obj-072e5188596fb2f7c5355b91681082d8.mesh" ]
+
+source_file="res://assets/worldEngine/terrain/cornerB.obj"
+dest_files=[ "res://.import/cornerB.obj-072e5188596fb2f7c5355b91681082d8.mesh", "res://.import/cornerB.obj-072e5188596fb2f7c5355b91681082d8.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/editIcon.png-bc85914897dbd19034298abdd7d44bc0.stex"
+path="res://.import/earthIcon.png-be125d625037361e717d001a7d6e9837.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/GUI/editIcon.png"
-dest_files=[ "res://.import/editIcon.png-bc85914897dbd19034298abdd7d44bc0.stex" ]
+source_file="res://assets/GUI/earthIcon.png"
+dest_files=[ "res://.import/earthIcon.png-be125d625037361e717d001a7d6e9837.stex" ]
 
 [params]
 
