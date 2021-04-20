@@ -1,14 +1,5 @@
 extends Spatial
 ### SCENE SETUP ###
-# Enum setup
-enum {
-	MODETERRAIN,
-	MODEFLORA,
-	MODEOBJECT
-}
-
-# Constants
-var DEFMODE = MODETERRAIN
 # 	Render settings
 var tRENDER = 100 # Terrain
 var fRENDER = 35 # Flora
@@ -18,7 +9,8 @@ var UPDATEDIS = 5 # Distance before new world parts are loaded
 var fUPDATEDIS = 1 # Distance before flora is updated
 
 # Variable declarations
-var mode = DEFMODE
+var mode = W.DEFMODE
+
 # 	World positions
 var lastLoc = Vector2(pow(10, 10), pow(10, 10)) # Y being Z
 var fLastLoc = lastLoc # For flora
@@ -28,6 +20,12 @@ var curLoc = Vector2()
 var tileCacheData = {} # ID:[type, metadata]
 var tileOrder = [] # Order in which to load tiles
 
+#	Node connections
+onready var ySelector = $ySelector
+onready var selectedPos = $selectedPos
+onready var cam = $Camera
+onready var sceneMenu = $GUI/sceneMenu
+
 ### ALLMODE CODE ###
 # Runs every frame
 func _process(delta):
@@ -35,16 +33,28 @@ func _process(delta):
 	var camLoc = $Camera.global_transform.origin
 	curLoc = Vector2(camLoc.x, camLoc.z)
 	
-	
 	# Runs the relevant world code based on current mode
 	match mode:
-		MODETERRAIN:
+		W.MODETERRAIN:
 			terrainProcess()
-		MODEFLORA:
+		W.MODEFLORA:
 			floraProcess()
-		MODEOBJECT:
+		W.MODEOBJECT:
 			objectProcess()
-
+	
+	# Updates scene based on recent inputs
+	#	ySelector inputs
+	if Input.is_action_just_pressed("yUp"): ySelector.moveUp(W.gridLock);
+	if Input.is_action_just_pressed("yDown"): ySelector.moveDown(W.gridLock);
+	if Input.is_action_just_pressed("yRePos"): ySelector.rePos(camLoc);
+	if Input.is_action_just_pressed("yReset"): ySelector.reset(camLoc);
+	
+	#	selectedPos adjustments
+	if selectedPos.curAim != cam.goTo: selectedPos.updateAim(cam.goTo);
+	
+	#	sceneMenu adjustments
+	if sceneMenu.camCoord != camLoc: sceneMenu.updateCoords(camLoc);
+	
 # Updates the world
 func updateWorld():
 	# Load new terrain
@@ -88,12 +98,16 @@ func objectProcess():
 ### MODE CHANGES ###
 # Changes mode to terrain
 func _on_terrainMode_button_down():
-	mode = MODETERRAIN
+	mode = W.MODETERRAIN
 
 # Changes mode to flora
 func _on_plantMode_button_down():
-	mode = MODEFLORA
+	mode = W.MODEFLORA
 
 # Changes mode to object
 func _on_objectMode_button_down():
-	mode = MODEOBJECT
+	mode = W.MODEOBJECT
+
+
+func _on_sceneMenu_changeCoords():
+	cam.translation = sceneMenu.camCoord

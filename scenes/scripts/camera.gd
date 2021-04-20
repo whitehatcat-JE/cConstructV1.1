@@ -21,9 +21,13 @@ var _d = false
 var _q = false
 var _e = false
 
+# Added variables
 var goTo = Vector3()
 var shift = false
 var cntr = false
+
+# Node connections
+onready var selectorCast = $selectorCast
 
 func _input(event):
 	# Receives mouse motion
@@ -69,6 +73,11 @@ func _process(delta):
 		_update_movement(delta)
 		shift = Input.is_action_pressed("shift")
 		cntr = Input.is_action_pressed("control")
+		
+		if selectorCast.is_colliding():
+			goTo = selectorCast.get_collision_point()
+		else:
+			goTo = Vector3(1000000, 0, 0)
 
 # Updates camera movement
 func _update_movement(delta):

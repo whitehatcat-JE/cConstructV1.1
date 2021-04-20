@@ -2,11 +2,17 @@ extends Node
 
 ### ENUM DECLARATIONS ###
 enum {
+	# Terrain Enums
 	tFLAT,
 	tCLIFF,
 	tCORNER,
 	tLEDGE,
 	tTRANS,
+	
+	# World Modes
+	MODETERRAIN,
+	MODEFLORA,
+	MODEOBJECT
 }
 
 ### ASSET LOCATIONS ###
@@ -21,3 +27,17 @@ var TERRAINVARIATIONS = { #Amt of variations of tile
 	tTRANS:2
 }
 
+### UNIVERSIAL CONSTRANTS/VARIABLES ###
+# Constants
+var DEFMODE = MODETERRAIN
+var DEFGRIDDIS = 2
+var DEFRENDERDIS = 50
+
+# Grid constrants
+var gridLock = DEFGRIDDIS
+var yOffset = 0
+var xOffset = 0
+var zOffset = 0
+
+# World loading
+var renderDis =  DEFRENDERDIS

@@ -179,6 +179,7 @@ func updateHotbar():
 		$GUI/tileSelection/hotbar.get_child(slot).icon = GV.tileList[GV.hotbar[slot]][1]
  
 func _process(delta):
+	
 	$GUI/FPS.text = str(Engine.get_frames_per_second())
 	
 	GV.plrLoc = $Camera.translation

@@ -3,6 +3,7 @@ extends Control
 #Ready Variables
 onready var navHidden = ($options/hideButton.text == ">")
 onready var tileHidden = ($options/tileButton.text == ">")
+onready var sceneHidden = ($options/tileButton.text == ">")
 #Node connections
 onready var o = $output
 onready var tileMenu = $tileMenu
@@ -54,3 +55,14 @@ func _on_reloadButton_button_down():
 
 func _on_tileMenu_changeSort():
 	o.out("Sort ID: " + str(tileMenu.sortID))
+
+
+func _on_hideSceneMenu_button_down():
+	if sceneHidden:
+		o.out("Opened sceneMenu")
+		$sceneMenu/sceneTransition.play_backwards("hideSceneSettings")
+	else:
+		o.out("Closed sceneMenu")
+		$sceneMenu/sceneTransition.play("hideSceneSettings")
+	
+	sceneHidden = !sceneHidden
