@@ -18,26 +18,26 @@
 [ext_resource path="res://scenes/scripts/worldEngine/selectedPos.gd" type="Script" id=16]
 [ext_resource path="res://scenes/scripts/worldEngine/sceneMenu.gd" type="Script" id=17]
 
-[sub_resource type="SphereMesh" id=14]
+[sub_resource type="SphereMesh" id=1]
 
-[sub_resource type="SpatialMaterial" id=1]
+[sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true
 albedo_color = Color( 0.243137, 0.243137, 0.243137, 0.52549 )
 
-[sub_resource type="CubeMesh" id=2]
+[sub_resource type="CubeMesh" id=3]
 size = Vector3( 500, 0.1, 500 )
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 250, 0.05, 250 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=6]
 outline_size = 2
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
@@ -64,19 +64,19 @@ tracks/1/keys = {
 "values": [ ">", "<" ]
 }
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 size = 40
 outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=9]
 size = 64
 outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_scale")
@@ -91,21 +91,21 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0, 1 ) ]
 }
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=11]
 size = 11
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=12]
 size = 25
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=13]
 size = 100
 outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=14]
 resource_name = "hideSceneSettings"
 length = 0.2
 tracks/0/type = "value"
@@ -139,16 +139,16 @@ outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=16]
 size = 40
 outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=18]
+[sub_resource type="DynamicFont" id=17]
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=18]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_scale")
@@ -197,7 +197,7 @@ collide_with_bodies = false
 script = ExtResource( 16 )
 
 [node name="MeshInstance" type="MeshInstance" parent="selectedPos"]
-mesh = SubResource( 14 )
+mesh = SubResource( 1 )
 material/0 = null
 
 [node name="ySelector" type="Spatial" parent="."]
@@ -206,12 +206,12 @@ script = ExtResource( 15 )
 [node name="selectionPlane" type="Area" parent="ySelector"]
 
 [node name="MeshInstance" type="MeshInstance" parent="ySelector/selectionPlane"]
-material_override = SubResource( 1 )
-mesh = SubResource( 2 )
+material_override = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="ySelector/selectionPlane"]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="GUI" type="Control" parent="."]
 margin_right = 40.0
@@ -233,7 +233,7 @@ margin_top = -0.25
 margin_right = 1018.0
 margin_bottom = 26.75
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "X"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -245,7 +245,7 @@ margin_top = -0.25
 margin_right = 991.0
 margin_bottom = 26.75
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -262,7 +262,7 @@ margin_right = 66.0
 margin_bottom = 27.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -277,7 +277,7 @@ margin_right = 22.0
 margin_bottom = 63.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -292,7 +292,7 @@ margin_top = 36.0
 margin_right = 1019.0
 margin_bottom = 63.0
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -308,7 +308,7 @@ margin_top = 36.18
 margin_right = 991.0
 margin_bottom = 63.18
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -324,7 +324,7 @@ margin_top = 36.18
 margin_right = 961.579
 margin_bottom = 63.18
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -345,7 +345,7 @@ __meta__ = {
 }
 
 [node name="outputTransitions" type="AnimationPlayer" parent="GUI/output"]
-anims/shrinkOutput = SubResource( 6 )
+anims/shrinkOutput = SubResource( 7 )
 
 [node name="outputWindow" type="Sprite" parent="GUI/output"]
 self_modulate = Color( 0.54902, 0.54902, 0.54902, 0.384314 )
@@ -377,7 +377,7 @@ margin_top = 1.54601
 margin_right = 1238.0
 margin_bottom = 321.546
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 clip_text = true
 max_lines_visible = 5
@@ -393,7 +393,7 @@ margin_bottom = -1.0
 rect_rotation = -89.9999
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "<"
@@ -412,7 +412,7 @@ __meta__ = {
 margin_right = 137.0
 margin_bottom = 81.0
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "127"
 __meta__ = {
@@ -424,7 +424,7 @@ margin_top = 12.0
 margin_right = 116.0
 margin_bottom = 93.0
 rect_scale = Vector2( 0.1, 0.1 )
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "FPS"
 align = 1
@@ -443,7 +443,7 @@ __meta__ = {
 }
 
 [node name="navigationTransitions" type="AnimationPlayer" parent="GUI/navigation"]
-anims/hideNav = SubResource( 9 )
+anims/hideNav = SubResource( 10 )
 
 [node name="entitySelect" type="Button" parent="GUI/navigation"]
 margin_left = 140.0
@@ -451,7 +451,7 @@ margin_top = -13.0
 margin_right = 265.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Entity Creator"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -463,7 +463,7 @@ margin_top = 9.0
 margin_right = 68.0
 margin_bottom = 31.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 text = "Recipes"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -475,7 +475,7 @@ margin_top = 9.0
 margin_right = 124.0
 margin_bottom = 31.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 text = "Items"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -487,7 +487,7 @@ margin_top = -13.0
 margin_right = 524.0
 margin_bottom = 27.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "World Engine"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -499,7 +499,7 @@ margin_top = -13.0
 margin_right = 657.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Quest System"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -511,7 +511,7 @@ margin_top = -13.0
 margin_right = 793.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Spawn Nodes"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -528,7 +528,7 @@ margin_top = -13.0
 margin_right = 735.0
 margin_bottom = 112.0
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 13 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Item Designer"
 align = 1
@@ -546,6 +546,183 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="terrainMenu" type="Control" parent="GUI"]
+margin_left = 980.0
+margin_top = 250.0
+margin_right = 1020.0
+margin_bottom = 290.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="heightSlider" type="VSlider" parent="GUI/terrainMenu"]
+margin_left = 24.0
+margin_top = -54.0
+margin_right = 40.0
+margin_bottom = 114.0
+min_value = 1.0
+max_value = 8.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="autoPlace" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 0, 0.345098, 1, 1 )
+margin_left = 4.0
+margin_top = -54.0
+margin_right = 28.0
+margin_bottom = -30.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cliffA" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 4.0
+margin_top = -34.0
+margin_right = 28.0
+margin_bottom = -10.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cliffB" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 4.0
+margin_top = -18.0
+margin_right = 28.0
+margin_bottom = 6.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cliffC" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 4.0
+margin_top = -2.0
+margin_right = 28.0
+margin_bottom = 22.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cliffD" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 4.0
+margin_top = 14.0
+margin_right = 28.0
+margin_bottom = 38.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ledgeA" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 4.0
+margin_top = 34.0
+margin_right = 28.0
+margin_bottom = 58.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ledgeB" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 4.0
+margin_top = 50.0
+margin_right = 28.0
+margin_bottom = 74.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ledgeC" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 4.0
+margin_top = 66.0
+margin_right = 28.0
+margin_bottom = 90.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ledgeD" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 4.0
+margin_top = 82.0
+margin_right = 28.0
+margin_bottom = 106.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="transA" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
+margin_left = 4.0
+margin_top = 110.0
+margin_right = 28.0
+margin_bottom = 134.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="transB" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
+margin_left = 24.0
+margin_top = 110.0
+margin_right = 48.0
+margin_bottom = 134.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="transC" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
+margin_left = 4.0
+margin_top = 130.0
+margin_right = 28.0
+margin_bottom = 154.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="transD" type="CheckBox" parent="GUI/terrainMenu"]
+modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
+margin_left = 24.0
+margin_top = 130.0
+margin_right = 48.0
+margin_bottom = 154.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="sceneMenu" type="Control" parent="GUI"]
 margin_left = 135.0
 margin_right = 175.0
@@ -556,7 +733,7 @@ __meta__ = {
 }
 
 [node name="sceneTransition" type="AnimationPlayer" parent="GUI/sceneMenu"]
-anims/hideSceneSettings = SubResource( 16 )
+anims/hideSceneSettings = SubResource( 14 )
 
 [node name="sceneBackground" type="Sprite" parent="GUI/sceneMenu"]
 self_modulate = Color( 0.54902, 0.54902, 0.54902, 0.384314 )
@@ -606,7 +783,7 @@ margin_top = 528.0
 margin_right = 1249.0
 margin_bottom = 617.0
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 16 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Render Distance:"
 align = 2
@@ -622,7 +799,7 @@ margin_top = 528.0
 margin_right = 1047.0
 margin_bottom = 559.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 17 )
 placeholder_text = "50"
 caret_blink = true
 __meta__ = {
@@ -635,7 +812,7 @@ margin_top = 544.0
 margin_right = 1249.0
 margin_bottom = 633.0
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 16 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Gridlock:"
 align = 2
@@ -651,7 +828,7 @@ margin_top = 544.0
 margin_right = 1047.0
 margin_bottom = 575.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 17 )
 placeholder_text = "2"
 caret_blink = true
 __meta__ = {
@@ -664,7 +841,7 @@ margin_top = 564.0
 margin_right = 1047.0
 margin_bottom = 595.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 17 )
 placeholder_text = "z:0"
 caret_blink = true
 __meta__ = {
@@ -677,7 +854,7 @@ margin_top = 564.0
 margin_right = 1015.0
 margin_bottom = 595.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 17 )
 placeholder_text = "y:0"
 caret_blink = true
 __meta__ = {
@@ -690,7 +867,7 @@ margin_top = 564.0
 margin_right = 983.0
 margin_bottom = 595.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 17 )
 placeholder_text = "x:0"
 caret_blink = true
 __meta__ = {
@@ -703,7 +880,7 @@ margin_top = 580.0
 margin_right = 1047.0
 margin_bottom = 611.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 17 )
 placeholder_text = "oz:0"
 caret_blink = true
 __meta__ = {
@@ -716,7 +893,7 @@ margin_top = 580.0
 margin_right = 1015.0
 margin_bottom = 611.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 17 )
 placeholder_text = "oy:0"
 caret_blink = true
 __meta__ = {
@@ -729,7 +906,7 @@ margin_top = 580.0
 margin_right = 983.0
 margin_bottom = 611.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 17 )
 placeholder_text = "ox:0"
 caret_blink = true
 __meta__ = {
@@ -744,7 +921,7 @@ margin_bottom = 559.0
 rect_rotation = -180.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -765,7 +942,7 @@ __meta__ = {
 }
 
 [node name="tileTransitions" type="AnimationPlayer" parent="GUI/tileMenu"]
-anims/hideTiles = SubResource( 13 )
+anims/hideTiles = SubResource( 18 )
 
 [node name="backdrop" type="Sprite" parent="GUI/tileMenu"]
 self_modulate = Color( 0.54902, 0.54902, 0.54902, 0.384314 )
@@ -834,6 +1011,20 @@ environment = ExtResource( 14 )
 [connection signal="button_down" from="GUI/options/plantMode" to="." method="_on_plantMode_button_down"]
 [connection signal="button_down" from="GUI/options/objectMode" to="." method="_on_objectMode_button_down"]
 [connection signal="button_down" from="GUI/output/hideOutput" to="GUI/output" method="_on_hideOutput_button_down"]
+[connection signal="value_changed" from="GUI/terrainMenu/heightSlider" to="." method="_on_heightSlider_value_changed"]
+[connection signal="toggled" from="GUI/terrainMenu/autoPlace" to="." method="_on_autoPlace_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/cliffA" to="." method="_on_cliffA_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/cliffB" to="." method="_on_cliffB_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/cliffC" to="." method="_on_cliffC_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/cliffD" to="." method="_on_cliffD_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/ledgeA" to="." method="_on_ledgeA_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/ledgeB" to="." method="_on_ledgeB_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/ledgeC" to="." method="_on_ledgeC_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/ledgeD" to="." method="_on_ledgeD_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/transA" to="." method="_on_transA_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/transB" to="." method="_on_transB_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/transC" to="." method="_on_transC_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/transD" to="." method="_on_transD_toggled"]
 [connection signal="changeCoords" from="GUI/sceneMenu" to="." method="_on_sceneMenu_changeCoords"]
 [connection signal="text_entered" from="GUI/sceneMenu/renderDisInput" to="GUI/sceneMenu" method="_on_renderDisInput_text_entered"]
 [connection signal="text_entered" from="GUI/sceneMenu/gridLockInput" to="GUI/sceneMenu" method="_on_gridLockInput_text_entered"]

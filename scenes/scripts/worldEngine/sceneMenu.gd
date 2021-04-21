@@ -50,8 +50,8 @@ func _on_renderDisInput_text_entered(new_text):
 
 func _on_gridLockInput_text_entered(new_text):
 	if checkInt(new_text):
-		if new_text != "0": W.gridLock = int(new_text);
-		else: W.gridLock = int(new_text) + 0.01;
+		if new_text != "0": W.gridLock = float(new_text);
+		else: W.gridLock = float(new_text) + 0.01;
 	
 	gridLockInput.text = ""
 	gridLockInput.placeholder_text = new_text
@@ -88,7 +88,6 @@ func _on_xCoord_text_entered(new_text):
 	xCoord.release_focus()
 	emit_signal("changeCoords")
 
-
 func _on_xOffset_text_entered(new_text):
 	if checkInt(new_text):
 		W.xOffset = int(new_text)
@@ -98,7 +97,6 @@ func _on_xOffset_text_entered(new_text):
 	
 	xOffset.release_focus()
 
-
 func _on_yOffset_text_entered(new_text):
 	if checkInt(new_text):
 		W.yOffset = int(new_text)
@@ -107,7 +105,6 @@ func _on_yOffset_text_entered(new_text):
 	yOffset.placeholder_text = "oy:" + new_text
 	
 	yOffset.release_focus()
-
 
 func _on_zOffset_text_entered(new_text):
 	if checkInt(new_text):

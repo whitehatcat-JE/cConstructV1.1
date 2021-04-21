@@ -16,6 +16,7 @@ enum {
 }
 
 ### ASSET LOCATIONS ###
+var loaded = {}
 # Terrain
 var OBJTYPE = ".obj"
 var TERRAINFOLDER = "res://assets/worldEngine/terrain/"

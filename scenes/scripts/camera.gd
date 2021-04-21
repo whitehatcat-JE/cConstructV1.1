@@ -57,8 +57,7 @@ func _input(event):
 			KEY_A:
 				_a = event.pressed
 			KEY_D:
-				if !Input.is_action_pressed("duplicate"):
-					_d = event.pressed
+				_d = event.pressed
 			KEY_Q:
 				_q = event.pressed
 			KEY_E:

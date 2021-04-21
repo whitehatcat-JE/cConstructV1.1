@@ -1,5 +1,6 @@
 extends Spatial
 ### SCENE SETUP ###
+# Constants
 # 	Render settings
 var tRENDER = 100 # Terrain
 var fRENDER = 35 # Flora
@@ -8,25 +9,66 @@ var oRENDER = 65 # Objects
 var UPDATEDIS = 5 # Distance before new world parts are loaded
 var fUPDATEDIS = 1 # Distance before flora is updated
 
+#	Terrain
+var MAXHEIGHT = 8
+var MINHEIGHT = 1
+
 # Variable declarations
 var mode = W.DEFMODE
+
+#	Terrain
+var height = MAXHEIGHT
+
+var autoSelect = true
+var cliffA = false
+var cliffB = false
+var cliffC = false
+var cliffD = false
+var ledgeA = false
+var ledgeB = false
+var ledgeC = false
+var ledgeD = false
+var transA = false
+var transB = false
+var transC = false
+var transD = false
+
 
 # 	World positions
 var lastLoc = Vector2(pow(10, 10), pow(10, 10)) # Y being Z
 var fLastLoc = lastLoc # For flora
 var curLoc = Vector2()
 
+var tXMatrix = {}
+var tZMatrix = {}
+var oXMatrix = {}
+var oZMatrix = {}
+
+var tTileQueue = {}
+var tTileQueueOrder = []
+var oTileQueue = {}
+var oTileQueueOrder = []
+
 #	Asset loading
-var tileCacheData = {} # ID:[type, metadata]
-var tileOrder = [] # Order in which to load tiles
+var terrainHandler = "res://scenes/terrainPieceHandler.tscn"
 
 #	Node connections
 onready var ySelector = $ySelector
 onready var selectedPos = $selectedPos
+onready var heightSlider = $GUI/terrainMenu/heightSlider
 onready var cam = $Camera
 onready var sceneMenu = $GUI/sceneMenu
+onready var o = $GUI/output
 
 ### ALLMODE CODE ###
+# Runs when scene is created
+func _ready():
+	# Asset loading
+	W.loaded["terrainHandler"] = load(terrainHandler)
+	
+	# Node updates
+	heightSlider.value = MAXHEIGHT
+
 # Runs every frame
 func _process(delta):
 	# World loading
@@ -85,7 +127,19 @@ func getObjects(x, z, render, dis):
 ### MODE PROCESSES ###
 # Terrain script for each frame
 func terrainProcess():
-	pass
+	# Input Handler
+	var isControl = Input.is_action_pressed("control")
+	
+	if Input.is_action_just_released("scroll_up") and isControl:
+		heightSlider.value = clamp(height + 1, MINHEIGHT, MAXHEIGHT)
+	if Input.is_action_just_released("scroll_down") and isControl:
+		heightSlider.value = clamp(height - 1, MINHEIGHT, MAXHEIGHT)
+	
+	
+	if Input.is_action_just_pressed("place") and Input.is_action_pressed("inWorld"):
+		var newTerrainPiece = W.loaded["terrainHandler"].instance()
+		self.add_child(newTerrainPiece)
+		newTerrainPiece.translation = selectedPos.global_transform.origin
 
 # Flora script for each frame
 func floraProcess():
@@ -111,3 +165,25 @@ func _on_objectMode_button_down():
 
 func _on_sceneMenu_changeCoords():
 	cam.translation = sceneMenu.camCoord
+
+### TERRAIN HANDLER ADJUSTMENTS ###
+func _on_heightSlider_value_changed(value):
+	height = int(value)
+	o.out("Set height: " + str(height))
+
+func _on_autoPlace_toggled(button_pressed): autoSelect = button_pressed
+
+func _on_cliffA_toggled(button_pressed): cliffA = button_pressed
+func _on_cliffB_toggled(button_pressed): cliffB = button_pressed
+func _on_cliffC_toggled(button_pressed): cliffC = button_pressed
+func _on_cliffD_toggled(button_pressed): cliffD = button_pressed
+
+func _on_ledgeA_toggled(button_pressed): ledgeA = button_pressed
+func _on_ledgeB_toggled(button_pressed): ledgeB = button_pressed
+func _on_ledgeC_toggled(button_pressed): ledgeC = button_pressed
+func _on_ledgeD_toggled(button_pressed): ledgeD = button_pressed
+
+func _on_transA_toggled(button_pressed): transA = button_pressed
+func _on_transB_toggled(button_pressed): transB = button_pressed
+func _on_transC_toggled(button_pressed): transC = button_pressed
+func _on_transD_toggled(button_pressed): transD = button_pressed
