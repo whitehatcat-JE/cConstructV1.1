@@ -137,9 +137,31 @@ func terrainProcess():
 	
 	
 	if Input.is_action_just_pressed("place") and Input.is_action_pressed("inWorld"):
-		var newTerrainPiece = W.loaded["terrainHandler"].instance()
-		self.add_child(newTerrainPiece)
-		newTerrainPiece.translation = selectedPos.global_transform.origin
+		generateTerrain()
+
+# Creates requested terrain piece
+func generateTerrain( # Required Variables
+	coord = selectedPos.global_transform.origin,
+	h = height,
+	cA = cliffA,
+	cB = cliffB,
+	cC = cliffC,
+	cD = cliffD,
+	lA = ledgeA,
+	lB = ledgeB,
+	lC = ledgeC,
+	lD = ledgeD,
+	tA = transA,
+	tB = transB,
+	tC = transC,
+	tD = transD):
+	# Feeds set info into terrainHandler
+	var newTerrainPiece = W.loaded["terrainHandler"].instance()
+	self.add_child(newTerrainPiece)
+	newTerrainPiece.translation = selectedPos.global_transform.origin
+	newTerrainPiece.manGenerate(
+		h, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD
+	)
 
 # Flora script for each frame
 func floraProcess():

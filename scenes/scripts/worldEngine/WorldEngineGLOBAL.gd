@@ -42,3 +42,17 @@ var zOffset = 0
 
 # World loading
 var renderDis =  DEFRENDERDIS
+
+### LOADING OF UNIVERSIAL ASSETS ###
+func _ready():
+	loaded["tFlat"] = load(TERRAINFOLDER + "flat" + OBJTYPE)
+	loaded["tCliff"] = load(TERRAINFOLDER + "cliffV1" + OBJTYPE)
+	loaded["tCornerA"] = load(TERRAINFOLDER + "cornerA" + OBJTYPE)
+	loaded["tCornerB"] = load(TERRAINFOLDER + "cornerB" + OBJTYPE)
+	loaded["tLedge"] = load(TERRAINFOLDER + "ledgeV1" + OBJTYPE)
+	loaded["tTransA"] = load(TERRAINFOLDER + "tTransAV1" + OBJTYPE)
+	loaded["tTransB"] = load(TERRAINFOLDER + "tTransBv1" + OBJTYPE)
+	
+	loaded["cGreen"] = load("res://materials/green.tres")
+	loaded["cGrey"] = load("res://materials/grey.tres")
+	loaded["cBrown"] = load("res://materials/brown.tres")

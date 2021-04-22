@@ -201,9 +201,11 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="ySelector" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 0, 0 )
 script = ExtResource( 15 )
 
 [node name="selectionPlane" type="Area" parent="ySelector"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="ySelector/selectionPlane"]
 material_override = SubResource( 2 )
