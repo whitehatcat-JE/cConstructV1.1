@@ -1,0 +1,20 @@
+SQL Queries needed:
+Adding terrain:
+	Add piece to dataPointID
+	For each feature:
+		Check if feature in featureCodes, else add feature
+		Add featureID to dataPointID
+	Add stair data if any
+
+Removing terrain:
+	Delete piece from dataPointID (storing ID temporarily)
+	Delete dataPointID from featureIDs
+	Delete stair data if any
+
+Cleaning DB:
+	Delete any featureCodes not associated with any dataPointIDs
+
+Retrieving needed terrain:
+	Get dataPointIDs that match coordinate parameters
+	Merge featureIDs with featureCodes where dataPointID in previous query and send new table
+	Get any stair data
