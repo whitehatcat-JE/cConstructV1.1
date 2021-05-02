@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://scenes/scripts/worldEngine/ySelector.gd" type="Script" id=15]
 [ext_resource path="res://scenes/scripts/worldEngine/selectedPos.gd" type="Script" id=16]
 [ext_resource path="res://scenes/scripts/worldEngine/sceneMenu.gd" type="Script" id=17]
+[ext_resource path="res://scenes/MultiMeshInstance.gd" type="Script" id=18]
 
 [sub_resource type="SphereMesh" id=1]
 
@@ -174,6 +175,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [ true, false ]
 }
+
+[sub_resource type="SpatialMaterial" id=19]
+albedo_color = Color( 0.0901961, 0.309804, 0.886275, 1 )
+
+[sub_resource type="CubeMesh" id=20]
+size = Vector3( 0.1, 0.3, 0.1 )
+
+[sub_resource type="MultiMesh" id=21]
+transform_format = 1
+instance_count = 1
+mesh = SubResource( 20 )
+transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="worldEngineV2" type="Spatial"]
 script = ExtResource( 6 )
@@ -1005,6 +1018,15 @@ __meta__ = {
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 14 )
+
+[node name="Spatial" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.6, 0 )
+
+[node name="MultiMeshInstance" type="MultiMeshInstance" parent="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1, 0 )
+material_override = SubResource( 19 )
+multimesh = SubResource( 21 )
+script = ExtResource( 18 )
 [connection signal="button_down" from="GUI/options/exitButton" to="GUI" method="_on_exitButton_button_down"]
 [connection signal="button_down" from="GUI/options/reloadButton" to="GUI" method="_on_reloadButton_button_down"]
 [connection signal="button_down" from="GUI/options/hideButton" to="GUI" method="_on_hideButton_button_down"]

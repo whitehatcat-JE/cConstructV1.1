@@ -21,7 +21,6 @@ func _process(delta):
 		if !dead:
 			fallen = false
 			$sprite.translate(loc - $sprite.translation + Vector3(GV.plrLoc.x, round(GV.plrLoc.y), GV.plrLoc.z))
-			$spawn.play("spawn")
 			$sprite.frame = 0
 			$sprite.playing = false
 			$sprite/floorDetect.enabled = true
