@@ -126,7 +126,7 @@ func genMesh(type, autoParent = true):
 func genFloor():
 	var parentFloor #Setup parent variable
 	# Checks if floor is flat (Either all or none as trans)
-	if !(transA and !transB and !transC and !transD):
+	if !transA and !transB and !transC and !transD:
 		parentFloor = genMesh("tFlat")
 		parentFloor.material_override = W.loaded[color]
 	elif transA and transB and transC and transD:
@@ -142,40 +142,78 @@ func genFloor():
 		# a corner and 3er use the same model, the 3er just inverted
 		if transCount == 1 or transCount == 3:
 			# Creates meshes
-			parentFloor = genMesh("tCornerA")
-			var childFloor = genMesh("tCornerB", parentFloor)
+			parentFloor = genMesh("tCornerB")
+			var childFloor = genMesh("tCornerA", parentFloor)
+			childFloor.translation = Vector3(0, 1.6 * displacement / 2, 0)
+			childFloor.scale = Vector3(1, 0.125 * height, 1)
 			# Applies colors
 			if transCount == 1: 
 				parentFloor.material_override = W.loaded[color]
 				childFloor.material_override = W.loaded[colorTrans]
+				# Rotates the mesh to match trans position
+				if transA: 
+					parentFloor.rotation_degrees.y = 0
+					childFloor.rotation_degrees.y = 0
+				elif transB: 
+					parentFloor.rotation_degrees.y = 270
+					childFloor.rotation_degrees.y = 270
+				elif transC: 
+					parentFloor.rotation_degrees.y = 90
+					childFloor.rotation_degrees.y = 90
+				else: 
+					parentFloor.rotation_degrees.y = 180
+					childFloor.rotation_degrees.y = 180
 			else: # Inverts colors if 3er
 				parentFloor.material_override = W.loaded[colorTrans]
 				childFloor.material_override = W.loaded[color]
-				
-			# Rotates the mesh to match trans position
-			if transA: parentFloor.rotation_degrees.y = 0;
-			elif transB: parentFloor.rotation_degrees.y = 90;
-			elif transC: parentFloor.rotation_degrees.y = 180;
-			elif transD: parentFloor.rotation_degrees.y = 270;
+				# Rotates the mesh to match trans position
+				if !transA: 
+					parentFloor.rotation_degrees.y = 0
+					childFloor.rotation_degrees.y = 0
+				elif !transB: 
+					parentFloor.rotation_degrees.y = 270
+					childFloor.rotation_degrees.y = 270
+				elif !transC: 
+					parentFloor.rotation_degrees.y = 90
+					childFloor.rotation_degrees.y = 90
+				else: 
+					parentFloor.rotation_degrees.y = 180
+					childFloor.rotation_degrees.y = 180
 		
 		else:
-			if ((transA and transC) or (transB and transD)): # Checks if the 2 trans are opp each other
+			if transA == transD: # Checks if the 2 trans are opp each other
 				# Creates mesh
 				parentFloor = genMesh("tOppCornerA")
 				parentFloor.material_override = W.loaded[color]
 				var childFloor = genMesh("tOppCornerB", parentFloor)
 				childFloor.material_override = W.loaded[colorTrans]
+				childFloor.translation = Vector3(0, 1.6 * displacement / 2, 0)
+				childFloor.scale = Vector3(1, 0.125 * height, 1)
+				
 				# Rotates mesh to correct trans locations
-				if transB: parentFloor.rotation_degrees.y = 180;
+				if transA:
+					parentFloor.rotation_degrees.y = 90
+					childFloor.rotation_degrees.y = 90
 			else: # Else they must be adjucent
 				# Creates and positions edge
 				parentFloor = genMesh("tEdgeA")
 				parentFloor.material_override = W.loaded[color]
 				var childFloor = genMesh("tEdgeB", parentFloor)
 				childFloor.material_override = W.loaded[colorTrans]
+				childFloor.translation = Vector3(0, 1.6 * displacement / 2, 0)
+				childFloor.scale = Vector3(1, 0.125 * height, 1)
 				
-				if transB and transC: parentFloor.rotation_degrees.y = 90;
-				elif transC and transD: parentFloor.rotation_degrees.y = 180;
-				elif transD and transA: parentFloor.rotation_degrees.y = 270;
+				if transA and transB:
+					parentFloor.rotation_degrees.y = 90
+					childFloor.rotation_degrees.y = 90
+				if transA and transC:
+					parentFloor.rotation_degrees.y = 180
+					childFloor.rotation_degrees.y = 180
+				elif transB and transD:
+					parentFloor.rotation_degrees.y = 0
+					childFloor.rotation_degrees.y = 0
+				elif transC and transD:
+					parentFloor.rotation_degrees.y = 270
+					childFloor.rotation_degrees.y = 270
 		
 	return parentFloor
