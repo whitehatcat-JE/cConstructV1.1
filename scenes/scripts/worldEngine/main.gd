@@ -160,7 +160,7 @@ func generateTerrain( # Required Variables
 	self.add_child(newTerrainPiece)
 	newTerrainPiece.translation = selectedPos.global_transform.origin
 	newTerrainPiece.manGenerate(
-		h, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD
+		h, "cGreen", "cBrown", "cGrey", cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, 0, 0, 0
 	)
 
 # Flora script for each frame

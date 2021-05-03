@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -20,6 +20,12 @@
 [ext_resource path="res://scenes/MultiMeshInstance.gd" type="Script" id=18]
 
 [sub_resource type="SphereMesh" id=1]
+
+[sub_resource type="CubeMesh" id=22]
+size = Vector3( 2, 0.2, 0.2 )
+
+[sub_resource type="SpatialMaterial" id=23]
+albedo_color = Color( 0.360784, 0.4, 1, 1 )
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true
@@ -213,6 +219,11 @@ script = ExtResource( 16 )
 mesh = SubResource( 1 )
 material/0 = null
 
+[node name="MeshInstance2" type="MeshInstance" parent="selectedPos"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55, 0, 0 )
+mesh = SubResource( 22 )
+material/0 = SubResource( 23 )
+
 [node name="ySelector" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 0, 0 )
 script = ExtResource( 15 )
@@ -221,6 +232,7 @@ script = ExtResource( 15 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="ySelector/selectionPlane"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, -0.05, 0 )
 material_override = SubResource( 2 )
 mesh = SubResource( 3 )
 material/0 = null
@@ -584,10 +596,10 @@ __meta__ = {
 
 [node name="autoPlace" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 0, 0.345098, 1, 1 )
-margin_left = 4.0
-margin_top = -54.0
-margin_right = 28.0
-margin_bottom = -30.0
+margin_left = 20.0
+margin_top = 114.0
+margin_right = 44.0
+margin_bottom = 138.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -596,10 +608,10 @@ __meta__ = {
 
 [node name="cliffA" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = 4.0
-margin_top = -34.0
-margin_right = 28.0
-margin_bottom = -10.0
+margin_left = -20.0
+margin_top = 126.0
+margin_right = 4.0
+margin_bottom = 150.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -608,10 +620,10 @@ __meta__ = {
 
 [node name="cliffB" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = 4.0
-margin_top = -18.0
-margin_right = 28.0
-margin_bottom = 6.0
+margin_left = 16.3986
+margin_top = 162.0
+margin_right = 40.3986
+margin_bottom = 186.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -620,10 +632,9 @@ __meta__ = {
 
 [node name="cliffC" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = 4.0
-margin_top = -2.0
-margin_right = 28.0
-margin_bottom = 22.0
+margin_top = 178.0
+margin_right = 24.0
+margin_bottom = 202.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -632,10 +643,10 @@ __meta__ = {
 
 [node name="cliffD" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = 4.0
-margin_top = 14.0
-margin_right = 28.0
-margin_bottom = 38.0
+margin_left = -36.0
+margin_top = 142.0
+margin_right = -12.0
+margin_bottom = 166.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -644,10 +655,9 @@ __meta__ = {
 
 [node name="ledgeA" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 1, 0, 0, 1 )
-margin_left = 4.0
-margin_top = 34.0
-margin_right = 28.0
-margin_bottom = 58.0
+margin_top = 126.0
+margin_right = 24.0
+margin_bottom = 150.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -656,10 +666,10 @@ __meta__ = {
 
 [node name="ledgeB" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 1, 0, 0, 1 )
-margin_left = 4.0
-margin_top = 50.0
-margin_right = 28.0
-margin_bottom = 74.0
+margin_left = 16.0
+margin_top = 142.0
+margin_right = 40.0
+margin_bottom = 166.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -668,10 +678,10 @@ __meta__ = {
 
 [node name="ledgeC" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 1, 0, 0, 1 )
-margin_left = 4.0
-margin_top = 66.0
-margin_right = 28.0
-margin_bottom = 90.0
+margin_left = -20.4442
+margin_top = 178.0
+margin_right = 3.55585
+margin_bottom = 202.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -680,10 +690,10 @@ __meta__ = {
 
 [node name="ledgeD" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 1, 0, 0, 1 )
-margin_left = 4.0
-margin_top = 82.0
-margin_right = 28.0
-margin_bottom = 106.0
+margin_left = -36.0
+margin_top = 162.0
+margin_right = -12.0
+margin_bottom = 186.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -692,10 +702,10 @@ __meta__ = {
 
 [node name="transA" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = 4.0
-margin_top = 110.0
-margin_right = 28.0
-margin_bottom = 134.0
+margin_left = -20.0
+margin_top = 142.0
+margin_right = 4.0
+margin_bottom = 166.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -704,10 +714,9 @@ __meta__ = {
 
 [node name="transB" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = 24.0
-margin_top = 110.0
-margin_right = 48.0
-margin_bottom = 134.0
+margin_top = 142.0
+margin_right = 24.0
+margin_bottom = 166.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -716,10 +725,10 @@ __meta__ = {
 
 [node name="transC" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = 4.0
-margin_top = 130.0
-margin_right = 28.0
-margin_bottom = 154.0
+margin_left = -20.0
+margin_top = 162.0
+margin_right = 4.0
+margin_bottom = 186.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -728,10 +737,9 @@ __meta__ = {
 
 [node name="transD" type="CheckBox" parent="GUI/terrainMenu"]
 modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = 24.0
-margin_top = 130.0
-margin_right = 48.0
-margin_bottom = 154.0
+margin_top = 162.0
+margin_right = 24.0
+margin_bottom = 186.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
@@ -1018,6 +1026,10 @@ __meta__ = {
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 14 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment"]
+transform = Transform( 0.559193, 0.59636, -0.575898, 0, 0.694658, 0.71934, 0.829038, -0.40225, 0.388448, 0, 4.1, 0 )
+shadow_enabled = true
 
 [node name="Spatial" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.6, 0 )

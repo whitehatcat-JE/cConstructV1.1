@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/oppCornerA.obj-46f553f85e443c68ed87736e329ff31f.mesh"
+
+[deps]
+
+files=[ "res://.import/oppCornerA.obj-46f553f85e443c68ed87736e329ff31f.mesh" ]
+
+source_file="res://assets/worldEngine/terrain/oppCornerA.obj"
+dest_files=[ "res://.import/oppCornerA.obj-46f553f85e443c68ed87736e329ff31f.mesh", "res://.import/oppCornerA.obj-46f553f85e443c68ed87736e329ff31f.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

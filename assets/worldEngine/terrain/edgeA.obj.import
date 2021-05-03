@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/edgeA.obj-1646218994c905abbc81d8af0d939bdb.mesh"
+
+[deps]
+
+files=[ "res://.import/edgeA.obj-1646218994c905abbc81d8af0d939bdb.mesh" ]
+
+source_file="res://assets/worldEngine/terrain/edgeA.obj"
+dest_files=[ "res://.import/edgeA.obj-1646218994c905abbc81d8af0d939bdb.mesh", "res://.import/edgeA.obj-1646218994c905abbc81d8af0d939bdb.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
