@@ -11,7 +11,8 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 
 #	Terrain
 var MAXHEIGHT = 8
-var MINHEIGHT = 1
+var MINHEIGHT = 0
+var MAXSTAIRS = 4
 
 # Variable declarations
 var mode = W.DEFMODE
@@ -32,6 +33,12 @@ var transA = false
 var transB = false
 var transC = false
 var transD = false
+var stairsA = 0
+var stairsB = 0
+var stairsC = 0
+var stairsD = 0
+
+var bSnap = [] # Snapshot of buttons before entering world, used to fix bug on right click
 
 
 # 	World positions
@@ -58,6 +65,7 @@ onready var selectedPos = $selectedPos
 onready var heightSlider = $GUI/terrainMenu/heightSlider
 onready var cam = $Camera
 onready var sceneMenu = $GUI/sceneMenu
+onready var terrainMenu = $GUI/terrainMenu
 onready var o = $GUI/output
 
 ### ALLMODE CODE ###
@@ -135,6 +143,12 @@ func terrainProcess():
 	if Input.is_action_just_released("scroll_down") and isControl:
 		heightSlider.value = clamp(height - 1, MINHEIGHT, MAXHEIGHT)
 	
+	if Input.is_action_just_pressed("inWorld"):
+		terrainMenu.set_position(Vector2(100000, 100000))
+		terrainMenu.switchDisabled()
+	elif Input.is_action_just_released("inWorld"):
+		terrainMenu.set_position(Vector2(980, 250)) #DEF POS (NEED TO TURN TO CONSTANT)
+		terrainMenu.switchDisabled()
 	
 	if Input.is_action_just_pressed("place") and Input.is_action_pressed("inWorld"):
 		generateTerrain()
@@ -193,19 +207,25 @@ func _on_heightSlider_value_changed(value):
 	height = int(value)
 	o.out("Set height: " + str(height))
 
-func _on_autoPlace_toggled(button_pressed): autoSelect = button_pressed
+func _on_autoPlace_toggled(button_pressed): autoSelect = button_pressed;
 
-func _on_cliffA_toggled(button_pressed): cliffA = button_pressed
-func _on_cliffB_toggled(button_pressed): cliffB = button_pressed
-func _on_cliffC_toggled(button_pressed): cliffC = button_pressed
-func _on_cliffD_toggled(button_pressed): cliffD = button_pressed
+func _on_cliffA_toggled(button_pressed): cliffA = button_pressed;
+func _on_cliffB_toggled(button_pressed): cliffB = button_pressed;
+func _on_cliffC_toggled(button_pressed): cliffC = button_pressed;
+func _on_cliffD_toggled(button_pressed): cliffD = button_pressed;
 
-func _on_ledgeA_toggled(button_pressed): ledgeA = button_pressed
-func _on_ledgeB_toggled(button_pressed): ledgeB = button_pressed
-func _on_ledgeC_toggled(button_pressed): ledgeC = button_pressed
-func _on_ledgeD_toggled(button_pressed): ledgeD = button_pressed
+func _on_ledgeA_toggled(button_pressed): ledgeA = button_pressed;
+func _on_ledgeB_toggled(button_pressed): ledgeB = button_pressed;
+func _on_ledgeC_toggled(button_pressed): ledgeC = button_pressed;
+func _on_ledgeD_toggled(button_pressed): ledgeD = button_pressed;
 
-func _on_transA_toggled(button_pressed): transA = button_pressed
-func _on_transB_toggled(button_pressed): transB = button_pressed
-func _on_transC_toggled(button_pressed): transC = button_pressed
-func _on_transD_toggled(button_pressed): transD = button_pressed
+func _on_transA_toggled(button_pressed): transA = button_pressed;
+func _on_transB_toggled(button_pressed): transB = button_pressed;
+func _on_transC_toggled(button_pressed): transC = button_pressed;
+func _on_transD_toggled(button_pressed): transD = button_pressed;
+
+
+func _on_stairsA_value_changed(value): stairsA = value;
+func _on_stairsB_value_changed(value): stairsB = value;
+func _on_stairsC_value_changed(value): stairsC = MAXSTAIRS - value;
+func _on_stairsD_value_changed(value): stairsD = MAXSTAIRS - value;

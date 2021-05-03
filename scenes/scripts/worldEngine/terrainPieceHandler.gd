@@ -64,54 +64,55 @@ func reloadPiece():
 		child.queue_free()
 	currentChildren.clear()
 	
-	# Creates floor
-	var newFloor = genFloor()
-	newFloor.scale = Vector3(1, 0.125 * height, 1)
-	newFloor.translation = Vector3(0, 1.6 * displacement / 2, 0)
-	
-	# Creates cliffs
-	if cliffA:
-		var newCliff = genMesh("tCliff")
-		newCliff.translation = Vector3(FEATUREDISTANCE, curFeatureHeight, 0)
-		newCliff.rotation_degrees.y = 180
-		newCliff.material_override = W.loaded[colorCliff]
-	if cliffB:
-		var newCliff = genMesh("tCliff")
-		newCliff.translation = Vector3(0, curFeatureHeight, FEATUREDISTANCE)
-		newCliff.rotation_degrees.y = 90
-		newCliff.material_override = W.loaded[colorCliff]
-	if cliffC:
-		var newCliff = genMesh("tCliff")
-		newCliff.translation = Vector3(-FEATUREDISTANCE, curFeatureHeight, 0)
-		newCliff.rotation_degrees.y = 0
-		newCliff.material_override = W.loaded[colorCliff]
-	if cliffD:
-		var newCliff = genMesh("tCliff")
-		newCliff.translation = Vector3(0, curFeatureHeight, -FEATUREDISTANCE)
-		newCliff.rotation_degrees.y = 270
-		newCliff.material_override = W.loaded[colorCliff]
-	
-	# Creates ledges
-	if ledgeA:
-		var newLedge = genMesh("tLedge")
-		newLedge.translation = Vector3(FEATUREDISTANCE, curFeatureHeight, 0)
-		newLedge.rotation_degrees.y = 180
-		newLedge.material_override = W.loaded[color]
-	if ledgeB:
-		var newLedge = genMesh("tLedge")
-		newLedge.translation = Vector3(0, curFeatureHeight, FEATUREDISTANCE)
-		newLedge.rotation_degrees.y = 90
-		newLedge.material_override = W.loaded[color]
-	if ledgeC:
-		var newLedge = genMesh("tLedge")
-		newLedge.translation = Vector3(-FEATUREDISTANCE, curFeatureHeight, 0)
-		newLedge.rotation_degrees.y = 0
-		newLedge.material_override = W.loaded[color]
-	if ledgeD:
-		var newLedge = genMesh("tLedge")
-		newLedge.translation = Vector3(0, curFeatureHeight, -FEATUREDISTANCE)
-		newLedge.rotation_degrees.y = 270
-		newLedge.material_override = W.loaded[color]
+	if height != 0:
+		# Creates floor
+		var newFloor = genFloor()
+		newFloor.scale = Vector3(1, 0.125 * height, 1)
+		newFloor.translation = Vector3(0, 1.6 * displacement / 2, 0)
+		
+		# Creates cliffs
+		if cliffA:
+			var newCliff = genMesh("tCliff")
+			newCliff.translation = Vector3(FEATUREDISTANCE, curFeatureHeight, 0)
+			newCliff.rotation_degrees.y = 180
+			newCliff.material_override = W.loaded[colorCliff]
+		if cliffB:
+			var newCliff = genMesh("tCliff")
+			newCliff.translation = Vector3(0, curFeatureHeight, FEATUREDISTANCE)
+			newCliff.rotation_degrees.y = 90
+			newCliff.material_override = W.loaded[colorCliff]
+		if cliffC:
+			var newCliff = genMesh("tCliff")
+			newCliff.translation = Vector3(-FEATUREDISTANCE, curFeatureHeight, 0)
+			newCliff.rotation_degrees.y = 0
+			newCliff.material_override = W.loaded[colorCliff]
+		if cliffD:
+			var newCliff = genMesh("tCliff")
+			newCliff.translation = Vector3(0, curFeatureHeight, -FEATUREDISTANCE)
+			newCliff.rotation_degrees.y = 270
+			newCliff.material_override = W.loaded[colorCliff]
+		
+		# Creates ledges
+		if ledgeA:
+			var newLedge = genMesh("tLedge")
+			newLedge.translation = Vector3(FEATUREDISTANCE, curFeatureHeight, 0)
+			newLedge.rotation_degrees.y = 180
+			newLedge.material_override = W.loaded[color]
+		if ledgeB:
+			var newLedge = genMesh("tLedge")
+			newLedge.translation = Vector3(0, curFeatureHeight, FEATUREDISTANCE)
+			newLedge.rotation_degrees.y = 90
+			newLedge.material_override = W.loaded[color]
+		if ledgeC:
+			var newLedge = genMesh("tLedge")
+			newLedge.translation = Vector3(-FEATUREDISTANCE, curFeatureHeight, 0)
+			newLedge.rotation_degrees.y = 0
+			newLedge.material_override = W.loaded[color]
+		if ledgeD:
+			var newLedge = genMesh("tLedge")
+			newLedge.translation = Vector3(0, curFeatureHeight, -FEATUREDISTANCE)
+			newLedge.rotation_degrees.y = 270
+			newLedge.material_override = W.loaded[color]
 
 # Creates a mesh as child of terrainPieceHandler
 func genMesh(type, autoParent = true):
@@ -202,7 +203,7 @@ func genFloor():
 				childFloor.material_override = W.loaded[colorTrans]
 				childFloor.translation = Vector3(0, 1.6 * displacement / 2, 0)
 				childFloor.scale = Vector3(1, 0.125 * height, 1)
-				
+				# Rotates edge
 				if transA and transB:
 					parentFloor.rotation_degrees.y = 90
 					childFloor.rotation_degrees.y = 90
