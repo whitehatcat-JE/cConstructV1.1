@@ -38,8 +38,7 @@ var stairsB = 0
 var stairsC = 0
 var stairsD = 0
 
-var bSnap = [] # Snapshot of buttons before entering world, used to fix bug on right click
-
+var terrainMenuLocked = false
 
 # 	World positions
 var lastLoc = Vector2(pow(10, 10), pow(10, 10)) # Y being Z
@@ -66,6 +65,7 @@ onready var heightSlider = $GUI/terrainMenu/heightSlider
 onready var cam = $Camera
 onready var sceneMenu = $GUI/sceneMenu
 onready var terrainMenu = $GUI/terrainMenu
+onready var terrainMenuPivot = $GUI/terrainMenu/pivot
 onready var o = $GUI/output
 
 ### ALLMODE CODE ###
@@ -148,6 +148,7 @@ func terrainProcess():
 		terrainMenu.switchDisabled()
 	elif Input.is_action_just_released("inWorld"):
 		terrainMenu.set_position(Vector2(980, 250)) #DEF POS (NEED TO TURN TO CONSTANT)
+		if !terrainMenuLocked: terrainMenuPivot.rotation_degrees = cam.rotation_degrees.y + 90;
 		terrainMenu.switchDisabled()
 	
 	if Input.is_action_just_pressed("place") and Input.is_action_pressed("inWorld"):
@@ -168,13 +169,17 @@ func generateTerrain( # Required Variables
 	tA = transA,
 	tB = transB,
 	tC = transC,
-	tD = transD):
+	tD = transD,
+	sA = stairsA,
+	sB = stairsB,
+	sC = stairsC,
+	sD = stairsD):
 	# Feeds set info into terrainHandler
 	var newTerrainPiece = W.loaded["terrainHandler"].instance()
 	self.add_child(newTerrainPiece)
 	newTerrainPiece.translation = selectedPos.global_transform.origin
 	newTerrainPiece.manGenerate(
-		h, "cGreen", "cBrown", "cGrey", cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, 0, 0, 0
+		h, "cGreen", "cBrown", "cGrey", cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD
 	)
 
 # Flora script for each frame
@@ -229,3 +234,11 @@ func _on_stairsA_value_changed(value): stairsA = value;
 func _on_stairsB_value_changed(value): stairsB = value;
 func _on_stairsC_value_changed(value): stairsC = MAXSTAIRS - value;
 func _on_stairsD_value_changed(value): stairsD = MAXSTAIRS - value;
+
+
+func _on_lockTerrainMenu_toggled(button_pressed):
+	terrainMenuLocked = button_pressed
+	if terrainMenuLocked: 
+		terrainMenuPivot.rotation_degrees = 0
+	else:
+		terrainMenuPivot.rotation_degrees = cam.rotation_degrees.y + 90

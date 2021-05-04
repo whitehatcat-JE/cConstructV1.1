@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -19,6 +19,8 @@
 [ext_resource path="res://scenes/scripts/worldEngine/sceneMenu.gd" type="Script" id=17]
 [ext_resource path="res://scenes/MultiMeshInstance.gd" type="Script" id=18]
 [ext_resource path="res://scenes/scripts/worldEngine/terrainMenu.gd" type="Script" id=19]
+[ext_resource path="res://assets/GUI/lock.png" type="Texture" id=20]
+[ext_resource path="res://assets/GUI/unlocked.png" type="Texture" id=21]
 
 [sub_resource type="SphereMesh" id=1]
 
@@ -361,6 +363,19 @@ position = Vector2( 11.6875, 13.5524 )
 scale = Vector2( 0.0725731, 0.0725731 )
 texture = ExtResource( 13 )
 
+[node name="lockTerrainMenu" type="CheckBox" parent="GUI/options"]
+margin_left = 1000.0
+margin_top = 68.0
+margin_right = 1212.0
+margin_bottom = 274.0
+rect_scale = Vector2( 0.1, 0.1 )
+custom_icons/checked = ExtResource( 20 )
+custom_icons/unchecked = ExtResource( 21 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="output" type="Control" parent="GUI"]
 margin_left = 20.0
 margin_top = -38.664
@@ -595,167 +610,170 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="autoPlace" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="pivot" type="Node2D" parent="GUI/terrainMenu"]
+position = Vector2( -468, 54 )
+
+[node name="autoPlace" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 0, 0.345098, 1, 1 )
-margin_left = -480.0
-margin_top = 42.0
-margin_right = -456.0
-margin_bottom = 66.0
+margin_left = -12.0
+margin_top = -12.0
+margin_right = 12.0
+margin_bottom = 12.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="cliffA" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="cliffA" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = -496.0
-margin_top = 10.0
-margin_right = -472.0
-margin_bottom = 34.0
+margin_left = -28.0
+margin_top = -44.0
+margin_right = -4.0
+margin_bottom = -20.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="cliffB" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="cliffB" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = -447.601
-margin_top = 58.0
-margin_right = -423.601
-margin_bottom = 82.0
+margin_left = 20.399
+margin_top = 4.0
+margin_right = 44.399
+margin_bottom = 28.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="cliffC" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="cliffC" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = -464.0
-margin_top = 74.0
-margin_right = -440.0
-margin_bottom = 98.0
+margin_left = 4.0
+margin_top = 20.0
+margin_right = 28.0
+margin_bottom = 44.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="cliffD" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="cliffD" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = -512.0
-margin_top = 26.0
-margin_right = -488.0
-margin_bottom = 50.0
+margin_left = -44.0
+margin_top = -28.0
+margin_right = -20.0
+margin_bottom = -4.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ledgeA" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="ledgeA" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 1, 0, 0, 1 )
-margin_left = -464.0
-margin_top = 10.0
-margin_right = -440.0
-margin_bottom = 34.0
+margin_left = 4.0
+margin_top = -44.0
+margin_right = 28.0
+margin_bottom = -20.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ledgeB" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="ledgeB" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 1, 0, 0, 1 )
-margin_left = -448.0
-margin_top = 26.0
-margin_right = -424.0
-margin_bottom = 50.0
+margin_left = 20.0
+margin_top = -28.0
+margin_right = 44.0
+margin_bottom = -4.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ledgeC" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="ledgeC" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 1, 0, 0, 1 )
-margin_left = -496.444
-margin_top = 74.0
-margin_right = -472.444
-margin_bottom = 98.0
+margin_left = -28.444
+margin_top = 20.0
+margin_right = -4.444
+margin_bottom = 44.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ledgeD" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="ledgeD" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 1, 0, 0, 1 )
-margin_left = -512.0
-margin_top = 58.0
-margin_right = -488.0
-margin_bottom = 82.0
+margin_left = -44.0
+margin_top = 4.0
+margin_right = -20.0
+margin_bottom = 28.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="transA" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="transA" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = -496.0
-margin_top = 26.0
-margin_right = -472.0
-margin_bottom = 50.0
+margin_left = -28.0
+margin_top = -28.0
+margin_right = -4.0
+margin_bottom = -4.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="transB" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="transB" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = -464.0
-margin_top = 26.0
-margin_right = -440.0
-margin_bottom = 50.0
+margin_left = 4.0
+margin_top = -28.0
+margin_right = 28.0
+margin_bottom = -4.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="transC" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="transC" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = -496.0
-margin_top = 58.0
-margin_right = -472.0
-margin_bottom = 82.0
+margin_left = -28.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = 28.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="transD" type="CheckBox" parent="GUI/terrainMenu"]
+[node name="transD" type="CheckBox" parent="GUI/terrainMenu/pivot"]
 modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = -464.0
-margin_top = 58.0
-margin_right = -440.0
-margin_bottom = 82.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 28.0
+margin_bottom = 28.0
 focus_mode = 0
 enabled_focus_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="stairsA" type="VSlider" parent="GUI/terrainMenu"]
-margin_left = -476.0
-margin_top = -70.0
-margin_right = -460.0
-margin_bottom = 10.0
+[node name="stairsA" type="VSlider" parent="GUI/terrainMenu/pivot"]
+margin_left = -8.0
+margin_top = -124.0
+margin_right = 8.0
+margin_bottom = -44.0
 min_value = 1.0
 max_value = 4.0
 value = 1.0
@@ -763,11 +781,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="stairsB" type="HSlider" parent="GUI/terrainMenu"]
-margin_left = -424.0
-margin_top = 46.0
-margin_right = -344.0
-margin_bottom = 62.0
+[node name="stairsB" type="HSlider" parent="GUI/terrainMenu/pivot"]
+margin_left = 44.0
+margin_top = -8.0
+margin_right = 124.0
+margin_bottom = 8.0
 min_value = 1.0
 max_value = 4.0
 value = 1.0
@@ -775,11 +793,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="stairsC" type="VSlider" parent="GUI/terrainMenu"]
-margin_left = -476.0
-margin_top = 98.0
-margin_right = -460.0
-margin_bottom = 178.0
+[node name="stairsC" type="VSlider" parent="GUI/terrainMenu/pivot"]
+margin_left = -8.0
+margin_top = 44.0
+margin_right = 8.0
+margin_bottom = 124.0
 min_value = 1.0
 max_value = 4.0
 value = 4.0
@@ -787,11 +805,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="stairsD" type="HSlider" parent="GUI/terrainMenu"]
-margin_left = -592.0
-margin_top = 46.0
-margin_right = -512.0
-margin_bottom = 62.0
+[node name="stairsD" type="HSlider" parent="GUI/terrainMenu/pivot"]
+margin_left = -124.0
+margin_top = -8.0
+margin_right = -44.0
+margin_bottom = 8.0
 min_value = 1.0
 max_value = 4.0
 value = 4.0
@@ -1098,25 +1116,26 @@ script = ExtResource( 18 )
 [connection signal="button_down" from="GUI/options/terrainMode" to="." method="_on_terrainMode_button_down"]
 [connection signal="button_down" from="GUI/options/plantMode" to="." method="_on_plantMode_button_down"]
 [connection signal="button_down" from="GUI/options/objectMode" to="." method="_on_objectMode_button_down"]
+[connection signal="toggled" from="GUI/options/lockTerrainMenu" to="." method="_on_lockTerrainMenu_toggled"]
 [connection signal="button_down" from="GUI/output/hideOutput" to="GUI/output" method="_on_hideOutput_button_down"]
 [connection signal="value_changed" from="GUI/terrainMenu/heightSlider" to="." method="_on_heightSlider_value_changed"]
-[connection signal="toggled" from="GUI/terrainMenu/autoPlace" to="." method="_on_autoPlace_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/cliffA" to="." method="_on_cliffA_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/cliffB" to="." method="_on_cliffB_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/cliffC" to="." method="_on_cliffC_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/cliffD" to="." method="_on_cliffD_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/ledgeA" to="." method="_on_ledgeA_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/ledgeB" to="." method="_on_ledgeB_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/ledgeC" to="." method="_on_ledgeC_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/ledgeD" to="." method="_on_ledgeD_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/transA" to="." method="_on_transA_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/transB" to="." method="_on_transB_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/transC" to="." method="_on_transC_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/transD" to="." method="_on_transD_toggled"]
-[connection signal="value_changed" from="GUI/terrainMenu/stairsA" to="." method="_on_stairsA_value_changed"]
-[connection signal="value_changed" from="GUI/terrainMenu/stairsB" to="." method="_on_stairsB_value_changed"]
-[connection signal="value_changed" from="GUI/terrainMenu/stairsC" to="." method="_on_stairsC_value_changed"]
-[connection signal="value_changed" from="GUI/terrainMenu/stairsD" to="." method="_on_stairsD_value_changed"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/autoPlace" to="." method="_on_autoPlace_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/cliffA" to="." method="_on_cliffA_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/cliffB" to="." method="_on_cliffB_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/cliffC" to="." method="_on_cliffC_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/cliffD" to="." method="_on_cliffD_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/ledgeA" to="." method="_on_ledgeA_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/ledgeB" to="." method="_on_ledgeB_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/ledgeC" to="." method="_on_ledgeC_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/ledgeD" to="." method="_on_ledgeD_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/transA" to="." method="_on_transA_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/transB" to="." method="_on_transB_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/transC" to="." method="_on_transC_toggled"]
+[connection signal="toggled" from="GUI/terrainMenu/pivot/transD" to="." method="_on_transD_toggled"]
+[connection signal="value_changed" from="GUI/terrainMenu/pivot/stairsA" to="." method="_on_stairsA_value_changed"]
+[connection signal="value_changed" from="GUI/terrainMenu/pivot/stairsB" to="." method="_on_stairsB_value_changed"]
+[connection signal="value_changed" from="GUI/terrainMenu/pivot/stairsC" to="." method="_on_stairsC_value_changed"]
+[connection signal="value_changed" from="GUI/terrainMenu/pivot/stairsD" to="." method="_on_stairsD_value_changed"]
 [connection signal="changeCoords" from="GUI/sceneMenu" to="." method="_on_sceneMenu_changeCoords"]
 [connection signal="text_entered" from="GUI/sceneMenu/renderDisInput" to="GUI/sceneMenu" method="_on_renderDisInput_text_entered"]
 [connection signal="text_entered" from="GUI/sceneMenu/gridLockInput" to="GUI/sceneMenu" method="_on_gridLockInput_text_entered"]

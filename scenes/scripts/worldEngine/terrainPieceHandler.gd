@@ -19,6 +19,10 @@ var transA = false
 var transB = false
 var transC = false
 var transD = false
+var stairsA = 0
+var stairsB = 0
+var stairsC = 0
+var stairsD = 0
 var color = null
 var colorTrans = null
 var colorCliff = null
@@ -28,7 +32,7 @@ var curFeatureHeight = FEATUREHEIGHT
 # Deletes these when reloadPiece script executes
 var currentChildren = []
 # Sets variables manually
-func manGenerate(h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sC, sM, sT):
+func manGenerate(h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD):
 	height = h
 	cliffA = cA
 	cliffB = cB
@@ -42,7 +46,10 @@ func manGenerate(h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, t
 	transB = tB
 	transC = tC
 	transD = tD
-	
+	stairsA = sA
+	stairsB = sB
+	stairsC = sC
+	stairsD = sD
 	color = coA
 	colorTrans = coB
 	colorCliff = coC
@@ -64,6 +71,7 @@ func reloadPiece():
 		child.queue_free()
 	currentChildren.clear()
 	
+	# Generates the floor and features of piece
 	if height != 0:
 		# Creates floor
 		var newFloor = genFloor()
@@ -113,7 +121,20 @@ func reloadPiece():
 			newLedge.translation = Vector3(0, curFeatureHeight, -FEATUREDISTANCE)
 			newLedge.rotation_degrees.y = 270
 			newLedge.material_override = W.loaded[color]
-
+	
+	# Generates any stairs
+	if height <= 6:
+		if height <= 4:
+			if height <= 2:
+				if height == 0:
+					pass
+				else:
+					pass
+			else:
+				pass
+		else:
+			pass
+	
 # Creates a mesh as child of terrainPieceHandler
 func genMesh(type, autoParent = true):
 	var newMesh = W.loaded[type]
