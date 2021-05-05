@@ -102,26 +102,38 @@ func reloadPiece():
 			newCliff.material_override = W.loaded[colorCliff]
 		
 		# Creates ledges
-		if ledgeA:
+		if ledgeA and transA == transB:
 			var newLedge = genMesh("tLedge")
 			newLedge.translation = Vector3(FEATUREDISTANCE, curFeatureHeight, 0)
 			newLedge.rotation_degrees.y = 180
-			newLedge.material_override = W.loaded[color]
-		if ledgeB:
+			if transA and transB:
+				newLedge.material_override = W.loaded[colorTrans]
+			else:
+				newLedge.material_override = W.loaded[color]
+		if ledgeB and transB == transD:
 			var newLedge = genMesh("tLedge")
 			newLedge.translation = Vector3(0, curFeatureHeight, FEATUREDISTANCE)
 			newLedge.rotation_degrees.y = 90
-			newLedge.material_override = W.loaded[color]
-		if ledgeC:
+			if transB and transD:
+				newLedge.material_override = W.loaded[colorTrans]
+			else:
+				newLedge.material_override = W.loaded[color]
+		if ledgeC and transC == transD:
 			var newLedge = genMesh("tLedge")
 			newLedge.translation = Vector3(-FEATUREDISTANCE, curFeatureHeight, 0)
 			newLedge.rotation_degrees.y = 0
-			newLedge.material_override = W.loaded[color]
-		if ledgeD:
+			if transC and transD:
+				newLedge.material_override = W.loaded[colorTrans]
+			else:
+				newLedge.material_override = W.loaded[color]
+		if ledgeD and transA == transC:
 			var newLedge = genMesh("tLedge")
 			newLedge.translation = Vector3(0, curFeatureHeight, -FEATUREDISTANCE)
 			newLedge.rotation_degrees.y = 270
-			newLedge.material_override = W.loaded[color]
+			if transA and transC:
+				newLedge.material_override = W.loaded[colorTrans]
+			else:
+				newLedge.material_override = W.loaded[color]
 	
 	# Generates any stairs
 	if stairsA > 0:
