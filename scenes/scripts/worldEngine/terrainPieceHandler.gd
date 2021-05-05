@@ -3,6 +3,7 @@ extends Spatial
 # Constants
 var FEATUREDISTANCE = 3.2
 var FEATUREHEIGHT = 1.6
+var STAIRWIDTH = 0.8
 var DEFCLIFFCOLOR = "cGrey"
 #var 
 # Terrain Variables
@@ -123,18 +124,33 @@ func reloadPiece():
 			newLedge.material_override = W.loaded[color]
 	
 	# Generates any stairs
-	if height <= 6:
-		if height <= 4:
-			if height <= 2:
-				if height == 0:
-					pass
-				else:
-					pass
-			else:
-				pass
-		else:
-			pass
-	
+	if stairsA == 3 and height <= 5:
+		var newStair = genMesh("tFlat")
+		newStair.scale = Vector3(1, 0.375, 0.25)
+		newStair.translation = Vector3(0, 3.2*(0.125*(height + 1.5)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
+		newStair.material_override = W.loaded[color]
+		newStair = genMesh("tFlat")
+		newStair.scale = Vector3(1, 0.25, 0.25)
+		newStair.translation = Vector3(0, 3.2*(0.125*(height + 1)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2*3)
+		newStair.material_override = W.loaded[color]
+		newStair = genMesh("tFlat")
+		newStair.scale = Vector3(1, 0.125, 0.25)
+		newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*5)
+		newStair.material_override = W.loaded[color]
+	elif stairsA >= 2 and height <= 6:
+		var newStair = genMesh("tFlat")
+		newStair.scale = Vector3(1, 0.25, 0.25)
+		newStair.translation = Vector3(0, 3.2*(0.125*(height + 1)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
+		newStair.material_override = W.loaded[color]
+		newStair = genMesh("tFlat")
+		newStair.scale = Vector3(1, 0.125, 0.25)
+		newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*3)
+		newStair.material_override = W.loaded[color]
+	elif stairsA >= 1 and height <= 7:
+		var newStair = genMesh("tFlat")
+		newStair.scale = Vector3(1, 0.125, 0.25)
+		newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
+		newStair.material_override = W.loaded[color]
 # Creates a mesh as child of terrainPieceHandler
 func genMesh(type, autoParent = true):
 	var newMesh = W.loaded[type]
