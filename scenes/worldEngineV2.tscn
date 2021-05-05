@@ -775,7 +775,6 @@ margin_top = -124.0
 margin_right = 8.0
 margin_bottom = -44.0
 max_value = 4.0
-value = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -786,7 +785,6 @@ margin_top = -8.0
 margin_right = 124.0
 margin_bottom = 8.0
 max_value = 4.0
-value = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

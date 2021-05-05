@@ -124,7 +124,7 @@ func reloadPiece():
 			newLedge.material_override = W.loaded[color]
 	
 	# Generates any stairs
-	if stairsA == 3 and height <= 5:
+	if stairsA == 3 and height <= 4:
 		var newStair = genMesh("tFlat")
 		newStair.scale = Vector3(1, 0.375, 0.25)
 		newStair.translation = Vector3(0, 3.2*(0.125*(height + 1.5)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
@@ -137,7 +137,7 @@ func reloadPiece():
 		newStair.scale = Vector3(1, 0.125, 0.25)
 		newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*5)
 		newStair.material_override = W.loaded[color]
-	elif stairsA >= 2 and height <= 6:
+	elif stairsA >= 2 and height <= 5:
 		var newStair = genMesh("tFlat")
 		newStair.scale = Vector3(1, 0.25, 0.25)
 		newStair.translation = Vector3(0, 3.2*(0.125*(height + 1)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
@@ -146,7 +146,7 @@ func reloadPiece():
 		newStair.scale = Vector3(1, 0.125, 0.25)
 		newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*3)
 		newStair.material_override = W.loaded[color]
-	elif stairsA >= 1 and height <= 7:
+	elif stairsA >= 1 and height <= 6:
 		var newStair = genMesh("tFlat")
 		newStair.scale = Vector3(1, 0.125, 0.25)
 		newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
