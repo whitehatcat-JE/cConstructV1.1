@@ -124,33 +124,119 @@ func reloadPiece():
 			newLedge.material_override = W.loaded[color]
 	
 	# Generates any stairs
-	if stairsA == 3 and height <= 4:
-		var newStair = genMesh("tFlat")
-		newStair.scale = Vector3(1, 0.375, 0.25)
-		newStair.translation = Vector3(0, 3.2*(0.125*(height + 1.5)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
-		newStair.material_override = W.loaded[color]
-		newStair = genMesh("tFlat")
-		newStair.scale = Vector3(1, 0.25, 0.25)
-		newStair.translation = Vector3(0, 3.2*(0.125*(height + 1)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2*3)
-		newStair.material_override = W.loaded[color]
-		newStair = genMesh("tFlat")
-		newStair.scale = Vector3(1, 0.125, 0.25)
-		newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*5)
-		newStair.material_override = W.loaded[color]
-	elif stairsA >= 2 and height <= 5:
-		var newStair = genMesh("tFlat")
-		newStair.scale = Vector3(1, 0.25, 0.25)
-		newStair.translation = Vector3(0, 3.2*(0.125*(height + 1)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
-		newStair.material_override = W.loaded[color]
-		newStair = genMesh("tFlat")
-		newStair.scale = Vector3(1, 0.125, 0.25)
-		newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*3)
-		newStair.material_override = W.loaded[color]
-	elif stairsA >= 1 and height <= 6:
-		var newStair = genMesh("tFlat")
-		newStair.scale = Vector3(1, 0.125, 0.25)
-		newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
-		newStair.material_override = W.loaded[color]
+	if stairsA > 0:
+		if stairsA == 3 and height <= 4:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.375, 1)
+			newStair.translation = Vector3(FEATUREDISTANCE / 2 - STAIRWIDTH / 2, 3.2*(0.125*(height + 1.5)), 0)
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.25, 1)
+			newStair.translation = Vector3(FEATUREDISTANCE / 2 - STAIRWIDTH / 2*3, 3.2*(0.125*(height + 1)), 0)
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.125, 1)
+			newStair.translation = Vector3(FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*5, 3.2*(0.125*(height+0.5)), 0)
+			newStair.material_override = W.loaded[color]
+		elif stairsA >= 2 and height <= 5:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.25, 1)
+			newStair.translation = Vector3(FEATUREDISTANCE / 2 - STAIRWIDTH / 2, 3.2*(0.125*(height + 1)), 0)
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.125, 1)
+			newStair.translation = Vector3(FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*3, 3.2*(0.125*(height+0.5)), 0)
+			newStair.material_override = W.loaded[color]
+		elif stairsA >= 1 and height <= 6:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.125, 1)
+			newStair.translation = Vector3(FEATUREDISTANCE / 2 - STAIRWIDTH / 2, 3.2*(0.125*(height+0.5)), 0)
+			newStair.material_override = W.loaded[color]
+	if stairsB > 0:
+		if stairsB == 3 and height <= 4:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.375, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height + 1.5)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.25, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height + 1)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2*3)
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.125, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*5)
+			newStair.material_override = W.loaded[color]
+		elif stairsB >= 2 and height <= 5:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.25, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height + 1)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.125, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*3)
+			newStair.material_override = W.loaded[color]
+		elif stairsB >= 1 and height <= 6:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.125, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), FEATUREDISTANCE / 2 - STAIRWIDTH / 2)
+			newStair.material_override = W.loaded[color]
+	if stairsC > 0:
+		if stairsC == 3 and height <= 4:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.375, 1)
+			newStair.translation = Vector3(-(FEATUREDISTANCE / 2 - STAIRWIDTH / 2), 3.2*(0.125*(height + 1.5)), 0)
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.25, 1)
+			newStair.translation = Vector3(-(FEATUREDISTANCE / 2 - STAIRWIDTH / 2*3), 3.2*(0.125*(height + 1)), 0)
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.125, 1)
+			newStair.translation = Vector3(-(FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*5), 3.2*(0.125*(height+0.5)), 0)
+			newStair.material_override = W.loaded[color]
+		elif stairsC >= 2 and height <= 5:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.25, 1)
+			newStair.translation = Vector3(-(FEATUREDISTANCE / 2 - STAIRWIDTH / 2), 3.2*(0.125*(height + 1)), 0)
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.125, 1)
+			newStair.translation = Vector3(-(FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*3), 3.2*(0.125*(height+0.5)), 0)
+			newStair.material_override = W.loaded[color]
+		elif stairsC >= 1 and height <= 6:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(0.25, 0.125, 1)
+			newStair.translation = Vector3(-(FEATUREDISTANCE / 2 - STAIRWIDTH / 2), 3.2*(0.125*(height+0.5)), 0)
+			newStair.material_override = W.loaded[color]
+	if stairsD > 0:
+		if stairsD == 3 and height <= 4:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.375, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height + 1.5)), -(FEATUREDISTANCE / 2 - STAIRWIDTH / 2))
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.25, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height + 1)), -(FEATUREDISTANCE / 2 - STAIRWIDTH / 2*3))
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.125, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), -(FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*5))
+			newStair.material_override = W.loaded[color]
+		elif stairsD >= 2 and height <= 5:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.25, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height + 1)), -(FEATUREDISTANCE / 2 - STAIRWIDTH / 2))
+			newStair.material_override = W.loaded[color]
+			newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.125, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), -(FEATUREDISTANCE / 2 - (STAIRWIDTH / 2)*3))
+			newStair.material_override = W.loaded[color]
+		elif stairsD >= 1 and height <= 6:
+			var newStair = genMesh("tFlat")
+			newStair.scale = Vector3(1, 0.125, 0.25)
+			newStair.translation = Vector3(0, 3.2*(0.125*(height+0.5)), -(FEATUREDISTANCE / 2 - STAIRWIDTH / 2))
+			newStair.material_override = W.loaded[color]
+
 # Creates a mesh as child of terrainPieceHandler
 func genMesh(type, autoParent = true):
 	var newMesh = W.loaded[type]
