@@ -53,7 +53,7 @@ var tXMatrix = {}
 var tZMatrix = {}
 var oXMatrix = {}
 var oZMatrix = {}
-var e = 0
+
 var tTileQueue = {}
 var tTileQueueOrder = []
 var oTileQueue = {}

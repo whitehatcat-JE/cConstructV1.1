@@ -62,14 +62,17 @@ func manGenerate(h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, t
 	color = coA
 	colorTrans = coB
 	colorCliff = coC
+	# Sets colors
 	if colorTrans == null: colorTrans = coA;
 	if colorCliff == null: colorCliff = DEFCLIFFCOLOR;
 	if tA and tB and tC and tD: color = colorTrans;
 	
+	# Sets common variables used when positioning the meshes
 	displacement = float(height) / 4.0
 	curFeatureHeight = FEATUREHEIGHT * displacement - FEATUREHEIGHT
 	
 	reloadPiece()
+
 # Calculates variables based on surrounding terrain
 func autoGenerate(aH, bH, cH, dH): # Heights of surrounding terrain (0=none)
 	reloadPiece()
@@ -144,18 +147,20 @@ func reloadPiece():
 			else:
 				newLedge.material_override = W.loaded[color]
 	
+	# Sets commonly used variables for stairs/ostairs
 	var stairDisp = FEATUREDISTANCE / 6 - STAIRWIDTH / 6
 	var stairGlbDisp = STAIRWIDTH * 2
 	# Generates any stairs
-	if stairsA > 0:
-		if stairsA >= 3 and height <= 4:
+	if stairsA > 0: # Details in here
+		if stairsA >= 3 and height <= 4: # Max stair amt, height stops stairs from clipping into other regions
+			# tileType, autoparent, scale, position relative to parent
 			genMesh("tFlat", true, Vector3(0.25, 0.375, 1), Vector3(stairDisp - stairGlbDisp, 3.2*(0.125*(height + 1.5)), 0))
 			genMesh("tFlat", true, Vector3(0.25, 0.25, 1), Vector3(stairDisp*3 - stairGlbDisp, 3.2*(0.125*(height + 1)), 0))
 			genMesh("tFlat", true, Vector3(0.25, 0.125, 1), Vector3(stairDisp*5 - stairGlbDisp, 3.2*(0.125*(height+0.5)), 0))
 		elif stairsA >= 2 and height <= 5:
 			genMesh("tFlat", true, Vector3(0.25, 0.25, 1), Vector3(stairDisp - stairGlbDisp, 3.2*(0.125*(height + 1)), 0))
 			genMesh("tFlat", true, Vector3(0.25, 0.125, 1), Vector3(stairDisp*3 - stairGlbDisp, 3.2*(0.125*(height+0.5)), 0))
-		elif stairsA >= 1 and height <= 6:
+		elif stairsA >= 1 and height <= 6: # Singular stair
 			genMesh("tFlat", true, Vector3(0.25, 0.125, 1), Vector3(stairDisp - stairGlbDisp, 3.2*(0.125*(height+0.5)), 0))
 	if stairsB > 0:
 		if stairsB >= 3 and height <= 4:
@@ -231,14 +236,19 @@ func reloadPiece():
 
 # Creates a mesh as child of terrainPieceHandler
 func genMesh(type, autoParent = true, scal = Vector3(1, 1, 1), trans = Vector3(0, 0, 0), mat = color):
+	# Fetches/creates new mesh
 	var newMesh = W.loaded[type]
 	var newInstance = MeshInstance.new()
+	# Binds mesh to self
 	if autoParent: self.add_child(newInstance);
+	# Transforms mesh
 	newInstance.mesh = newMesh
 	newInstance.scale = scal
 	newInstance.translation = trans
-	newInstance.material_override = W.loaded[mat]
+	newInstance.material_override = W.loaded[mat] # Adds selected color
+	# COLLISION TEMPORARY UNTIL SQL CODE IS WORKING
 	newInstance.create_trimesh_collision()
+	# Stores and returns mesh
 	currentChildren.append(newInstance)
 	return newInstance
 
