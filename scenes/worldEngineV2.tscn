@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -21,6 +21,8 @@
 [ext_resource path="res://scenes/scripts/worldEngine/terrainMenu.gd" type="Script" id=19]
 [ext_resource path="res://assets/GUI/lock.png" type="Texture" id=20]
 [ext_resource path="res://assets/GUI/unlocked.png" type="Texture" id=21]
+
+[sub_resource type="CubeMesh" id=24]
 
 [sub_resource type="SphereMesh" id=1]
 
@@ -203,7 +205,7 @@ script = ExtResource( 6 )
 script = ExtResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 2.38419e-07, 0, -2.38419e-07, 1, 0, 2.9, 0 )
 far = 8192.0
 script = ExtResource( 7 )
 
@@ -213,6 +215,14 @@ enabled = true
 cast_to = Vector3( 0, -100, 0 )
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="objDisplayPoint" type="Spatial" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.781887, 0.287322, -0.900001 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Camera/objDisplayPoint"]
+transform = Transform( 0.0629682, 0.0186535, -0.0362222, -0.0306163, 0.065657, -0.0194114, 0.026882, 0.0310839, 0.0627387, 0, 0, 0 )
+mesh = SubResource( 24 )
+material/0 = null
 
 [node name="selectedPos" type="Spatial" parent="."]
 script = ExtResource( 16 )
@@ -1081,7 +1091,6 @@ margin_left = -16.0
 margin_top = 68.0
 margin_right = 12.0
 margin_bottom = 72.0
-rect_scale = Vector2( 1e-05, 1 )
 script = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1092,43 +1101,236 @@ anims/hideTiles = SubResource( 20 )
 
 [node name="backdrop" type="Sprite" parent="GUI/tileMenu"]
 self_modulate = Color( 0.54902, 0.54902, 0.54902, 0.384314 )
-position = Vector2( 56, 244.812 )
-scale = Vector2( 255.805, 536 )
+position = Vector2( 56, 326.253 )
+scale = Vector2( 255.805, 384 )
+texture = ExtResource( 3 )
+offset = Vector2( 0.344012, 0.0357979 )
+
+[node name="backdrop2" type="Sprite" parent="GUI/tileMenu/backdrop"]
+self_modulate = Color( 0.54902, 0.54902, 0.54902, 0.384314 )
+position = Vector2( 1.49012e-08, -0.806652 )
+scale = Vector2( 1, 0.105203 )
 texture = ExtResource( 3 )
 offset = Vector2( 0.344012, 0.0357979 )
 
 [node name="rightSide" type="Sprite" parent="GUI/tileMenu/backdrop"]
 self_modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 0.831137, 5.96046e-08 )
-scale = Vector2( 0.0152553, 1 )
+position = Vector2( 0.831137, -0.212087 )
+scale = Vector2( 0.0152553, 1.39583 )
 texture = ExtResource( 3 )
 offset = Vector2( 0.344012, 0.0357979 )
 
 [node name="rightSide2" type="Sprite" parent="GUI/tileMenu/backdrop"]
 self_modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 0.000322565, -0.460738 )
-scale = Vector2( 1.00007, 0.00746263 )
+position = Vector2( 0.000322551, -0.855201 )
+scale = Vector2( 1.00007, 0.0104166 )
+texture = ExtResource( 3 )
+offset = Vector2( 0.344012, 0.0357979 )
+
+[node name="rightSide3" type="Sprite" parent="GUI/tileMenu/backdrop"]
+self_modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 0, -0.755865 )
+scale = Vector2( 1.00007, 0.0104166 )
+texture = ExtResource( 3 )
+offset = Vector2( 0.344012, 0.0357979 )
+
+[node name="rightSide4" type="Sprite" parent="GUI/tileMenu/backdrop"]
+self_modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 0, -0.464203 )
+scale = Vector2( 1.00007, 0.0104166 )
 texture = ExtResource( 3 )
 offset = Vector2( 0.344012, 0.0357979 )
 
 [node name="sortBoxBackdrop" type="Sprite" parent="GUI/tileMenu/backdrop"]
 self_modulate = Color( 0.121569, 0.145098, 0.2, 1 )
-position = Vector2( 0.594203, -0.426888 )
-scale = Vector2( 0.40656, 0.0447761 )
+position = Vector2( 0.594203, -0.807952 )
+scale = Vector2( 0.40656, 0.0625 )
 texture = ExtResource( 3 )
 
 [node name="arrow" type="Sprite" parent="GUI/tileMenu/backdrop"]
-position = Vector2( 0.749022, -0.427056 )
+position = Vector2( 0.749022, -0.808187 )
 rotation = -3.14159
-scale = Vector2( 0.000133403, 6.07456e-05 )
+scale = Vector2( 0.000133403, 8.47908e-05 )
 texture = ExtResource( 10 )
+
+[node name="resultsDown" type="Button" parent="GUI/tileMenu"]
+margin_left = 40.0
+margin_top = 584.0
+margin_right = 62.0
+margin_bottom = 611.0
+rect_rotation = 89.9999
+rect_pivot_offset = Vector2( 88, 16 )
+focus_mode = 0
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = ">"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="resultsUp" type="Button" parent="GUI/tileMenu"]
+margin_left = 72.0
+margin_top = 428.0
+margin_right = 94.0
+margin_bottom = 455.0
+rect_rotation = -89.9999
+rect_pivot_offset = Vector2( 88, 16 )
+focus_mode = 0
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = ">"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorOptions" type="Node2D" parent="GUI/tileMenu"]
+position = Vector2( 20, 40 )
+
+[node name="colorA" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 116.0
+margin_right = 240.0
+margin_bottom = 136.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorB" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 144.0
+margin_right = 240.0
+margin_bottom = 164.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorC" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 172.0
+margin_right = 240.0
+margin_bottom = 192.0
+rect_pivot_offset = Vector2( 196, 60 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorD" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 200.0
+margin_right = 240.0
+margin_bottom = 220.0
+rect_pivot_offset = Vector2( 196, 32 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorE" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 228.0
+margin_right = 240.0
+margin_bottom = 248.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorF" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 256.0
+margin_right = 240.0
+margin_bottom = 276.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorG" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 284.0
+margin_right = 240.0
+margin_bottom = 304.0
+rect_pivot_offset = Vector2( 196, 60 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorH" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 312.0
+margin_right = 240.0
+margin_bottom = 332.0
+rect_pivot_offset = Vector2( 196, 32 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorI" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 340.0
+margin_right = 240.0
+margin_bottom = 360.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorJ" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 368.0
+margin_right = 240.0
+margin_bottom = 388.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorK" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 396.0
+margin_right = 240.0
+margin_bottom = 416.0
+rect_pivot_offset = Vector2( 196, 60 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorL" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 424.0
+margin_right = 240.0
+margin_bottom = 444.0
+rect_pivot_offset = Vector2( 196, 32 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorM" type="Button" parent="GUI/tileMenu/colorOptions"]
+margin_top = 452.0
+margin_right = 240.0
+margin_bottom = 472.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="searchBar" type="LineEdit" parent="GUI/tileMenu"]
 margin_left = 20.0
 margin_top = 4.0
 margin_right = 152.0
 margin_bottom = 28.0
-editable = false
 clear_button_enabled = true
 placeholder_text = "search"
 caret_blink = true
