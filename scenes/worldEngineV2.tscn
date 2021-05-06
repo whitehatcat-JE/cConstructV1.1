@@ -770,43 +770,101 @@ __meta__ = {
 }
 
 [node name="stairsA" type="VSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = -8.0
-margin_top = -124.0
-margin_right = 8.0
-margin_bottom = -44.0
-max_value = 4.0
+margin_left = 784.002
+margin_top = 627.998
+margin_right = 800.002
+margin_bottom = 707.998
+rect_rotation = 180.0
+rect_pivot_offset = Vector2( -388, -252 )
+max_value = 3.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="stairsB" type="HSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = 44.0
-margin_top = -8.0
-margin_right = 124.0
-margin_bottom = 8.0
-max_value = 4.0
+margin_left = 836.002
+margin_top = 743.998
+margin_right = 916.002
+margin_bottom = 759.998
+rect_rotation = 180.0
+rect_pivot_offset = Vector2( -440, -368 )
+max_value = 3.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="stairsC" type="VSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = -8.0
-margin_top = 44.0
-margin_right = 8.0
-margin_bottom = 124.0
-max_value = 4.0
-value = 4.0
+margin_left = 784.002
+margin_top = 795.998
+margin_right = 800.002
+margin_bottom = 875.998
+rect_rotation = 180.0
+rect_pivot_offset = Vector2( -388, -420 )
+max_value = 3.0
+value = 3.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="stairsD" type="HSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = -124.0
-margin_top = -8.0
-margin_right = -44.0
-margin_bottom = 8.0
-max_value = 4.0
-value = 4.0
+margin_left = 668.002
+margin_top = 743.998
+margin_right = 748.002
+margin_bottom = 759.998
+rect_rotation = 180.0
+rect_pivot_offset = Vector2( -272, -368 )
+max_value = 3.0
+value = 3.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="oStairsA" type="VSlider" parent="GUI/terrainMenu/pivot"]
+margin_left = 402.592
+margin_top = 797.306
+margin_right = 418.592
+margin_bottom = 877.306
+rect_rotation = 225.0
+rect_pivot_offset = Vector2( -388, -252 )
+max_value = 3.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="oStairsB" type="HSlider" parent="GUI/terrainMenu/pivot"]
+margin_left = 454.592
+margin_top = 913.306
+margin_right = 534.592
+margin_bottom = 929.306
+rect_rotation = 225.0
+rect_pivot_offset = Vector2( -440, -368 )
+max_value = 3.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="oStairsC" type="VSlider" parent="GUI/terrainMenu/pivot"]
+margin_left = 402.592
+margin_top = 965.306
+margin_right = 418.592
+margin_bottom = 1045.31
+rect_rotation = 225.0
+rect_pivot_offset = Vector2( -388, -420 )
+max_value = 3.0
+value = 3.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="oStairsD" type="HSlider" parent="GUI/terrainMenu/pivot"]
+margin_left = 286.592
+margin_top = 913.306
+margin_right = 366.592
+margin_bottom = 929.306
+rect_rotation = 225.0
+rect_pivot_offset = Vector2( -272, -368 )
+max_value = 3.0
+value = 3.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1103,6 +1161,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1, 0 )
 material_override = SubResource( 21 )
 multimesh = SubResource( 23 )
 script = ExtResource( 18 )
+
 [connection signal="button_down" from="GUI/options/exitButton" to="GUI" method="_on_exitButton_button_down"]
 [connection signal="button_down" from="GUI/options/reloadButton" to="GUI" method="_on_reloadButton_button_down"]
 [connection signal="button_down" from="GUI/options/hideButton" to="GUI" method="_on_hideButton_button_down"]
@@ -1130,6 +1189,10 @@ script = ExtResource( 18 )
 [connection signal="value_changed" from="GUI/terrainMenu/pivot/stairsB" to="." method="_on_stairsB_value_changed"]
 [connection signal="value_changed" from="GUI/terrainMenu/pivot/stairsC" to="." method="_on_stairsC_value_changed"]
 [connection signal="value_changed" from="GUI/terrainMenu/pivot/stairsD" to="." method="_on_stairsD_value_changed"]
+[connection signal="value_changed" from="GUI/terrainMenu/pivot/oStairsA" to="." method="_on_oStairsA_value_changed"]
+[connection signal="value_changed" from="GUI/terrainMenu/pivot/oStairsB" to="." method="_on_oStairsB_value_changed"]
+[connection signal="value_changed" from="GUI/terrainMenu/pivot/oStairsC" to="." method="_on_oStairsC_value_changed"]
+[connection signal="value_changed" from="GUI/terrainMenu/pivot/oStairsD" to="." method="_on_oStairsD_value_changed"]
 [connection signal="changeCoords" from="GUI/sceneMenu" to="." method="_on_sceneMenu_changeCoords"]
 [connection signal="text_entered" from="GUI/sceneMenu/renderDisInput" to="GUI/sceneMenu" method="_on_renderDisInput_text_entered"]
 [connection signal="text_entered" from="GUI/sceneMenu/gridLockInput" to="GUI/sceneMenu" method="_on_gridLockInput_text_entered"]

@@ -2655,6 +2655,7 @@ position = Vector2( 507.812, 296 )
 texture = ExtResource( 8 )
 
 [node name="weatherSystem" parent="." instance=ExtResource( 11 )]
+
 [connection signal="button_down" from="GUI/tileSelection/upButton" to="GUI/tileSelection/displayedTiles" method="_on_upButton_button_down"]
 [connection signal="button_down" from="GUI/tileSelection/downButton" to="GUI/tileSelection/displayedTiles" method="_on_downButton_button_down"]
 [connection signal="text_changed" from="GUI/tileSelection/searchInput" to="GUI/tileSelection/displayedTiles" method="_on_searchInput_text_changed"]

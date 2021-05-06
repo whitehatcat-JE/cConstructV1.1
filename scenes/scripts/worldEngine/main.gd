@@ -12,7 +12,7 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var MAXSTAIRS = 4
+var MAXSTAIRS = 3
 
 # Variable declarations
 var mode = W.DEFMODE
@@ -37,6 +37,10 @@ var stairsA = 0
 var stairsB = 0
 var stairsC = 0
 var stairsD = 0
+var oStairsA = 0
+var oStairsB = 0
+var oStairsC = 0
+var oStairsD = 0
 
 var terrainMenuLocked = false
 
@@ -49,7 +53,7 @@ var tXMatrix = {}
 var tZMatrix = {}
 var oXMatrix = {}
 var oZMatrix = {}
-
+var e = 0
 var tTileQueue = {}
 var tTileQueueOrder = []
 var oTileQueue = {}
@@ -145,11 +149,11 @@ func terrainProcess():
 	
 	if Input.is_action_just_pressed("inWorld"):
 		terrainMenu.set_position(Vector2(100000, 100000))
-		terrainMenu.switchDisabled()
+		terrainMenu.switchDisabled(true)
 	elif Input.is_action_just_released("inWorld"):
 		terrainMenu.set_position(Vector2(980, 250)) #DEF POS (NEED TO TURN TO CONSTANT)
 		if !terrainMenuLocked: terrainMenuPivot.rotation_degrees = cam.rotation_degrees.y + 90;
-		terrainMenu.switchDisabled()
+		terrainMenu.switchDisabled(false)
 	
 	if Input.is_action_just_pressed("place") and Input.is_action_pressed("inWorld"):
 		generateTerrain()
@@ -173,13 +177,17 @@ func generateTerrain( # Required Variables
 	sA = stairsA,
 	sB = stairsB,
 	sC = stairsC,
-	sD = stairsD):
+	sD = stairsD,
+	oA = oStairsA,
+	oB = oStairsB,
+	oC = oStairsC,
+	oD = oStairsD):
 	# Feeds set info into terrainHandler
 	var newTerrainPiece = W.loaded["terrainHandler"].instance()
 	self.add_child(newTerrainPiece)
 	newTerrainPiece.translation = selectedPos.global_transform.origin
 	newTerrainPiece.manGenerate(
-		h, "cGreen", "cBrown", "cGrey", cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD
+		h, "cGreen", "cBrown", "cGrey", cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD, oA, oB, oC, oD
 	)
 
 # Flora script for each frame
@@ -236,9 +244,15 @@ func _on_stairsC_value_changed(value): stairsC = MAXSTAIRS - value;
 func _on_stairsD_value_changed(value): stairsD = MAXSTAIRS - value;
 
 
+func _on_oStairsA_value_changed(value): oStairsA = value;
+func _on_oStairsB_value_changed(value): oStairsB = value;
+func _on_oStairsC_value_changed(value): oStairsC = MAXSTAIRS - value;
+func _on_oStairsD_value_changed(value): oStairsD = MAXSTAIRS - value;
+
 func _on_lockTerrainMenu_toggled(button_pressed):
 	terrainMenuLocked = button_pressed
 	if terrainMenuLocked: 
 		terrainMenuPivot.rotation_degrees = 0
 	else:
 		terrainMenuPivot.rotation_degrees = cam.rotation_degrees.y + 90
+

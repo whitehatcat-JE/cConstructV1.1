@@ -52,8 +52,7 @@ func _input(event):
 			KEY_W:
 				_w = event.pressed
 			KEY_S:
-				if !Input.is_action_pressed("save"):
-					_s = event.pressed
+				_s = event.pressed
 			KEY_A:
 				_a = event.pressed
 			KEY_D:
@@ -65,6 +64,10 @@ func _input(event):
 
 # Updates mouselook and movement every frame
 func _process(delta):
+	if Input.is_action_just_pressed("summonTemp"):
+		var newBall = load("res://temp.tscn").instance()
+		get_parent().add_child(newBall)
+		newBall.transform = self.global_transform
 	if GV.paused:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	else:
