@@ -19,6 +19,10 @@ var loaded = {}
 var OBJTYPE = ".obj"
 var TERRAINFOLDER = "res://assets/worldEngine/terrain/"
 
+# Color
+var COLORTYPE = ".tres"
+var COLORFOLDER = "res://materials/"
+
 ### UNIVERSIAL CONSTRANTS/VARIABLES ###
 # Constants
 var DEFMODE = MODETERRAIN
@@ -46,6 +50,6 @@ func _ready():
 	loaded["tOppCornerA"] = load(TERRAINFOLDER + "oppCornerA" + OBJTYPE)
 	loaded["tOppCornerB"] = load(TERRAINFOLDER + "oppCornerB" + OBJTYPE)
 	
-	loaded["cGreen"] = load("res://materials/green.tres")
-	loaded["cGrey"] = load("res://materials/grey.tres")
-	loaded["cBrown"] = load("res://materials/brown.tres")
+	var colors = ["green", "grey", "brown"]
+	for color in colors:
+		loaded["c" + color.capitalize()] = load(COLORFOLDER + color + COLORTYPE)

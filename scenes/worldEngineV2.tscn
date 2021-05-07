@@ -22,7 +22,7 @@
 [ext_resource path="res://assets/GUI/lock.png" type="Texture" id=20]
 [ext_resource path="res://assets/GUI/unlocked.png" type="Texture" id=21]
 
-[sub_resource type="CubeMesh" id=24]
+[sub_resource type="SphereMesh" id=24]
 
 [sub_resource type="SphereMesh" id=1]
 
@@ -217,10 +217,11 @@ collide_with_areas = true
 collide_with_bodies = false
 
 [node name="objDisplayPoint" type="Spatial" parent="Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.781887, 0.287322, -0.900001 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.172, 0.422, -1.31 )
+visible = false
 
 [node name="MeshInstance" type="MeshInstance" parent="Camera/objDisplayPoint"]
-transform = Transform( 0.0629682, 0.0186535, -0.0362222, -0.0306163, 0.065657, -0.0194114, 0.026882, 0.0310839, 0.0627387, 0, 0, 0 )
+transform = Transform( 0.149429, 0.0130734, 0, -0.0118485, 0.135429, -0.0633927, -0.00552504, 0.0631515, 0.135946, 0, 0, 0 )
 mesh = SubResource( 24 )
 material/0 = null
 
@@ -1091,6 +1092,7 @@ margin_left = -16.0
 margin_top = 68.0
 margin_right = 12.0
 margin_bottom = 72.0
+rect_scale = Vector2( 1e-05, 1 )
 script = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1331,6 +1333,7 @@ margin_left = 20.0
 margin_top = 4.0
 margin_right = 152.0
 margin_bottom = 28.0
+editable = false
 clear_button_enabled = true
 placeholder_text = "search"
 caret_blink = true
@@ -1364,6 +1367,7 @@ material_override = SubResource( 21 )
 multimesh = SubResource( 23 )
 script = ExtResource( 18 )
 
+[connection signal="objVisible" from="GUI" to="." method="_on_GUI_objVisible"]
 [connection signal="button_down" from="GUI/options/exitButton" to="GUI" method="_on_exitButton_button_down"]
 [connection signal="button_down" from="GUI/options/reloadButton" to="GUI" method="_on_reloadButton_button_down"]
 [connection signal="button_down" from="GUI/options/hideButton" to="GUI" method="_on_hideButton_button_down"]

@@ -256,3 +256,5 @@ func _on_lockTerrainMenu_toggled(button_pressed):
 	else:
 		terrainMenuPivot.rotation_degrees = cam.rotation_degrees.y + 90
 
+func _on_GUI_objVisible():
+	$Camera/objDisplayPoint.visible = !$Camera/objDisplayPoint.visible

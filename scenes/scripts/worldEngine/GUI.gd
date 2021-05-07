@@ -1,10 +1,14 @@
 extends Control
 
-#Ready Variables
+# Signals
+signal objVisible
+
+# Ready Variables
 onready var navHidden = ($options/hideButton.text == ">")
 onready var tileHidden = ($options/tileButton.text == ">")
 onready var sceneHidden = ($options/tileButton.text == ">")
-#Node connections
+
+# Node connections
 onready var o = $output
 onready var tileMenu = $tileMenu
 
@@ -33,10 +37,12 @@ func _on_hideButton_button_down():
 func _on_tileButton_button_down():
 	if tileHidden:
 		o.out("Opened tileMenu")
+		emit_signal("objVisible")
 		$tileMenu/tileTransitions.play_backwards("hideTiles")
 		$options/tileButton.text = "<"
 	else:
 		o.out("Closed tileMenu")
+		emit_signal("objVisible")
 		$tileMenu/tileTransitions.play("hideTiles")
 		$options/tileButton.text = ">"
 	
