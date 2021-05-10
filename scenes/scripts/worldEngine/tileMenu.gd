@@ -17,6 +17,7 @@ func _ready():
 	sortBox.get_popup().add_item("Loaded", 4)
 	
 	sortBox.get_popup().connect("id_pressed", self, "changeSorting")
+	updateResultArrows()
 
 func changeSorting(id):
 	var sortName = sortBox.get_popup().get_item_text(id)
@@ -24,3 +25,25 @@ func changeSorting(id):
 	sortID = id
 	
 	emit_signal("changeSort")
+
+
+func _on_resultsUp_button_down():
+	$colorOptions.pre()
+	updateResultArrows()
+
+
+func _on_resultsDown_button_down():
+	$colorOptions.next()
+	updateResultArrows()
+
+func updateResultArrows():
+	if $colorOptions.canNext(): $resultsDown.disabled = false;
+	else: $resultsDown.disabled = true;
+	
+	if $colorOptions.canPre(): $resultsUp.disabled = false;
+	else: $resultsUp.disabled = true;
+
+
+func _on_searchBar_text_changed(new_text):
+	$colorOptions.filter(new_text)
+	updateResultArrows()

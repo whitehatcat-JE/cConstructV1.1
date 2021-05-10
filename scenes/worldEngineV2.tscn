@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -21,35 +21,36 @@
 [ext_resource path="res://scenes/scripts/worldEngine/terrainMenu.gd" type="Script" id=19]
 [ext_resource path="res://assets/GUI/lock.png" type="Texture" id=20]
 [ext_resource path="res://assets/GUI/unlocked.png" type="Texture" id=21]
-
-[sub_resource type="SphereMesh" id=24]
+[ext_resource path="res://scenes/scripts/worldEngine/colorOptions.gd" type="Script" id=22]
 
 [sub_resource type="SphereMesh" id=1]
 
-[sub_resource type="CubeMesh" id=2]
+[sub_resource type="SphereMesh" id=2]
+
+[sub_resource type="CubeMesh" id=3]
 size = Vector3( 2, 0.2, 0.2 )
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="SpatialMaterial" id=4]
 albedo_color = Color( 0.360784, 0.4, 1, 1 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=5]
 flags_transparent = true
 albedo_color = Color( 0.243137, 0.243137, 0.243137, 0.52549 )
 
-[sub_resource type="CubeMesh" id=5]
+[sub_resource type="CubeMesh" id=6]
 size = Vector3( 500, 0.1, 500 )
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="BoxShape" id=7]
 extents = Vector3( 250, 0.05, 250 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=9]
 outline_size = 2
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
@@ -76,19 +77,19 @@ tracks/1/keys = {
 "values": [ ">", "<" ]
 }
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=11]
 size = 40
 outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=12]
 size = 64
 outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_scale")
@@ -103,21 +104,21 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0, 1 ) ]
 }
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=14]
 size = 11
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=15]
 size = 25
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=16]
 size = 100
 outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=17]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
@@ -144,22 +145,22 @@ tracks/1/keys = {
 "values": [ "<", ">" ]
 }
 
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=18]
 size = 60
 outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=18]
+[sub_resource type="DynamicFont" id=19]
 size = 40
 outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=19]
+[sub_resource type="DynamicFont" id=20]
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=21]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_scale")
@@ -186,16 +187,16 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="SpatialMaterial" id=21]
+[sub_resource type="SpatialMaterial" id=22]
 albedo_color = Color( 0.0901961, 0.309804, 0.886275, 1 )
 
-[sub_resource type="CubeMesh" id=22]
+[sub_resource type="CubeMesh" id=23]
 size = Vector3( 0.1, 0.3, 0.1 )
 
-[sub_resource type="MultiMesh" id=23]
+[sub_resource type="MultiMesh" id=24]
 transform_format = 1
 instance_count = 1
-mesh = SubResource( 22 )
+mesh = SubResource( 23 )
 transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="worldEngineV2" type="Spatial"]
@@ -222,20 +223,20 @@ visible = false
 
 [node name="MeshInstance" type="MeshInstance" parent="Camera/objDisplayPoint"]
 transform = Transform( 0.149429, 0.0130734, 0, -0.0118485, 0.135429, -0.0633927, -0.00552504, 0.0631515, 0.135946, 0, 0, 0 )
-mesh = SubResource( 24 )
+mesh = SubResource( 1 )
 material/0 = null
 
 [node name="selectedPos" type="Spatial" parent="."]
 script = ExtResource( 16 )
 
 [node name="MeshInstance" type="MeshInstance" parent="selectedPos"]
-mesh = SubResource( 1 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="MeshInstance2" type="MeshInstance" parent="selectedPos"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55, 0, 0 )
-mesh = SubResource( 2 )
-material/0 = SubResource( 3 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
 
 [node name="ySelector" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 0, 0 )
@@ -246,12 +247,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="ySelector/selectionPlane"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, -0.05, 0 )
-material_override = SubResource( 4 )
-mesh = SubResource( 5 )
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="ySelector/selectionPlane"]
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="GUI" type="Control" parent="."]
 margin_right = 40.0
@@ -273,7 +274,7 @@ margin_top = -0.25
 margin_right = 1018.0
 margin_bottom = 26.75
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "X"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -285,7 +286,7 @@ margin_top = -0.25
 margin_right = 991.0
 margin_bottom = 26.75
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -302,7 +303,7 @@ margin_right = 66.0
 margin_bottom = 27.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -317,7 +318,7 @@ margin_right = 22.0
 margin_bottom = 63.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -332,7 +333,7 @@ margin_top = 36.0
 margin_right = 1019.0
 margin_bottom = 63.0
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -348,7 +349,7 @@ margin_top = 36.18
 margin_right = 991.0
 margin_bottom = 63.18
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -364,7 +365,7 @@ margin_top = 36.18
 margin_right = 961.579
 margin_bottom = 63.18
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -398,7 +399,7 @@ __meta__ = {
 }
 
 [node name="outputTransitions" type="AnimationPlayer" parent="GUI/output"]
-anims/shrinkOutput = SubResource( 9 )
+anims/shrinkOutput = SubResource( 10 )
 
 [node name="outputWindow" type="Sprite" parent="GUI/output"]
 self_modulate = Color( 0.54902, 0.54902, 0.54902, 0.384314 )
@@ -430,7 +431,7 @@ margin_top = 1.54601
 margin_right = 1238.0
 margin_bottom = 321.546
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 clip_text = true
 max_lines_visible = 5
@@ -446,7 +447,7 @@ margin_bottom = -1.0
 rect_rotation = -89.9999
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "<"
@@ -465,7 +466,7 @@ __meta__ = {
 margin_right = 137.0
 margin_bottom = 81.0
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "127"
 __meta__ = {
@@ -477,7 +478,7 @@ margin_top = 12.0
 margin_right = 116.0
 margin_bottom = 93.0
 rect_scale = Vector2( 0.1, 0.1 )
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "FPS"
 align = 1
@@ -496,7 +497,7 @@ __meta__ = {
 }
 
 [node name="navigationTransitions" type="AnimationPlayer" parent="GUI/navigation"]
-anims/hideNav = SubResource( 12 )
+anims/hideNav = SubResource( 13 )
 
 [node name="entitySelect" type="Button" parent="GUI/navigation"]
 margin_left = 140.0
@@ -504,7 +505,7 @@ margin_top = -13.0
 margin_right = 265.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Entity Creator"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -516,7 +517,7 @@ margin_top = 9.0
 margin_right = 68.0
 margin_bottom = 31.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 text = "Recipes"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -528,7 +529,7 @@ margin_top = 9.0
 margin_right = 124.0
 margin_bottom = 31.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 text = "Items"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -540,7 +541,7 @@ margin_top = -13.0
 margin_right = 524.0
 margin_bottom = 27.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 15 )
 text = "World Engine"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -552,7 +553,7 @@ margin_top = -13.0
 margin_right = 657.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Quest System"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -564,7 +565,7 @@ margin_top = -13.0
 margin_right = 793.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Spawn Nodes"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -581,7 +582,7 @@ margin_top = -13.0
 margin_right = 735.0
 margin_bottom = 112.0
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 16 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Item Designer"
 align = 1
@@ -890,7 +891,7 @@ __meta__ = {
 }
 
 [node name="sceneTransition" type="AnimationPlayer" parent="GUI/sceneMenu"]
-anims/hideSceneSettings = SubResource( 16 )
+anims/hideSceneSettings = SubResource( 17 )
 
 [node name="sceneBackground" type="Sprite" parent="GUI/sceneMenu"]
 self_modulate = Color( 0.54902, 0.54902, 0.54902, 0.384314 )
@@ -923,7 +924,7 @@ margin_top = 504.0
 margin_right = 1613.0
 margin_bottom = 595.0
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 18 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Scene Settings"
 align = 1
@@ -940,7 +941,7 @@ margin_top = 528.0
 margin_right = 1249.0
 margin_bottom = 617.0
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 19 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Render Distance:"
 align = 2
@@ -956,7 +957,7 @@ margin_top = 528.0
 margin_right = 1047.0
 margin_bottom = 559.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 20 )
 placeholder_text = "50"
 caret_blink = true
 __meta__ = {
@@ -969,7 +970,7 @@ margin_top = 544.0
 margin_right = 1249.0
 margin_bottom = 633.0
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 19 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Gridlock:"
 align = 2
@@ -985,7 +986,7 @@ margin_top = 544.0
 margin_right = 1047.0
 margin_bottom = 575.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 20 )
 placeholder_text = "2"
 caret_blink = true
 __meta__ = {
@@ -998,7 +999,7 @@ margin_top = 564.0
 margin_right = 1047.0
 margin_bottom = 595.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 20 )
 placeholder_text = "z:0"
 caret_blink = true
 __meta__ = {
@@ -1011,7 +1012,7 @@ margin_top = 564.0
 margin_right = 1015.0
 margin_bottom = 595.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 20 )
 placeholder_text = "y:0"
 caret_blink = true
 __meta__ = {
@@ -1024,7 +1025,7 @@ margin_top = 564.0
 margin_right = 983.0
 margin_bottom = 595.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 20 )
 placeholder_text = "x:0"
 caret_blink = true
 __meta__ = {
@@ -1037,7 +1038,7 @@ margin_top = 580.0
 margin_right = 1047.0
 margin_bottom = 611.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 20 )
 placeholder_text = "oz:0"
 caret_blink = true
 __meta__ = {
@@ -1050,7 +1051,7 @@ margin_top = 580.0
 margin_right = 1015.0
 margin_bottom = 611.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 20 )
 placeholder_text = "oy:0"
 caret_blink = true
 __meta__ = {
@@ -1063,7 +1064,7 @@ margin_top = 580.0
 margin_right = 983.0
 margin_bottom = 611.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 20 )
 placeholder_text = "ox:0"
 caret_blink = true
 __meta__ = {
@@ -1078,7 +1079,7 @@ margin_bottom = 559.0
 rect_rotation = -180.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -1099,7 +1100,7 @@ __meta__ = {
 }
 
 [node name="tileTransitions" type="AnimationPlayer" parent="GUI/tileMenu"]
-anims/hideTiles = SubResource( 20 )
+anims/hideTiles = SubResource( 21 )
 
 [node name="backdrop" type="Sprite" parent="GUI/tileMenu"]
 self_modulate = Color( 0.54902, 0.54902, 0.54902, 0.384314 )
@@ -1163,7 +1164,7 @@ margin_bottom = 611.0
 rect_rotation = 89.9999
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -1180,7 +1181,7 @@ margin_bottom = 455.0
 rect_rotation = -89.9999
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -1191,6 +1192,7 @@ __meta__ = {
 
 [node name="colorOptions" type="Node2D" parent="GUI/tileMenu"]
 position = Vector2( 20, 40 )
+script = ExtResource( 22 )
 
 [node name="colorA" type="Button" parent="GUI/tileMenu/colorOptions"]
 margin_top = 116.0
@@ -1363,8 +1365,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.6, 0 )
 
 [node name="MultiMeshInstance" type="MultiMeshInstance" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1, 0 )
-material_override = SubResource( 21 )
-multimesh = SubResource( 23 )
+material_override = SubResource( 22 )
+multimesh = SubResource( 24 )
 script = ExtResource( 18 )
 
 [connection signal="objVisible" from="GUI" to="." method="_on_GUI_objVisible"]
@@ -1410,3 +1412,6 @@ script = ExtResource( 18 )
 [connection signal="text_entered" from="GUI/sceneMenu/xOffset" to="GUI/sceneMenu" method="_on_xOffset_text_entered"]
 [connection signal="button_down" from="GUI/sceneMenu/hideSceneMenu" to="GUI" method="_on_hideSceneMenu_button_down"]
 [connection signal="changeSort" from="GUI/tileMenu" to="GUI" method="_on_tileMenu_changeSort"]
+[connection signal="button_down" from="GUI/tileMenu/resultsDown" to="GUI/tileMenu" method="_on_resultsDown_button_down"]
+[connection signal="button_down" from="GUI/tileMenu/resultsUp" to="GUI/tileMenu" method="_on_resultsUp_button_down"]
+[connection signal="text_changed" from="GUI/tileMenu/searchBar" to="GUI/tileMenu" method="_on_searchBar_text_changed"]
