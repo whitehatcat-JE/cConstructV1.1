@@ -59,11 +59,17 @@ var editingColor = TILE
 var lastLoc = Vector2(pow(10, 10), pow(10, 10)) # Y being Z
 var fLastLoc = lastLoc # For flora
 var curLoc = Vector2()
+var camLoc = Vector2()
+var preLoc = Vector2(1000000, 1000000)
+var renderPause = 3
+var renderDis = 100
 
 var tXMatrix = {}
 var tZMatrix = {}
 var oXMatrix = {}
 var oZMatrix = {}
+
+var stairData = {}
 
 var tTileQueue = {}
 var tTileQueueOrder = []
@@ -192,6 +198,9 @@ func terrainProcess():
 				transA, transB, transC, transD) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);""",
 			 pieceData)
 		generateTerrain()
+	
+	if pow(camLoc.x - $Camera.translation.x, 2) > renderPause or pow(camLoc.y - $Camera.translation.z, 2) > renderPause:
+		camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
 
 # Creates requested terrain piece
 func generateTerrain( # Required Variables
@@ -227,6 +236,135 @@ func generateTerrain( # Required Variables
 	newTerrainPiece.manGenerate(
 		h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD, oA, oB, oC, oD
 	)
+	return newTerrainPiece
+
+# Get the needed terrain pieces
+func fetchTerrain():
+	#Gets the distance travelled since func was last called
+	var disLoc = Vector2(camLoc.x - preLoc.x, camLoc.y - preLoc.y)
+	preLoc = camLoc
+	
+	if disLoc.x == 0: disLoc.x += 0.00001
+	if disLoc.y == 0: disLoc.y += 0.00001
+	
+	#Finds the region the db needs to retrieve info on
+	var retrieveRegionX = [0, 0, camLoc.y + renderDis, camLoc.y - renderDis]
+	var retrieveRegionZ = [camLoc.x + renderDis, camLoc.x - renderDis, 0, 0]
+	
+	#Creates the reqiured region checking
+	if sqrt(pow(disLoc.x, 2)) > renderDis or sqrt(pow(disLoc.y, 2)) > renderDis:
+		retrieveRegionX = [camLoc.x + renderDis, camLoc.x - renderDis, camLoc.y + renderDis, camLoc.y - renderDis]
+		retrieveRegionZ = [1000000, 1000000, 1000000, 1000000]
+	else:
+		if disLoc.x > 0:
+			retrieveRegionX[0] = camLoc.x + renderDis
+			retrieveRegionX[1] = camLoc.x + renderDis - disLoc.x
+		else:
+			retrieveRegionX[0] = camLoc.x - renderDis - disLoc.x
+			retrieveRegionX[1] = camLoc.x - renderDis
+		
+		if disLoc.y > 0:
+			retrieveRegionZ[2] = camLoc.y + renderDis
+			retrieveRegionZ[3] = camLoc.y + renderDis - disLoc.y
+		else:
+			retrieveRegionZ[2] = camLoc.y - renderDis - disLoc.y
+			retrieveRegionZ[3] = camLoc.y - renderDis
+	
+	
+	#Retrieves the regions tiles
+	var xdb = db.fetch_array_with_args(
+		"SELECT * FROM terrain WHERE terrain.posX <= ? and terrain.posX >= ? and terrain.posZ <= ? and terrain.posZ >= ?;", 
+		retrieveRegionX
+	)
+	
+	var zdb = db.fetch_array_with_args(
+		"SELECT * FROM terrain WHERE terrain.posX <= ? and terrain.posX >= ? and terrain.posZ <= ? and terrain.posZ >= ?;", 
+		retrieveRegionZ
+	)
+	return xdb + zdb
+
+# Adds a terrain piece to the world
+func addItem(item, stairs):
+	#Converts the dbs entries into usable values
+	var Bposition = Vector3(item["posX"], item["posY"], item["posZ"]) #Gets the translation
+	
+	#Checks if item exists
+	var exists = false
+	if Bposition.x in tXMatrix:
+		if item["terrainID"] in tXMatrix[Bposition.x]:
+			exists = true
+	
+	var sA = 0
+	var sB = 0
+	var sC = 0
+	var sD = 0
+	var oSA = 0
+	var oSB = 0
+	var oSC = 0
+	var oSD = 0
+	
+	for stair in stairs:
+		if stair["terrainID"] == item["terrainID"]:
+			match stair["type"]:
+				"sA":
+					sA = stair["count"]
+				"sB":
+					sB = stair["count"]
+				"sC":
+					sC = stair["count"]
+				"sD":
+					sD = stair["count"]
+				"oSA":
+					oSA = stair["count"]
+				"oSB":
+					oSB = stair["count"]
+				"oSC":
+					oSC = stair["count"]
+				"oSD":
+					oSD = stair["count"]
+
+	
+	if !exists:
+		var tile2Create = generateTerrain(
+			Bposition,
+			item["height"],
+			W.colors[item["colorIDA"]],
+			W.colors[item["colorIDB"]],
+			W.colors[item["colorIDC"]],
+			item["cliffA"],
+			item["cliffB"],
+			item["cliffC"],
+			item["cliffD"],
+			item["ledgeA"],
+			item["ledgeB"],
+			item["ledgeC"],
+			item["ledgeD"],
+			item["transA"],
+			item["transB"],
+			item["transC"],
+			item["transD"],
+			sA,
+			sB,
+			sC,
+			sD,
+			oSA,
+			oSB,
+			oSC,
+			oSD
+		)
+		
+		#Appends to xMatrix
+		if Bposition.x in tXMatrix:
+			tXMatrix[Bposition.x][item["terrainID"]] = tile2Create
+		else:
+			tXMatrix[Bposition.x] = {item["terrainID"]:tile2Create}
+		#Appends to zMatrix
+		if Bposition.z in tZMatrix:
+			tZMatrix[Bposition.z][item["terrainID"]] = tile2Create
+		else:
+			tZMatrix[Bposition.z] = {item["terrainID"]:tile2Create}
+
+
 
 # Flora script for each frame
 func floraProcess():
@@ -296,7 +434,6 @@ func _on_lockTerrainMenu_toggled(button_pressed):
 
 func _on_GUI_objVisible():
 	$Camera/objDisplayPoint.visible = !$Camera/objDisplayPoint.visible
-
 
 func changeColor(color):
 	if editingColor == TILE:
