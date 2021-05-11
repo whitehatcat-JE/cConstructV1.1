@@ -38,6 +38,9 @@ var zOffset = 0
 # World loading
 var renderDis =  DEFRENDERDIS
 
+# Colors
+var colors = ["Green", "Grey", "Brown"]
+
 ### LOADING OF UNIVERSIAL ASSETS ###
 func _ready():
 	loaded["tFlat"] = load(TERRAINFOLDER + "flat" + OBJTYPE)
@@ -50,6 +53,5 @@ func _ready():
 	loaded["tOppCornerA"] = load(TERRAINFOLDER + "oppCornerA" + OBJTYPE)
 	loaded["tOppCornerB"] = load(TERRAINFOLDER + "oppCornerB" + OBJTYPE)
 	
-	var colors = ["green", "grey", "brown"]
 	for color in colors:
 		loaded["c" + color.capitalize()] = load(COLORFOLDER + color + COLORTYPE)

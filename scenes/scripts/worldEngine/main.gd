@@ -1,5 +1,12 @@
 extends Spatial
 ### SCENE SETUP ###
+# Enumerators
+enum {
+	TILE,
+	TRANSITION,
+	DETAILS
+}
+
 # Constants
 # 	Render settings
 var tRENDER = 100 # Terrain
@@ -43,6 +50,10 @@ var oStairsC = 0
 var oStairsD = 0
 
 var terrainMenuLocked = false
+var tileMenuColor = "Green"
+var transMenuColor = "Brown"
+var detailMenuColor = "Grey"
+var editingColor = TILE
 
 # 	World positions
 var lastLoc = Vector2(pow(10, 10), pow(10, 10)) # Y being Z
@@ -72,6 +83,11 @@ onready var terrainMenu = $GUI/terrainMenu
 onready var terrainMenuPivot = $GUI/terrainMenu/pivot
 onready var o = $GUI/output
 
+### SQL MODULE ###
+const SQLite = preload("res://lib/gdsqlite.gdns");
+# Create gdsqlite instance
+var db = SQLite.new();
+
 ### ALLMODE CODE ###
 # Runs when scene is created
 func _ready():
@@ -80,6 +96,9 @@ func _ready():
 	
 	# Node updates
 	heightSlider.value = MAXHEIGHT
+	
+	# SQL Connections
+	db.open("user://worldDB.db");
 
 # Runs every frame
 func _process(delta):
@@ -156,12 +175,31 @@ func terrainProcess():
 		terrainMenu.switchDisabled(false)
 	
 	if Input.is_action_just_pressed("place") and Input.is_action_pressed("inWorld"):
+		var sP = selectedPos.global_transform.origin
+		var pieceData = [
+			height, 
+			round(sP.x*10)/10, round(sP.y*10)/10, round(sP.z*10)/10,
+			W.colors.bsearch(transMenuColor), 
+			W.colors.bsearch(tileMenuColor), 
+			W.colors.bsearch(detailMenuColor),
+			cliffA, cliffB, cliffC, cliffD,
+			ledgeA, ledgeB, ledgeC, ledgeD,
+			transA, transB, transC, transD
+		]
+		db.query_with_args(
+			"""INSERT INTO terrain (height, posX, posY, posZ, colorIDA, colorIDB, colorIDC,
+				cliffA, cliffB, cliffC, cliffD, ledgeA, ledgeB, ledgeC, ledgeD,
+				transA, transB, transC, transD) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);""",
+			 pieceData)
 		generateTerrain()
 
 # Creates requested terrain piece
 func generateTerrain( # Required Variables
 	coord = selectedPos.global_transform.origin,
 	h = height,
+	coA = "c" + tileMenuColor,
+	coB = "c" + transMenuColor,
+	coC = "c" + detailMenuColor,
 	cA = cliffA,
 	cB = cliffB,
 	cC = cliffC,
@@ -187,7 +225,7 @@ func generateTerrain( # Required Variables
 	self.add_child(newTerrainPiece)
 	newTerrainPiece.translation = selectedPos.global_transform.origin
 	newTerrainPiece.manGenerate(
-		h, "cGreen", "cBrown", "cGrey", cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD, oA, oB, oC, oD
+		h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD, oA, oB, oC, oD
 	)
 
 # Flora script for each frame
@@ -258,3 +296,50 @@ func _on_lockTerrainMenu_toggled(button_pressed):
 
 func _on_GUI_objVisible():
 	$Camera/objDisplayPoint.visible = !$Camera/objDisplayPoint.visible
+
+
+func changeColor(color):
+	if editingColor == TILE:
+		tileMenuColor = color
+		$Camera/objDisplayPoint/mainDisplay.material_override = W.loaded["c" + tileMenuColor]
+	elif editingColor == TRANSITION:
+		transMenuColor =  color
+		$Camera/objDisplayPoint/subDisplayA.material_override = W.loaded["c" + transMenuColor]
+	else:
+		detailMenuColor = color
+		$Camera/objDisplayPoint/subDisplayB.material_override = W.loaded["c" + detailMenuColor]
+
+func _on_colorA_button_down(): changeColor($GUI/tileMenu/colorOptions/colorA.text);
+func _on_colorB_button_down(): changeColor($GUI/tileMenu/colorOptions/colorB.text);
+func _on_colorC_button_down(): changeColor($GUI/tileMenu/colorOptions/colorC.text);
+func _on_colorD_button_down(): changeColor($GUI/tileMenu/colorOptions/colorD.text);
+func _on_colorE_button_down(): changeColor($GUI/tileMenu/colorOptions/colorE.text);
+func _on_colorF_button_down(): changeColor($GUI/tileMenu/colorOptions/colorF.text);
+func _on_colorG_button_down(): changeColor($GUI/tileMenu/colorOptions/colorG.text);
+func _on_colorH_button_down(): changeColor($GUI/tileMenu/colorOptions/colorH.text);
+func _on_colorI_button_down(): changeColor($GUI/tileMenu/colorOptions/colorI.text);
+func _on_colorJ_button_down(): changeColor($GUI/tileMenu/colorOptions/colorJ.text);
+func _on_colorK_button_down(): changeColor($GUI/tileMenu/colorOptions/colorK.text);
+func _on_colorL_button_down(): changeColor($GUI/tileMenu/colorOptions/colorL.text);
+func _on_colorM_button_down(): changeColor($GUI/tileMenu/colorOptions/colorM.text);
+
+
+func _on_editingColorA_button_down():
+	editingColor = DETAILS
+	$GUI/tileMenu/editingColorA.modulate = Color(1.0, 1.0, 1.0)
+	$GUI/tileMenu/editingColorB.modulate = Color(0.5, 0.5, 0.5)
+	$GUI/tileMenu/editingColorC.modulate = Color(0.5, 0.5, 0.5)
+
+
+func _on_editingColorB_button_down():
+	editingColor = TILE
+	$GUI/tileMenu/editingColorA.modulate = Color(0.5, 0.5, 0.5)
+	$GUI/tileMenu/editingColorB.modulate = Color(1.0, 1.0, 1.0)
+	$GUI/tileMenu/editingColorC.modulate = Color(0.5, 0.5, 0.5)
+
+
+func _on_editingColorC_button_down():
+	editingColor = TRANSITION
+	$GUI/tileMenu/editingColorA.modulate = Color(0.5, 0.5, 0.5)
+	$GUI/tileMenu/editingColorB.modulate = Color(0.5, 0.5, 0.5)
+	$GUI/tileMenu/editingColorC.modulate = Color(1.0, 1.0, 1.0)

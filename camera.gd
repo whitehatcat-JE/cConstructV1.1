@@ -48,8 +48,7 @@ func _input(event):
 			KEY_W:
 				_w = event.pressed
 			KEY_S:
-				if !Input.is_action_pressed("save"):
-					_s = event.pressed
+				_s = event.pressed
 			KEY_A:
 				_a = event.pressed
 			KEY_D:
