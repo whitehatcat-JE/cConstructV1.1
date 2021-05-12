@@ -69,7 +69,7 @@ var tZMatrix = {}
 var oXMatrix = {}
 var oZMatrix = {}
 
-var stairData = {}
+var stairData = []
 
 var tTileQueue = {}
 var tTileQueueOrder = []
@@ -281,17 +281,27 @@ func fetchTerrain():
 		"SELECT * FROM terrain WHERE terrain.posX <= ? and terrain.posX >= ? and terrain.posZ <= ? and terrain.posZ >= ?;", 
 		retrieveRegionZ
 	)
+	
+	stairData = db.fetch_array_with_args(
+		"""SELECT terrainID, stairType, stairCount FROM terrainStairs
+			WHERE terrainID IN (
+				SELECT terrainID FROM terrain
+				WHERE posX < ? AND posX > ? AND posZ < ? AND posZ > ?
+			);""",
+		[camLoc.x + renderDis, camLoc.x - renderDis, camLoc.y + renderDis, camLoc.y - renderDis]
+	)
+	
 	return xdb + zdb
 
 # Adds a terrain piece to the world
-func addItem(item, stairs):
+func addTerrain(piece, stairs):
 	#Converts the dbs entries into usable values
-	var Bposition = Vector3(item["posX"], item["posY"], item["posZ"]) #Gets the translation
+	var Bposition = Vector3(piece["posX"], piece["posY"], piece["posZ"]) #Gets the translation
 	
 	#Checks if item exists
 	var exists = false
 	if Bposition.x in tXMatrix:
-		if item["terrainID"] in tXMatrix[Bposition.x]:
+		if piece["terrainID"] in tXMatrix[Bposition.x]:
 			exists = true
 	
 	var sA = 0
@@ -304,7 +314,7 @@ func addItem(item, stairs):
 	var oSD = 0
 	
 	for stair in stairs:
-		if stair["terrainID"] == item["terrainID"]:
+		if stair["terrainID"] == piece["terrainID"]:
 			match stair["type"]:
 				"sA":
 					sA = stair["count"]
@@ -327,22 +337,22 @@ func addItem(item, stairs):
 	if !exists:
 		var tile2Create = generateTerrain(
 			Bposition,
-			item["height"],
-			W.colors[item["colorIDA"]],
-			W.colors[item["colorIDB"]],
-			W.colors[item["colorIDC"]],
-			item["cliffA"],
-			item["cliffB"],
-			item["cliffC"],
-			item["cliffD"],
-			item["ledgeA"],
-			item["ledgeB"],
-			item["ledgeC"],
-			item["ledgeD"],
-			item["transA"],
-			item["transB"],
-			item["transC"],
-			item["transD"],
+			piece["height"],
+			W.colors[piece["colorIDA"]],
+			W.colors[piece["colorIDB"]],
+			W.colors[piece["colorIDC"]],
+			piece["cliffA"],
+			piece["cliffB"],
+			piece["cliffC"],
+			piece["cliffD"],
+			piece["ledgeA"],
+			piece["ledgeB"],
+			piece["ledgeC"],
+			piece["ledgeD"],
+			piece["transA"],
+			piece["transB"],
+			piece["transC"],
+			piece["transD"],
 			sA,
 			sB,
 			sC,
@@ -355,16 +365,69 @@ func addItem(item, stairs):
 		
 		#Appends to xMatrix
 		if Bposition.x in tXMatrix:
-			tXMatrix[Bposition.x][item["terrainID"]] = tile2Create
+			tXMatrix[Bposition.x][piece["terrainID"]] = tile2Create
 		else:
-			tXMatrix[Bposition.x] = {item["terrainID"]:tile2Create}
+			tXMatrix[Bposition.x] = {piece["terrainID"]:tile2Create}
 		#Appends to zMatrix
 		if Bposition.z in tZMatrix:
-			tZMatrix[Bposition.z][item["terrainID"]] = tile2Create
+			tZMatrix[Bposition.z][piece["terrainID"]] = tile2Create
 		else:
-			tZMatrix[Bposition.z] = {item["terrainID"]:tile2Create}
+			tZMatrix[Bposition.z] = {piece["terrainID"]:tile2Create}
 
+# Adds new terrain and removes old terrain from world
+func updateTerrain(pieces):
+	# Adds new terrain
+	for piece in pieces:
+		var Bposition = Vector3(piece["posX"], piece["posY"], piece["posZ"]) #Gets the translation
+		var matrixCheck = false
+		if Bposition.x in tXMatrix:
+			matrixCheck = piece["terrainID"] in tXMatrix[Bposition.x]
+		var queueCheck = piece["terrainID"] in tTileQueue
+		if !(matrixCheck or queueCheck):
+			tTileQueue[piece["terrainID"]] = piece
+			tTileQueueOrder.append(piece["terrainID"])
+	
+	# Finds the terrain it needs to delete
+	var delItems = []
+	for xPos in tXMatrix:
+		if xPos > camLoc.x + renderDis or xPos < camLoc.x - renderDis: #Checks if out of range on x
+			var remTiles = tXMatrix[xPos]
+			for item in remTiles:
+				if !("eleted" in str(remTiles[item])):
+					tZMatrix[remTiles[item].translation.z].erase(item)
+					remTiles[item].queue_free()
+			tXMatrix.erase(xPos)
+	
+	for zPos in tXMatrix:
+		if zPos > camLoc.y + renderDis or zPos < camLoc.y - renderDis: #Checks if out of range on z
+			var remTiles = tZMatrix[zPos]
+			for item in remTiles:
+				if !("eleted" in str(remTiles[item])):
+					tXMatrix[remTiles[item].translation.x].erase(item)
+					remTiles[item].queue_free()
+			tZMatrix.erase(zPos)
 
+#Updates queue order
+func updateTerrainQueue():
+	var queueDistances = []
+	var newQueueOrder = []
+	
+	for piece in tTileQueue.values():
+		queueDistances.append(sqrt(pow(piece["posX"] - camLoc.x, 2)) + sqrt(pow(piece["posZ"] - camLoc.y, 2)))
+	queueDistances.sort()
+	
+	for x in range(len(tTileQueue)):
+		newQueueOrder.append(-1)
+	
+	for piece in tTileQueue.values():
+		var dis = sqrt(pow(piece["posX"] - camLoc.x, 2)) + sqrt(pow(piece["posZ"] - camLoc.y, 2))
+		var pos = queueDistances.bsearch(dis)
+		
+		while newQueueOrder[pos] != -1:
+			pos += 1
+		newQueueOrder[pos] = piece["ID"]
+	
+	tTileQueueOrder = newQueueOrder
 
 # Flora script for each frame
 func floraProcess():
