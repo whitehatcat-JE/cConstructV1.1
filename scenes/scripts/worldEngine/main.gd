@@ -71,10 +71,12 @@ var oZMatrix = {}
 
 var stairData = []
 
-var tTileQueue = {}
-var tTileQueueOrder = []
+var terrainQueue = {}
+var terrainQueueOrder = []
 var oTileQueue = {}
 var oTileQueueOrder = []
+
+var terrainLoaded = {}
 
 #	Asset loading
 var terrainHandler = "res://scenes/terrainPieceHandler.tscn"
@@ -201,6 +203,14 @@ func terrainProcess():
 	
 	if pow(camLoc.x - $Camera.translation.x, 2) > renderPause or pow(camLoc.y - $Camera.translation.z, 2) > renderPause:
 		camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
+		updateTerrain(fetchTerrain())
+		updateTerrainQueue()
+	
+	if len(terrainQueue) > 0:
+		for x in range(round(len(terrainQueue)/100) + 2):
+			if len(terrainQueue) > 0:
+				addTerrain(terrainQueue[terrainQueueOrder[0]], stairData)
+				terrainQueue.erase(terrainQueueOrder.pop_front())
 
 # Creates requested terrain piece
 func generateTerrain( # Required Variables
@@ -338,9 +348,9 @@ func addTerrain(piece, stairs):
 		var tile2Create = generateTerrain(
 			Bposition,
 			piece["height"],
-			W.colors[piece["colorIDA"]],
-			W.colors[piece["colorIDB"]],
-			W.colors[piece["colorIDC"]],
+			"c" + W.colors[piece["colorIDA"]],
+			"c" + W.colors[piece["colorIDB"]],
+			"c" + W.colors[piece["colorIDC"]],
 			piece["cliffA"],
 			piece["cliffB"],
 			piece["cliffC"],
@@ -378,33 +388,39 @@ func addTerrain(piece, stairs):
 func updateTerrain(pieces):
 	# Adds new terrain
 	for piece in pieces:
+		if !(piece["terrainID"] in terrainLoaded) and !(piece["terrainID"] in terrainQueue):
+			terrainQueue[entity["ID"]] = entity
+			terrainQueueOrder.append(entity["ID"])
 		var Bposition = Vector3(piece["posX"], piece["posY"], piece["posZ"]) #Gets the translation
 		var matrixCheck = false
 		if Bposition.x in tXMatrix:
 			matrixCheck = piece["terrainID"] in tXMatrix[Bposition.x]
-		var queueCheck = piece["terrainID"] in tTileQueue
+		var queueCheck = piece["terrainID"] in terrainQueue
 		if !(matrixCheck or queueCheck):
-			tTileQueue[piece["terrainID"]] = piece
-			tTileQueueOrder.append(piece["terrainID"])
+			terrainQueue[piece["terrainID"]] = piece
+			terrainQueueOrder.append(piece["terrainID"])
 	
 	# Finds the terrain it needs to delete
-	var delItems = []
 	for xPos in tXMatrix:
 		if xPos > camLoc.x + renderDis or xPos < camLoc.x - renderDis: #Checks if out of range on x
-			var remTiles = tXMatrix[xPos]
-			for item in remTiles:
-				if !("eleted" in str(remTiles[item])):
-					tZMatrix[remTiles[item].translation.z].erase(item)
-					remTiles[item].queue_free()
+			var remTerrain = tXMatrix[xPos]
+			for piece in remTerrain:
+				var tObj = tXMatrix[xPos][piece]
+				if !("eleted" in str(tObj)):
+					var zPos = round(tObj.translation.z*10)/10
+					if zPos in tZMatrix: tZMatrix[zPos].erase(piece)
+					tObj.queue_free()
 			tXMatrix.erase(xPos)
 	
-	for zPos in tXMatrix:
+	for zPos in tZMatrix:
 		if zPos > camLoc.y + renderDis or zPos < camLoc.y - renderDis: #Checks if out of range on z
-			var remTiles = tZMatrix[zPos]
-			for item in remTiles:
-				if !("eleted" in str(remTiles[item])):
-					tXMatrix[remTiles[item].translation.x].erase(item)
-					remTiles[item].queue_free()
+			var remTerrain = tZMatrix[zPos]
+			for piece in remTerrain:
+				var tObj = tZMatrix[zPos][piece]
+				if !("eleted" in str(tObj)):
+					var xPos = round(tObj.translation.x*10)/10
+					if xPos in tXMatrix: tXMatrix[xPos].erase(piece)
+					tObj.queue_free()
 			tZMatrix.erase(zPos)
 
 #Updates queue order
@@ -412,22 +428,22 @@ func updateTerrainQueue():
 	var queueDistances = []
 	var newQueueOrder = []
 	
-	for piece in tTileQueue.values():
-		queueDistances.append(sqrt(pow(piece["posX"] - camLoc.x, 2)) + sqrt(pow(piece["posZ"] - camLoc.y, 2)))
+	for piece in terrainQueue.values():
+		queueDistances.append(sqrt(pow(float(piece["posX"]) - camLoc.x, 2)) + sqrt(pow(float(piece["posZ"]) - camLoc.y, 2)))
 	queueDistances.sort()
 	
-	for x in range(len(tTileQueue)):
+	for x in range(len(terrainQueue)):
 		newQueueOrder.append(-1)
 	
-	for piece in tTileQueue.values():
-		var dis = sqrt(pow(piece["posX"] - camLoc.x, 2)) + sqrt(pow(piece["posZ"] - camLoc.y, 2))
+	for piece in terrainQueue.values():
+		var dis = sqrt(pow(float(piece["posX"]) - camLoc.x, 2)) + sqrt(pow(float(piece["posZ"]) - camLoc.y, 2))
 		var pos = queueDistances.bsearch(dis)
 		
 		while newQueueOrder[pos] != -1:
 			pos += 1
-		newQueueOrder[pos] = piece["ID"]
+		newQueueOrder[pos] = piece["terrainID"]
 	
-	tTileQueueOrder = newQueueOrder
+	terrainQueueOrder = newQueueOrder
 
 # Flora script for each frame
 func floraProcess():
