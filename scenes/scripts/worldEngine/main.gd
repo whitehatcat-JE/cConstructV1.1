@@ -61,7 +61,7 @@ var fLastLoc = lastLoc # For flora
 var curLoc = Vector2()
 var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
-var renderPause = 0.2
+var renderPause = 10
 var renderDis = 100
 
 var tXMatrix = {}
@@ -96,7 +96,7 @@ onready var o = $GUI/output
 const SQLite = preload("res://lib/gdsqlite.gdns");
 # Create gdsqlite instance
 var db = SQLite.new();
-var terrainQuery = """CREATE TABLE "terrain" (
+var terrainQuery = """CREATE TABLE IF NOT EXISTS  "terrain" (
 	"terrainID"	INTEGER,
 	"height"	INTEGER,
 	"posX"	TEXT,
@@ -118,7 +118,7 @@ var terrainQuery = """CREATE TABLE "terrain" (
 	"transC"	INTEGER,
 	"transD"	INTEGER,
 	PRIMARY KEY("terrainID" AUTOINCREMENT));"""
-var stairQuery = """CREATE TABLE "terrainStairs" (
+var stairQuery = """CREATE TABLE IF NOT EXISTS  "terrainStairs" (
 	"terrainID"	INTEGER,
 	"stairType"	INTEGER,
 	"stairCount"	INTEGER);"""
@@ -213,7 +213,6 @@ func terrainProcess():
 	
 	if Input.is_action_just_pressed("place") and Input.is_action_pressed("inWorld"):
 		var sP = selectedPos.global_transform.origin
-		print(W.colors.bsearch(tileMenuColor))
 		var pieceData = [
 			height, 
 			round(sP.x*10)/10, round(sP.y*10)/10, round(sP.z*10)/10,
@@ -339,11 +338,11 @@ func fetchTerrain():
 	if disLoc.x == 0: disLoc.x += 0.00001
 	if disLoc.y == 0: disLoc.y += 0.00001
 	
-	#Finds the region the db needs to retrieve info on
+	# Finds the region the db needs to retrieve info on
 	var retrieveRegionX = [0, 0, camLoc.y + renderDis, camLoc.y - renderDis]
 	var retrieveRegionZ = [camLoc.x + renderDis, camLoc.x - renderDis, 0, 0]
 	
-	#Creates the reqiured region checking
+	# Creates the reqiured region checking
 	if sqrt(pow(disLoc.x, 2)) > renderDis or sqrt(pow(disLoc.y, 2)) > renderDis:
 		retrieveRegionX = [camLoc.x + renderDis, camLoc.x - renderDis, camLoc.y + renderDis, camLoc.y - renderDis]
 		retrieveRegionZ = [1000000, 1000000, 1000000, 1000000]
@@ -363,7 +362,7 @@ func fetchTerrain():
 			retrieveRegionZ[3] = camLoc.y - renderDis
 	
 	
-	#Retrieves the regions tiles
+	# Retrieves the regions tiles
 	var xdb = db.fetch_array_with_args(
 		"SELECT * FROM terrain WHERE terrain.posX <= ? and terrain.posX >= ? and terrain.posZ <= ? and terrain.posZ >= ?;", 
 		retrieveRegionX
@@ -374,6 +373,7 @@ func fetchTerrain():
 		retrieveRegionZ
 	)
 	
+	print(len(xdb) + len(zdb))
 	var newStairData = db.fetch_array_with_args(
 		"""SELECT terrainID, stairType, stairCount FROM terrainStairs
 			WHERE terrainID IN (
@@ -470,17 +470,6 @@ func addTerrain(piece):
 
 # Adds new terrain and removes old terrain from world
 func updateTerrain(pieces):
-	# Adds new terrain
-	for piece in pieces:
-		var Bposition = Vector3(piece["posX"], piece["posY"], piece["posZ"]) #Gets the translation
-		var matrixCheck = false
-		if Bposition.x in tXMatrix:
-			matrixCheck = piece["terrainID"] in tXMatrix[Bposition.x]
-		var queueCheck = piece["terrainID"] in terrainQueue
-		if !(matrixCheck or queueCheck):
-			terrainQueue[piece["terrainID"]] = piece
-			terrainQueueOrder.append(piece["terrainID"])
-	
 	# Finds the terrain it needs to delete
 	for xPos in tXMatrix:
 		if xPos > camLoc.x + renderDis or xPos < camLoc.x - renderDis: #Checks if out of range on x
@@ -503,6 +492,30 @@ func updateTerrain(pieces):
 					if xPos in tXMatrix: tXMatrix[xPos].erase(piece)
 					tObj.queue_free()
 			tZMatrix.erase(zPos)
+	
+	for loadingPiece in terrainQueue:
+		var piece = terrainQueue[loadingPiece]
+		var posX = float(piece["posX"])
+		var posZ = float(piece["posZ"])
+		
+		var xCheck = posX > camLoc.x + renderDis or posX < camLoc.x - renderDis
+		var zCheck = posZ > camLoc.y + renderDis or posZ < camLoc.y - renderDis
+		
+		if xCheck or zCheck:
+			terrainQueue.erase(loadingPiece)
+			terrainQueueOrder.erase(loadingPiece)
+		
+	
+	# Adds new terrain
+	for piece in pieces:
+		var Bposition = Vector3(piece["posX"], piece["posY"], piece["posZ"]) #Gets the translation
+		var matrixCheck = false
+		if Bposition.x in tXMatrix:
+			matrixCheck = piece["terrainID"] in tXMatrix[Bposition.x]
+		var queueCheck = piece["terrainID"] in terrainQueue
+		if !(matrixCheck or queueCheck):
+			terrainQueue[piece["terrainID"]] = piece
+			terrainQueueOrder.append(piece["terrainID"])
 
 # Updates queue order
 func updateTerrainQueue():
