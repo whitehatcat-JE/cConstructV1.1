@@ -8,6 +8,7 @@ var DEFCLIFFCOLOR = "cGrey"
 #var 
 # Terrain Variables
 var height = 0
+var storedTrans
 var cliffA = false
 var cliffB = false
 var cliffC = false
@@ -66,7 +67,6 @@ func manGenerate(h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, t
 	if colorTrans == null: colorTrans = coA;
 	if colorCliff == null: colorCliff = DEFCLIFFCOLOR;
 	if tA and tB and tC and tD: color = colorTrans;
-	
 	# Sets common variables used when positioning the meshes
 	displacement = float(height) / 4.0
 	curFeatureHeight = FEATUREHEIGHT * displacement - FEATUREHEIGHT

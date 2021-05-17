@@ -59,9 +59,9 @@ var editingColor = TILE
 var lastLoc = Vector2(pow(10, 10), pow(10, 10)) # Y being Z
 var fLastLoc = lastLoc # For flora
 var curLoc = Vector2()
-var camLoc = Vector2()
+var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
-var renderPause = 3
+var renderPause = 0.2
 var renderDis = 100
 
 var tXMatrix = {}
@@ -86,6 +86,7 @@ onready var ySelector = $ySelector
 onready var selectedPos = $selectedPos
 onready var heightSlider = $GUI/terrainMenu/heightSlider
 onready var cam = $Camera
+onready var deleteCast = $Camera/deleteCast
 onready var sceneMenu = $GUI/sceneMenu
 onready var terrainMenu = $GUI/terrainMenu
 onready var terrainMenuPivot = $GUI/terrainMenu/pivot
@@ -95,6 +96,32 @@ onready var o = $GUI/output
 const SQLite = preload("res://lib/gdsqlite.gdns");
 # Create gdsqlite instance
 var db = SQLite.new();
+var terrainQuery = """CREATE TABLE "terrain" (
+	"terrainID"	INTEGER,
+	"height"	INTEGER,
+	"posX"	TEXT,
+	"posY"	REAL,
+	"posZ"	REAL,
+	"colorIDA"	INTEGER,
+	"colorIDB"	INTEGER,
+	"colorIDC"	INTEGER,
+	"cliffA"	INTEGER,
+	"cliffB"	INTEGER,
+	"cliffC"	INTEGER,
+	"cliffD"	INTEGER,
+	"ledgeA"	INTEGER,
+	"ledgeB"	INTEGER,
+	"ledgeC"	INTEGER,
+	"ledgeD"	INTEGER,
+	"transA"	INTEGER,
+	"transB"	INTEGER,
+	"transC"	INTEGER,
+	"transD"	INTEGER,
+	PRIMARY KEY("terrainID" AUTOINCREMENT));"""
+var stairQuery = """CREATE TABLE "terrainStairs" (
+	"terrainID"	INTEGER,
+	"stairType"	INTEGER,
+	"stairCount"	INTEGER);"""
 
 ### ALLMODE CODE ###
 # Runs when scene is created
@@ -106,7 +133,9 @@ func _ready():
 	heightSlider.value = MAXHEIGHT
 	
 	# SQL Connections
-	db.open("user://worldDB.db");
+	db.open("user://worldDB.db")
+	db.query(terrainQuery)
+	db.query(stairQuery)
 
 # Runs every frame
 func _process(delta):
@@ -184,12 +213,13 @@ func terrainProcess():
 	
 	if Input.is_action_just_pressed("place") and Input.is_action_pressed("inWorld"):
 		var sP = selectedPos.global_transform.origin
+		print(W.colors.bsearch(tileMenuColor))
 		var pieceData = [
 			height, 
 			round(sP.x*10)/10, round(sP.y*10)/10, round(sP.z*10)/10,
-			W.colors.bsearch(transMenuColor), 
-			W.colors.bsearch(tileMenuColor), 
-			W.colors.bsearch(detailMenuColor),
+			colorIndex(transMenuColor), 
+			colorIndex(tileMenuColor), 
+			colorIndex(detailMenuColor),
 			cliffA, cliffB, cliffC, cliffD,
 			ledgeA, ledgeB, ledgeC, ledgeD,
 			transA, transB, transC, transD
@@ -199,7 +229,57 @@ func terrainProcess():
 				cliffA, cliffB, cliffC, cliffD, ledgeA, ledgeB, ledgeC, ledgeD,
 				transA, transB, transC, transD) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);""",
 			 pieceData)
-		generateTerrain()
+		var newID = 0
+		for id in db.fetch_array("SELECT MAX(terrainID) FROM terrain"):
+			newID = id[newID]
+		
+		if stairsA > 0:
+			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			[newID, 0, stairsA])
+		if stairsB > 0:
+			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			[newID, 1, stairsB])
+		if stairsC > 0:
+			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			[newID, 2, stairsC])
+		if stairsD > 0:
+			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			[newID, 3, stairsD])
+		if oStairsA > 0:
+			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			[newID, 4, oStairsA])
+		if oStairsB > 0:
+			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			[newID, 5, oStairsB])
+		if oStairsC > 0:
+			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			[newID, 6, oStairsC])
+		if oStairsD > 0:
+			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			[newID, 7, oStairsD])
+		
+		var newPiece = generateTerrain()
+		
+		#Appends to xMatrix
+		if pieceData[1] in tXMatrix:
+			tXMatrix[pieceData[1]][newID] = newPiece
+		else:
+			tXMatrix[pieceData[1]] = {newID:newPiece}
+		#Appends to zMatrix
+		if pieceData[2] in tZMatrix:
+			tZMatrix[pieceData[2]][newID] = newPiece
+		else:
+			tZMatrix[pieceData[2]] = {newID:newPiece}
+	
+	if Input.is_action_just_pressed("delete") and Input.is_action_pressed("inWorld"):
+		if deleteCast.is_colliding():
+			var delObj = deleteCast.get_collider().get_parent().get_parent()
+			var xPos = round(delObj.global_transform.origin.x*10)/10
+			var zPos = round(delObj.global_transform.origin.z*10)/10
+			db.query_with_args("DELETE FROM terrain WHERE posX == ? AND posZ == ?", 
+				[xPos, zPos]
+			)
+			delObj.queue_free()
 	
 	if pow(camLoc.x - $Camera.translation.x, 2) > renderPause or pow(camLoc.y - $Camera.translation.z, 2) > renderPause:
 		camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
@@ -207,10 +287,12 @@ func terrainProcess():
 		updateTerrainQueue()
 	
 	if len(terrainQueue) > 0:
-		for x in range(round(len(terrainQueue)/100) + 2):
+		for x in range(round(len(terrainQueueOrder)/100) + 2):
 			if len(terrainQueue) > 0:
-				addTerrain(terrainQueue[terrainQueueOrder[0]], stairData)
+				addTerrain(terrainQueue[terrainQueueOrder[0]])
 				terrainQueue.erase(terrainQueueOrder.pop_front())
+			else:
+				break
 
 # Creates requested terrain piece
 func generateTerrain( # Required Variables
@@ -242,7 +324,7 @@ func generateTerrain( # Required Variables
 	# Feeds set info into terrainHandler
 	var newTerrainPiece = W.loaded["terrainHandler"].instance()
 	self.add_child(newTerrainPiece)
-	newTerrainPiece.translation = selectedPos.global_transform.origin
+	newTerrainPiece.translation = coord
 	newTerrainPiece.manGenerate(
 		h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD, oA, oB, oC, oD
 	)
@@ -292,19 +374,21 @@ func fetchTerrain():
 		retrieveRegionZ
 	)
 	
-	stairData = db.fetch_array_with_args(
+	var newStairData = db.fetch_array_with_args(
 		"""SELECT terrainID, stairType, stairCount FROM terrainStairs
 			WHERE terrainID IN (
 				SELECT terrainID FROM terrain
-				WHERE posX < ? AND posX > ? AND posZ < ? AND posZ > ?
+				WHERE posX <= ? AND posX >= ? AND posZ <= ? AND posZ >= ?
 			);""",
 		[camLoc.x + renderDis, camLoc.x - renderDis, camLoc.y + renderDis, camLoc.y - renderDis]
 	)
 	
+	for stair in newStairData: stairData.append(stair)
+	
 	return xdb + zdb
 
 # Adds a terrain piece to the world
-func addTerrain(piece, stairs):
+func addTerrain(piece):
 	#Converts the dbs entries into usable values
 	var Bposition = Vector3(piece["posX"], piece["posY"], piece["posZ"]) #Gets the translation
 	
@@ -323,46 +407,46 @@ func addTerrain(piece, stairs):
 	var oSC = 0
 	var oSD = 0
 	
-	for stair in stairs:
-		if stair["terrainID"] == piece["terrainID"]:
-			match stair["type"]:
-				"sA":
-					sA = stair["count"]
-				"sB":
-					sB = stair["count"]
-				"sC":
-					sC = stair["count"]
-				"sD":
-					sD = stair["count"]
-				"oSA":
-					oSA = stair["count"]
-				"oSB":
-					oSB = stair["count"]
-				"oSC":
-					oSC = stair["count"]
-				"oSD":
-					oSD = stair["count"]
+	#for stair in stairData:
+	#	if stair["terrainID"] == piece["terrainID"]:
+	#		match stair["stairType"]:
+	#			0:
+	#				sA = stair["stairCount"]
+	#			1:
+	#				sB = stair["stairCount"]
+	#			2:
+	#				sC = stair["stairCount"]
+	#			3:
+	#				sD = stair["stairCount"]
+	#			4:
+	#				oSA = stair["stairCount"]
+	#			5:
+	#				oSB = stair["stairCount"]
+	#			6:
+	#				oSC = stair["stairCount"]
+	#			7:
+	#				oSD = stair["stairCount"]
 
 	
 	if !exists:
 		var tile2Create = generateTerrain(
 			Bposition,
 			piece["height"],
-			"c" + W.colors[piece["colorIDA"]],
 			"c" + W.colors[piece["colorIDB"]],
+			"c" + W.colors[piece["colorIDA"]],
 			"c" + W.colors[piece["colorIDC"]],
-			piece["cliffA"],
-			piece["cliffB"],
-			piece["cliffC"],
-			piece["cliffD"],
-			piece["ledgeA"],
-			piece["ledgeB"],
-			piece["ledgeC"],
-			piece["ledgeD"],
-			piece["transA"],
-			piece["transB"],
-			piece["transC"],
-			piece["transD"],
+			piece["cliffA"] == 1,
+			piece["cliffB"] == 1,
+			piece["cliffC"] == 1,
+			piece["cliffD"] == 1,
+			piece["ledgeA"] == 1,
+			piece["ledgeB"] == 1,
+			piece["ledgeC"] == 1,
+			piece["ledgeD"] == 1,
+			piece["transA"] == 1,
+			piece["transB"] == 1,
+			piece["transC"] == 1,
+			piece["transD"] == 1,
 			sA,
 			sB,
 			sC,
@@ -388,9 +472,6 @@ func addTerrain(piece, stairs):
 func updateTerrain(pieces):
 	# Adds new terrain
 	for piece in pieces:
-		if !(piece["terrainID"] in terrainLoaded) and !(piece["terrainID"] in terrainQueue):
-			terrainQueue[entity["ID"]] = entity
-			terrainQueueOrder.append(entity["ID"])
 		var Bposition = Vector3(piece["posX"], piece["posY"], piece["posZ"]) #Gets the translation
 		var matrixCheck = false
 		if Bposition.x in tXMatrix:
@@ -423,7 +504,7 @@ func updateTerrain(pieces):
 					tObj.queue_free()
 			tZMatrix.erase(zPos)
 
-#Updates queue order
+# Updates queue order
 func updateTerrainQueue():
 	var queueDistances = []
 	var newQueueOrder = []
@@ -444,6 +525,13 @@ func updateTerrainQueue():
 		newQueueOrder[pos] = piece["terrainID"]
 	
 	terrainQueueOrder = newQueueOrder
+
+func colorIndex(color):
+	if color in W.colors:
+		for colIndex in range(len(W.colors)):
+			if W.colors[colIndex] == color:
+				return colIndex
+				break
 
 # Flora script for each frame
 func floraProcess():
@@ -545,15 +633,11 @@ func _on_editingColorA_button_down():
 	$GUI/tileMenu/editingColorA.modulate = Color(1.0, 1.0, 1.0)
 	$GUI/tileMenu/editingColorB.modulate = Color(0.5, 0.5, 0.5)
 	$GUI/tileMenu/editingColorC.modulate = Color(0.5, 0.5, 0.5)
-
-
 func _on_editingColorB_button_down():
 	editingColor = TILE
 	$GUI/tileMenu/editingColorA.modulate = Color(0.5, 0.5, 0.5)
 	$GUI/tileMenu/editingColorB.modulate = Color(1.0, 1.0, 1.0)
 	$GUI/tileMenu/editingColorC.modulate = Color(0.5, 0.5, 0.5)
-
-
 func _on_editingColorC_button_down():
 	editingColor = TRANSITION
 	$GUI/tileMenu/editingColorA.modulate = Color(0.5, 0.5, 0.5)

@@ -217,6 +217,11 @@ cast_to = Vector3( 0, -100, 0 )
 collide_with_areas = true
 collide_with_bodies = false
 
+[node name="deleteCast" type="RayCast" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -100, 0 )
+
 [node name="objDisplayPoint" type="Spatial" parent="Camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.172, 0.422, -1.31 )
 visible = false
