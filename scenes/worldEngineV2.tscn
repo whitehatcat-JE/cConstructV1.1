@@ -1421,7 +1421,6 @@ environment = ExtResource( 14 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment"]
 transform = Transform( 0.559193, 0.59636, -0.575898, 0, 0.694658, 0.71934, 0.829038, -0.40225, 0.388448, 0, 4.1, 0 )
-shadow_enabled = true
 
 [node name="Spatial" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.6, 0 )

@@ -61,8 +61,8 @@ var fLastLoc = lastLoc # For flora
 var curLoc = Vector2()
 var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
-var renderPause = 10
-var renderDis = 100
+var renderPause = 3.2
+var renderDis = 32
 
 var tXMatrix = {}
 var tZMatrix = {}
@@ -386,14 +386,13 @@ func fetchTerrain():
 		[camLoc.x + renderDis, camLoc.x - renderDis, camLoc.y + renderDis, camLoc.y - renderDis]
 	)
 	
-	sortedStairData.clear()
 	for stair in newStairData:
 		if stair["terrainID"] in sortedStairData.keys():
 			sortedStairData[stair["terrainID"]].append(stair)
 		else:
 			sortedStairData[stair["terrainID"]] = [stair]
 
-	
+	print(len(xdb+zdb))
 	return xdb + zdb
 
 # Adds a terrain piece to the world
@@ -440,6 +439,7 @@ func addTerrain(piece):
 						oSC = stair["stairCount"]
 					7:
 						oSD = stair["stairCount"]
+		sortedStairData.erase(piece["terrainID"])
 
 	
 	if !exists:
@@ -503,8 +503,8 @@ func updateTerrain(pieces):
 		if xDel: #Checks if out of range on x
 			for terrainID in tXMatrix[xPos]:
 				var piece = tXMatrix[xPos][terrainID]
-				tZMatrix[piece.setZ].erase(terrainID)
 				if !("eleted" in str(piece)):
+					tZMatrix[piece.setZ].erase(terrainID)
 					piece.queue_free()
 			tXMatrix.erase(xPos)
 	
@@ -512,8 +512,8 @@ func updateTerrain(pieces):
 		if float(zPos) > camLoc.y + renderDis or float(zPos) < camLoc.y - renderDis: #Checks if out of range on z
 			for terrainID in tZMatrix[zPos]:
 				var piece = tZMatrix[zPos][terrainID]
-				tXMatrix[piece.setX].erase(terrainID)
 				if !("eleted" in str(piece)):
+					tXMatrix[piece.setX].erase(terrainID)
 					piece.queue_free()
 			tZMatrix.erase(zPos)
 	
@@ -528,6 +528,7 @@ func updateTerrain(pieces):
 		if xCheck or zCheck:
 			terrainQueue.erase(loadingPiece)
 			terrainQueueOrder.erase(loadingPiece)
+			sortedStairData.erase(loadingPiece)
 		
 	
 # Updates queue order
