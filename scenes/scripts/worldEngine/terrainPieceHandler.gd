@@ -36,9 +36,9 @@ var colorCliff = null
 var displacement = 1.0
 var curFeatureHeight = FEATUREHEIGHT
 
-var setX = 0
-var setY = 0
-var setZ = 0
+var setX = "0.0"
+var setY = "0.0"
+var setZ = "0.0"
 # Deletes these when reloadPiece script executes
 var currentChildren = []
 # Sets variables manually

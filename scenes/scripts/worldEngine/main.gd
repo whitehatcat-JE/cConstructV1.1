@@ -321,9 +321,9 @@ func generateTerrain( # Required Variables
 	oB = oStairsB,
 	oC = oStairsC,
 	oD = oStairsD,
-	sX = 0.0,
-	sY = 0.0,
-	sZ = 0.0):
+	sX = "0.0",
+	sY = "0.0",
+	sZ = "0.0"):
 	# Feeds set info into terrainHandler
 	var newTerrainPiece = W.loaded["terrainHandler"].instance()
 	self.add_child(newTerrainPiece)
@@ -399,12 +399,16 @@ func fetchTerrain():
 # Adds a terrain piece to the world
 func addTerrain(piece):
 	#Converts the dbs entries into usable values
-	var Bposition = Vector3(piece["posX"], piece["posY"], piece["posZ"]) #Gets the translation
+	var Bposition = Vector3(
+		round(float(piece["posX"])*10.0)/10.0, 
+		round(float(piece["posY"])*10.0)/10.0,
+		round(float(piece["posZ"])*10.0)/10.0
+	) #Gets the translation
 	
 	#Checks if item exists
 	var exists = false
-	if Bposition.x in tXMatrix:
-		if piece["terrainID"] in tXMatrix[Bposition.x]:
+	if piece["posX"] in tXMatrix:
+		if piece["terrainID"] in tXMatrix[piece["posX"]]:
 			exists = true
 	
 	var sA = 0
@@ -471,24 +475,23 @@ func addTerrain(piece):
 		)
 		
 		#Appends to xMatrix
-		if float(piece["posX"]) in tXMatrix:
-			tXMatrix[float(piece["posX"])][piece["terrainID"]] = tile2Create
+		if piece["posX"] in tXMatrix:
+			tXMatrix[piece["posX"]][piece["terrainID"]] = tile2Create
 		else:
-			tXMatrix[float(piece["posX"])] = {piece["terrainID"]:tile2Create}
+			tXMatrix[piece["posX"]] = {piece["terrainID"]:tile2Create}
 		#Appends to zMatrix
-		if float(piece["posZ"]) in tZMatrix:
-			tZMatrix[float(piece["posZ"])][piece["terrainID"]] = tile2Create
+		if piece["posZ"] in tZMatrix:
+			tZMatrix[piece["posZ"]][piece["terrainID"]] = tile2Create
 		else:
-			tZMatrix[float(piece["posZ"])] = {piece["terrainID"]:tile2Create}
+			tZMatrix[piece["posZ"]] = {piece["terrainID"]:tile2Create}
 
 # Adds new terrain and removes old terrain from world
 func updateTerrain(pieces):
 	# Adds new terrain
 	for piece in pieces:
-		var Bposition = Vector3(piece["posX"], piece["posY"], piece["posZ"]) #Gets the translation
 		var matrixCheck = false
-		if Bposition.x in tXMatrix:
-			matrixCheck = piece["terrainID"] in tXMatrix[Bposition.x]
+		if piece["posX"] in tXMatrix:
+			matrixCheck = piece["terrainID"] in tXMatrix[piece["posX"]]
 		var queueCheck = piece["terrainID"] in terrainQueue
 		if !(matrixCheck or queueCheck):
 			terrainQueue[piece["terrainID"]] = piece
@@ -496,28 +499,22 @@ func updateTerrain(pieces):
 	
 	# Finds the terrain it needs to delete
 	for xPos in tXMatrix:
-		var xDel = xPos > camLoc.x + renderDis or xPos < camLoc.x - renderDis
+		var xDel = float(xPos) > camLoc.x + renderDis or float(xPos) < camLoc.x - renderDis
 		if xDel: #Checks if out of range on x
-			var remTerrain = tXMatrix[xPos]
-			for piece in remTerrain:
-				var tObj = tXMatrix[xPos][piece]
-				if !("eleted" in str(tObj)):
-					var zPos = float(tObj.setZ)
-					var subMatri = tZMatrix[zPos]
-					tObj.queue_free()
-					subMatri.erase(piece)
+			for terrainID in tXMatrix[xPos]:
+				var piece = tXMatrix[xPos][terrainID]
+				tZMatrix[piece.setZ].erase(terrainID)
+				if !("eleted" in str(piece)):
+					piece.queue_free()
 			tXMatrix.erase(xPos)
 	
 	for zPos in tZMatrix:
-		if zPos > camLoc.y + renderDis or zPos < camLoc.y - renderDis: #Checks if out of range on z
-			var remTerrain = tZMatrix[zPos]
-			for piece in remTerrain:
-				var tObj = tZMatrix[zPos][piece]
-				if !("eleted" in str(tObj)):
-					var xPos = float(tObj.setX)
-					var subMatri = tXMatrix[xPos]
-					tObj.queue_free()
-					subMatri.erase(piece)
+		if float(zPos) > camLoc.y + renderDis or float(zPos) < camLoc.y - renderDis: #Checks if out of range on z
+			for terrainID in tZMatrix[zPos]:
+				var piece = tZMatrix[zPos][terrainID]
+				tXMatrix[piece.setX].erase(terrainID)
+				if !("eleted" in str(piece)):
+					piece.queue_free()
 			tZMatrix.erase(zPos)
 	
 	for loadingPiece in terrainQueue:
