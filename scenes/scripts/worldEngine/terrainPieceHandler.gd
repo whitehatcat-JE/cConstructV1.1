@@ -35,10 +35,14 @@ var colorCliff = null
 
 var displacement = 1.0
 var curFeatureHeight = FEATUREHEIGHT
+
+var setX = 0
+var setY = 0
+var setZ = 0
 # Deletes these when reloadPiece script executes
 var currentChildren = []
 # Sets variables manually
-func manGenerate(h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD, oA, oB, oC, oD):
+func manGenerate(h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD, oA, oB, oC, oD, sX, sY, sZ):
 	height = h
 	cliffA = cA
 	cliffB = cB
@@ -63,6 +67,9 @@ func manGenerate(h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, t
 	color = coA
 	colorTrans = coB
 	colorCliff = coC
+	setX = sX
+	setY = sY
+	setZ = sZ
 	# Sets colors
 	if colorTrans == null: colorTrans = coA;
 	if colorCliff == null: colorCliff = DEFCLIFFCOLOR;

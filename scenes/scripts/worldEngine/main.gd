@@ -70,6 +70,7 @@ var oXMatrix = {}
 var oZMatrix = {}
 
 var stairData = []
+var sortedStairData = {}
 
 var terrainQueue = {}
 var terrainQueueOrder = []
@@ -319,13 +320,16 @@ func generateTerrain( # Required Variables
 	oA = oStairsA,
 	oB = oStairsB,
 	oC = oStairsC,
-	oD = oStairsD):
+	oD = oStairsD,
+	sX = 0.0,
+	sY = 0.0,
+	sZ = 0.0):
 	# Feeds set info into terrainHandler
 	var newTerrainPiece = W.loaded["terrainHandler"].instance()
 	self.add_child(newTerrainPiece)
 	newTerrainPiece.translation = coord
 	newTerrainPiece.manGenerate(
-		h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD, oA, oB, oC, oD
+		h, coA, coB, coC, cA, cB, cC, cD, lA, lB, lC, lD, tA, tB, tC, tD, sA, sB, sC, sD, oA, oB, oC, oD, sX, sY, sZ
 	)
 	return newTerrainPiece
 
@@ -335,8 +339,8 @@ func fetchTerrain():
 	var disLoc = Vector2(camLoc.x - preLoc.x, camLoc.y - preLoc.y)
 	preLoc = camLoc
 	
-	if disLoc.x == 0: disLoc.x += 0.00001
-	if disLoc.y == 0: disLoc.y += 0.00001
+	if disLoc.x == 0.0: disLoc.x += 0.00001
+	if disLoc.y == 0.0: disLoc.y += 0.00001
 	
 	# Finds the region the db needs to retrieve info on
 	var retrieveRegionX = [0, 0, camLoc.y + renderDis, camLoc.y - renderDis]
@@ -373,7 +377,6 @@ func fetchTerrain():
 		retrieveRegionZ
 	)
 	
-	print(len(xdb) + len(zdb))
 	var newStairData = db.fetch_array_with_args(
 		"""SELECT terrainID, stairType, stairCount FROM terrainStairs
 			WHERE terrainID IN (
@@ -383,7 +386,13 @@ func fetchTerrain():
 		[camLoc.x + renderDis, camLoc.x - renderDis, camLoc.y + renderDis, camLoc.y - renderDis]
 	)
 	
-	for stair in newStairData: stairData.append(stair)
+	sortedStairData.clear()
+	for stair in newStairData:
+		if stair["terrainID"] in sortedStairData.keys():
+			sortedStairData[stair["terrainID"]].append(stair)
+		else:
+			sortedStairData[stair["terrainID"]] = [stair]
+
 	
 	return xdb + zdb
 
@@ -407,25 +416,26 @@ func addTerrain(piece):
 	var oSC = 0
 	var oSD = 0
 	
-	#for stair in stairData:
-	#	if stair["terrainID"] == piece["terrainID"]:
-	#		match stair["stairType"]:
-	#			0:
-	#				sA = stair["stairCount"]
-	#			1:
-	#				sB = stair["stairCount"]
-	#			2:
-	#				sC = stair["stairCount"]
-	#			3:
-	#				sD = stair["stairCount"]
-	#			4:
-	#				oSA = stair["stairCount"]
-	#			5:
-	#				oSB = stair["stairCount"]
-	#			6:
-	#				oSC = stair["stairCount"]
-	#			7:
-	#				oSD = stair["stairCount"]
+	if piece["terrainID"] in sortedStairData:
+		for stair in sortedStairData[piece["terrainID"]]:
+			if stair["terrainID"] == piece["terrainID"]:
+				match stair["stairType"]:
+					0:
+						sA = stair["stairCount"]
+					1:
+						sB = stair["stairCount"]
+					2:
+						sC = stair["stairCount"]
+					3:
+						sD = stair["stairCount"]
+					4:
+						oSA = stair["stairCount"]
+					5:
+						oSB = stair["stairCount"]
+					6:
+						oSC = stair["stairCount"]
+					7:
+						oSD = stair["stairCount"]
 
 	
 	if !exists:
@@ -454,32 +464,48 @@ func addTerrain(piece):
 			oSA,
 			oSB,
 			oSC,
-			oSD
+			oSD,
+			piece["posX"],
+			piece["posY"],
+			piece["posZ"]
 		)
 		
 		#Appends to xMatrix
-		if Bposition.x in tXMatrix:
-			tXMatrix[Bposition.x][piece["terrainID"]] = tile2Create
+		if float(piece["posX"]) in tXMatrix:
+			tXMatrix[float(piece["posX"])][piece["terrainID"]] = tile2Create
 		else:
-			tXMatrix[Bposition.x] = {piece["terrainID"]:tile2Create}
+			tXMatrix[float(piece["posX"])] = {piece["terrainID"]:tile2Create}
 		#Appends to zMatrix
-		if Bposition.z in tZMatrix:
-			tZMatrix[Bposition.z][piece["terrainID"]] = tile2Create
+		if float(piece["posZ"]) in tZMatrix:
+			tZMatrix[float(piece["posZ"])][piece["terrainID"]] = tile2Create
 		else:
-			tZMatrix[Bposition.z] = {piece["terrainID"]:tile2Create}
+			tZMatrix[float(piece["posZ"])] = {piece["terrainID"]:tile2Create}
 
 # Adds new terrain and removes old terrain from world
 func updateTerrain(pieces):
+	# Adds new terrain
+	for piece in pieces:
+		var Bposition = Vector3(piece["posX"], piece["posY"], piece["posZ"]) #Gets the translation
+		var matrixCheck = false
+		if Bposition.x in tXMatrix:
+			matrixCheck = piece["terrainID"] in tXMatrix[Bposition.x]
+		var queueCheck = piece["terrainID"] in terrainQueue
+		if !(matrixCheck or queueCheck):
+			terrainQueue[piece["terrainID"]] = piece
+			terrainQueueOrder.append(piece["terrainID"])
+	
 	# Finds the terrain it needs to delete
 	for xPos in tXMatrix:
-		if xPos > camLoc.x + renderDis or xPos < camLoc.x - renderDis: #Checks if out of range on x
+		var xDel = xPos > camLoc.x + renderDis or xPos < camLoc.x - renderDis
+		if xDel: #Checks if out of range on x
 			var remTerrain = tXMatrix[xPos]
 			for piece in remTerrain:
 				var tObj = tXMatrix[xPos][piece]
 				if !("eleted" in str(tObj)):
-					var zPos = round(tObj.translation.z*10)/10
-					if zPos in tZMatrix: tZMatrix[zPos].erase(piece)
+					var zPos = float(tObj.setZ)
+					var subMatri = tZMatrix[zPos]
 					tObj.queue_free()
+					subMatri.erase(piece)
 			tXMatrix.erase(xPos)
 	
 	for zPos in tZMatrix:
@@ -488,9 +514,10 @@ func updateTerrain(pieces):
 			for piece in remTerrain:
 				var tObj = tZMatrix[zPos][piece]
 				if !("eleted" in str(tObj)):
-					var xPos = round(tObj.translation.x*10)/10
-					if xPos in tXMatrix: tXMatrix[xPos].erase(piece)
+					var xPos = float(tObj.setX)
+					var subMatri = tXMatrix[xPos]
 					tObj.queue_free()
+					subMatri.erase(piece)
 			tZMatrix.erase(zPos)
 	
 	for loadingPiece in terrainQueue:
@@ -506,17 +533,6 @@ func updateTerrain(pieces):
 			terrainQueueOrder.erase(loadingPiece)
 		
 	
-	# Adds new terrain
-	for piece in pieces:
-		var Bposition = Vector3(piece["posX"], piece["posY"], piece["posZ"]) #Gets the translation
-		var matrixCheck = false
-		if Bposition.x in tXMatrix:
-			matrixCheck = piece["terrainID"] in tXMatrix[Bposition.x]
-		var queueCheck = piece["terrainID"] in terrainQueue
-		if !(matrixCheck or queueCheck):
-			terrainQueue[piece["terrainID"]] = piece
-			terrainQueueOrder.append(piece["terrainID"])
-
 # Updates queue order
 func updateTerrainQueue():
 	var queueDistances = []
@@ -544,7 +560,6 @@ func colorIndex(color):
 		for colIndex in range(len(W.colors)):
 			if W.colors[colIndex] == color:
 				return colIndex
-				break
 
 # Flora script for each frame
 func floraProcess():
