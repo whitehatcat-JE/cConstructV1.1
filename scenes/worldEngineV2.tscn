@@ -103,6 +103,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 0, 1 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 60, 13 ), Vector2( 60, 13 ), Vector2( 60, -56 ) ]
+}
 
 [sub_resource type="DynamicFont" id=14]
 size = 11
@@ -217,7 +229,7 @@ cast_to = Vector3( 0, -100, 0 )
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="deleteCast" type="RayCast" parent="Camera"]
+[node name="deleteOrPlaceCast" type="RayCast" parent="Camera"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 enabled = true
 cast_to = Vector3( 0, -100, 0 )
@@ -503,9 +515,9 @@ __meta__ = {
 
 [node name="navigation" type="Control" parent="GUI"]
 margin_left = 60.0
-margin_top = 13.0
+margin_top = -56.0
 margin_right = 60.0
-margin_bottom = 13.0
+margin_bottom = -56.0
 rect_scale = Vector2( 1e-05, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1421,6 +1433,8 @@ environment = ExtResource( 14 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment"]
 transform = Transform( 0.559193, 0.59636, -0.575898, 0, 0.694658, 0.71934, 0.829038, -0.40225, 0.388448, 0, 4.1, 0 )
+shadow_bias = 0.0
+directional_shadow_max_distance = 250.0
 
 [node name="Spatial" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.6, 0 )

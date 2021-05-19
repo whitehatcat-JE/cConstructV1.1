@@ -23,12 +23,10 @@ config/icon="res://icon.png"
 GV="*res://GV.gd"
 W="*res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd"
 
-[debug]
-
-settings/fps/force_fps=60
-
 [display]
 
+window/size/resizable=false
+window/size/fullscreen=true
 window/vsync/use_vsync=false
 window/stretch/mode="2d"
 

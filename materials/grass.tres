@@ -1,0 +1,9 @@
+[gd_resource type="SpatialMaterial" format=2]
+
+[resource]
+albedo_color = Color( 0.054902, 0.435294, 0.137255, 1 )
+metallic = 0.06
+metallic_specular = 0.02
+metallic_texture_channel = 1
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 0.15

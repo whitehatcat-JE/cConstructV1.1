@@ -4,7 +4,7 @@ extends Node2D
 var PAGELENGTH = 13
 
 # Variables
-var allColors = ["Green", "Brown", "Grey"]
+var allColors = W.colors
 var colorChoices = allColors.duplicate()
 var page = 0
 

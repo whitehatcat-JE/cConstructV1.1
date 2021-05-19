@@ -4,7 +4,7 @@ extends Spatial
 var FEATUREDISTANCE = 3.2
 var FEATUREHEIGHT = 1.6
 var STAIRWIDTH = 0.8
-var DEFCLIFFCOLOR = "cGrey"
+var DEFCLIFFCOLOR = "cStone"
 #var 
 # Terrain Variables
 var height = 0

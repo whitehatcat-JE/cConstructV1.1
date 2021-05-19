@@ -50,9 +50,9 @@ var oStairsC = 0
 var oStairsD = 0
 
 var terrainMenuLocked = false
-var tileMenuColor = "Green"
-var transMenuColor = "Brown"
-var detailMenuColor = "Grey"
+var tileMenuColor = "Grass"
+var transMenuColor = "Dirt"
+var detailMenuColor = "Stone"
 var editingColor = TILE
 
 # 	World positions
@@ -62,7 +62,7 @@ var curLoc = Vector2()
 var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
 var renderPause = 3.2
-var renderDis = 32
+var renderDis = 256.0
 
 var tXMatrix = {}
 var tZMatrix = {}
@@ -87,7 +87,8 @@ onready var ySelector = $ySelector
 onready var selectedPos = $selectedPos
 onready var heightSlider = $GUI/terrainMenu/heightSlider
 onready var cam = $Camera
-onready var deleteCast = $Camera/deleteCast
+onready var deleteCast = $Camera/deleteOrPlaceCast
+onready var floraCast = $Camera/deleteOrPlaceCast
 onready var sceneMenu = $GUI/sceneMenu
 onready var terrainMenu = $GUI/terrainMenu
 onready var terrainMenuPivot = $GUI/terrainMenu/pivot
@@ -216,7 +217,7 @@ func terrainProcess():
 		var sP = selectedPos.global_transform.origin
 		var pieceData = [
 			height, 
-			round(sP.x*10)/10, round(sP.y*10)/10, round(sP.z*10)/10,
+			round(sP.x*10.0)/10.0, round(sP.y*10.0)/10.0, round(sP.z*10.0)/10.0,
 			colorIndex(transMenuColor), 
 			colorIndex(tileMenuColor), 
 			colorIndex(detailMenuColor),
@@ -266,10 +267,10 @@ func terrainProcess():
 		else:
 			tXMatrix[pieceData[1]] = {newID:newPiece}
 		#Appends to zMatrix
-		if pieceData[2] in tZMatrix:
-			tZMatrix[pieceData[2]][newID] = newPiece
+		if pieceData[3] in tZMatrix:
+			tZMatrix[pieceData[3]][newID] = newPiece
 		else:
-			tZMatrix[pieceData[2]] = {newID:newPiece}
+			tZMatrix[pieceData[3]] = {newID:newPiece}
 	
 	if Input.is_action_just_pressed("delete") and Input.is_action_pressed("inWorld"):
 		if deleteCast.is_colliding():
@@ -321,9 +322,9 @@ func generateTerrain( # Required Variables
 	oB = oStairsB,
 	oC = oStairsC,
 	oD = oStairsD,
-	sX = "0.0",
-	sY = "0.0",
-	sZ = "0.0"):
+	sX = round(selectedPos.global_transform.origin.x * 10.0)/10.0,
+	sY = round(selectedPos.global_transform.origin.y * 10.0)/10.0,
+	sZ = round(selectedPos.global_transform.origin.z * 10.0)/10.0):
 	# Feeds set info into terrainHandler
 	var newTerrainPiece = W.loaded["terrainHandler"].instance()
 	self.add_child(newTerrainPiece)
@@ -365,6 +366,15 @@ func fetchTerrain():
 			retrieveRegionZ[2] = camLoc.y - renderDis - disLoc.y
 			retrieveRegionZ[3] = camLoc.y - renderDis
 	
+	retrieveRegionX[0] = round(retrieveRegionX[0] * 10.0)/10.0
+	retrieveRegionX[1] = round(retrieveRegionX[1] * 10.0)/10.0
+	retrieveRegionX[2] = round(retrieveRegionX[2] * 10.0)/10.0
+	retrieveRegionX[3] = round(retrieveRegionX[3] * 10.0)/10.0
+	
+	retrieveRegionZ[0] = round(retrieveRegionZ[0] * 10.0)/10.0
+	retrieveRegionZ[1] = round(retrieveRegionZ[1] * 10.0)/10.0
+	retrieveRegionZ[2] = round(retrieveRegionZ[2] * 10.0)/10.0
+	retrieveRegionZ[3] = round(retrieveRegionZ[3] * 10.0)/10.0
 	
 	# Retrieves the regions tiles
 	var xdb = db.fetch_array_with_args(
@@ -392,7 +402,6 @@ func fetchTerrain():
 		else:
 			sortedStairData[stair["terrainID"]] = [stair]
 
-	print(len(xdb+zdb))
 	return xdb + zdb
 
 # Adds a terrain piece to the world

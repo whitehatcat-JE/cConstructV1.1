@@ -39,7 +39,7 @@ var zOffset = 0
 var renderDis =  DEFRENDERDIS
 
 # Colors
-var colors = ["Green", "Grey", "Brown"]
+var colors = ["Grass", "Stone", "Dirt", "Sand"]
 
 ### LOADING OF UNIVERSIAL ASSETS ###
 func _ready():
