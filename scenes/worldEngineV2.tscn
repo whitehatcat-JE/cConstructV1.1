@@ -1444,7 +1444,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1, 0 )
 material_override = SubResource( 22 )
 multimesh = SubResource( 24 )
 script = ExtResource( 18 )
-
 [connection signal="objVisible" from="GUI" to="." method="_on_GUI_objVisible"]
 [connection signal="button_down" from="GUI/options/exitButton" to="GUI" method="_on_exitButton_button_down"]
 [connection signal="button_down" from="GUI/options/reloadButton" to="GUI" method="_on_reloadButton_button_down"]
