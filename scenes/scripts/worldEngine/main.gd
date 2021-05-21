@@ -538,7 +538,6 @@ func updateTerrain(pieces):
 			terrainQueue.erase(loadingPiece)
 			terrainQueueOrder.erase(loadingPiece)
 			sortedStairData.erase(loadingPiece)
-		
 	
 # Updates queue order
 func updateTerrainQueue():
@@ -570,7 +569,11 @@ func colorIndex(color):
 
 # Flora script for each frame
 func floraProcess():
-	pass
+	if Input.is_action_pressed("inWorld") and Input.is_action_just_pressed("place") and floraCast.is_colliding():
+		var newGrass = load("res://grassTemp.tscn").instance()
+		self.add_child(newGrass)
+		newGrass.translation = floraCast.get_collision_point()
+		newGrass.rotation_degrees.y = cam.rotation_degrees.y
 
 # Object script for each frame
 func objectProcess():
@@ -580,14 +583,20 @@ func objectProcess():
 # Changes mode to terrain
 func _on_terrainMode_button_down():
 	mode = W.MODETERRAIN
+	terrainMenu.visible = true
+	$selectedPos.visible = true
 
 # Changes mode to flora
 func _on_plantMode_button_down():
 	mode = W.MODEFLORA
+	terrainMenu.visible = false
+	$selectedPos.visible = false
 
 # Changes mode to object
 func _on_objectMode_button_down():
 	mode = W.MODEOBJECT
+	terrainMenu.visible = false
+	$selectedPos.visible = false
 
 
 func _on_sceneMenu_changeCoords():

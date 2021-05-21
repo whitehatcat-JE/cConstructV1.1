@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -17,7 +17,6 @@
 [ext_resource path="res://scenes/scripts/worldEngine/ySelector.gd" type="Script" id=15]
 [ext_resource path="res://scenes/scripts/worldEngine/selectedPos.gd" type="Script" id=16]
 [ext_resource path="res://scenes/scripts/worldEngine/sceneMenu.gd" type="Script" id=17]
-[ext_resource path="res://scenes/MultiMeshInstance.gd" type="Script" id=18]
 [ext_resource path="res://scenes/scripts/worldEngine/terrainMenu.gd" type="Script" id=19]
 [ext_resource path="res://assets/GUI/lock.png" type="Texture" id=20]
 [ext_resource path="res://assets/GUI/unlocked.png" type="Texture" id=21]
@@ -198,18 +197,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [ true, false ]
 }
-
-[sub_resource type="SpatialMaterial" id=22]
-albedo_color = Color( 0.0901961, 0.309804, 0.886275, 1 )
-
-[sub_resource type="CubeMesh" id=23]
-size = Vector3( 0.1, 0.3, 0.1 )
-
-[sub_resource type="MultiMesh" id=24]
-transform_format = 1
-instance_count = 1
-mesh = SubResource( 23 )
-transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="worldEngineV2" type="Spatial"]
 script = ExtResource( 6 )
@@ -1435,16 +1422,6 @@ environment = ExtResource( 14 )
 transform = Transform( 0.559193, 0.59636, -0.575898, 0, 0.694658, 0.71934, 0.829038, -0.40225, 0.388448, 0, 4.1, 0 )
 shadow_bias = 0.0
 directional_shadow_max_distance = 250.0
-
-[node name="Spatial" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.6, 0 )
-
-[node name="MultiMeshInstance" type="MultiMeshInstance" parent="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1, 0 )
-material_override = SubResource( 22 )
-multimesh = SubResource( 24 )
-script = ExtResource( 18 )
-
 [connection signal="objVisible" from="GUI" to="." method="_on_GUI_objVisible"]
 [connection signal="button_down" from="GUI/options/exitButton" to="GUI" method="_on_exitButton_button_down"]
 [connection signal="button_down" from="GUI/options/reloadButton" to="GUI" method="_on_reloadButton_button_down"]
