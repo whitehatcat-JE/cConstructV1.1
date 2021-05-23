@@ -62,7 +62,7 @@ var curLoc = Vector2()
 var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
 var renderPause = 3.2
-var renderDis = 256.0
+var renderDis = 64.0
 
 var tXMatrix = {}
 var tZMatrix = {}

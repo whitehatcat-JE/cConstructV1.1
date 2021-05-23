@@ -1422,6 +1422,7 @@ environment = ExtResource( 14 )
 transform = Transform( 0.559193, 0.59636, -0.575898, 0, 0.694658, 0.71934, 0.829038, -0.40225, 0.388448, 0, 4.1, 0 )
 shadow_bias = 0.0
 directional_shadow_max_distance = 250.0
+
 [connection signal="objVisible" from="GUI" to="." method="_on_GUI_objVisible"]
 [connection signal="button_down" from="GUI/options/exitButton" to="GUI" method="_on_exitButton_button_down"]
 [connection signal="button_down" from="GUI/options/reloadButton" to="GUI" method="_on_reloadButton_button_down"]
