@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -23,7 +23,6 @@
 [ext_resource path="res://assets/GUI/unlocked.png" type="Texture" id=21]
 [ext_resource path="res://scenes/scripts/worldEngine/colorOptions.gd" type="Script" id=22]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=23]
-[ext_resource path="res://grassTemp.tscn" type="PackedScene" id=24]
 [ext_resource path="res://assets/GUI/personIcon.png" type="Texture" id=25]
 
 [sub_resource type="SphereMesh" id=1]
@@ -198,9 +197,6 @@ tracks/1/keys = {
 
 [node name="worldEngineV2" type="Spatial"]
 script = ExtResource( 6 )
-
-[node name="plant" parent="." instance=ExtResource( 24 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.15, 5.2, 4.1 )
 
 [node name="WorldEngineGLOBAL" type="Node" parent="."]
 script = ExtResource( 1 )
