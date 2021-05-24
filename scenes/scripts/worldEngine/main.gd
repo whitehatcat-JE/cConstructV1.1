@@ -578,9 +578,12 @@ func floraProcess():
 		var newGrass = load("res://grassTemp.tscn").instance()
 		self.add_child(newGrass)
 		newGrass.translation = floraCast.get_collision_point()
-		newGrass.rotation_degrees.y = cam.rotation_degrees.y
+		newGrass.rotation_degrees.y = round(rand_range(0, 3))*90
 		var scaleVariation = rand_range(0.75, 1.5)
 		newGrass.scale = Vector3(scaleVariation, scaleVariation, scaleVariation)
+		if Input.is_action_pressed("control"):
+			newGrass.get_child(0).visible = true
+			newGrass.get_child(1).visible = false
 
 # Object script for each frame
 func objectProcess():
