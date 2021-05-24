@@ -26,7 +26,7 @@ func rebuild():
 	multimesh.set_color_format(MultiMesh.COLOR_NONE)
 	multimesh.instance_count = count
 	for index in (multimesh.instance_count):
-		var pos = Vector3(sin(2*PI*(rand_range(-span,span)/span)), 0.0, sin(2*PI*(rand_range(-span,span)/span)))
+		var pos = Vector3(rand_range(-span,span), 0.0, rand_range(-span,span))
 		var basis = Basis(Vector3.UP, deg2rad(rand_range(0, 359)))
 		multimesh.set_instance_transform(index, Transform(basis, pos))
 		multimesh.set_instance_custom_data(index, Color(

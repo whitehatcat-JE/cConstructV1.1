@@ -1,0 +1,27 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://planter.gd" type="Script" id=1]
+[ext_resource path="res://mat_grass.tres" type="Material" id=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.0784314, 0.14902, 0.0117647, 1 )
+
+[sub_resource type="ArrayMesh" id=6]
+custom_aabb = AABB( -0.5, 0, -0.5, 1, 1, 1 )
+surfaces/0 = {
+"aabb": AABB( -0.5, 0, 0, 1, 1, 1e-05 ),
+"array_data": PoolByteArray( 0, 0, 0, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 60, 0, 60 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97313,
+"index_count": 0,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 3
+}
+
+[sub_resource type="MultiMesh" id=3]
+transform_format = 1
+custom_data_format = 2
+instance_count = 10000000
+mesh = SubResource( 6 )

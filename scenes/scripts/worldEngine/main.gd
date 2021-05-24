@@ -155,6 +155,8 @@ func _process(delta):
 			floraProcess()
 		W.MODEOBJECT:
 			objectProcess()
+		W.MODEPLAY:
+			playtestProcess()
 	
 	# Updates scene based on recent inputs
 	#	ySelector inputs
@@ -577,11 +579,24 @@ func floraProcess():
 		self.add_child(newGrass)
 		newGrass.translation = floraCast.get_collision_point()
 		newGrass.rotation_degrees.y = cam.rotation_degrees.y
+		var scaleVariation = rand_range(0.75, 1.5)
+		newGrass.scale = Vector3(scaleVariation, scaleVariation, scaleVariation)
 
 # Object script for each frame
 func objectProcess():
 	pass
 
+# Playtest script for each frame
+func playtestProcess():
+	cam.translation = $player.translation
+	if Input.is_action_just_pressed("exit"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		$player.cam.current = false
+		cam.current = true
+		mode = W.MODETERRAIN
+		terrainMenu.visible = true
+		$GUI.visible = true
+		$Camera/selectorCast.collide_with_areas = true
 ### MODE CHANGES ###
 # Changes mode to terrain
 func _on_terrainMode_button_down():
@@ -590,6 +605,7 @@ func _on_terrainMode_button_down():
 	$selectedPos/floraDisplay.visible = false
 	$selectedPos/terrainDisplay.visible = true
 	$Camera/selectorCast.collide_with_bodies = false
+	$Camera/selectorCast.collide_with_areas = true
 
 # Changes mode to flora
 func _on_plantMode_button_down():
@@ -598,6 +614,7 @@ func _on_plantMode_button_down():
 	$selectedPos/floraDisplay.visible = true
 	$selectedPos/terrainDisplay.visible = false
 	$Camera/selectorCast.collide_with_bodies = true
+	$Camera/selectorCast.collide_with_areas = false
 
 # Changes mode to object
 func _on_objectMode_button_down():
@@ -606,6 +623,21 @@ func _on_objectMode_button_down():
 	$selectedPos/floraDisplay.visible = false
 	$selectedPos/terrainDisplay.visible = false
 	$Camera/selectorCast.collide_with_bodies = false
+	$Camera/selectorCast.collide_with_areas = false
+
+# Changes mode to player
+func _on_playerMode_button_down():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	$player.translation = cam.translation
+	cam.current = false
+	$player.cam.current = true
+	mode = W.MODEPLAY
+	terrainMenu.visible = false
+	$GUI.visible = false
+	$selectedPos/floraDisplay.visible = false
+	$selectedPos/terrainDisplay.visible = false
+	$Camera/selectorCast.collide_with_bodies = false
+	$Camera/selectorCast.collide_with_areas = false
 
 
 func _on_sceneMenu_changeCoords():
