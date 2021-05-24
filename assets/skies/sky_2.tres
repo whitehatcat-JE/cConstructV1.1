@@ -15,6 +15,7 @@ ambient_light_sky_contribution = 0.1
 fog_color = Color( 1, 1, 1, 1 )
 fog_depth_begin = 200.0
 fog_depth_end = 250.0
+tonemap_mode = 2
 auto_exposure_speed = 3.0
 ssao_radius = 96.12
 ssao_radius2 = 41.85

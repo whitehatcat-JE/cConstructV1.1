@@ -597,6 +597,7 @@ func playtestProcess():
 		terrainMenu.visible = true
 		$GUI.visible = true
 		$Camera/selectorCast.collide_with_areas = true
+		ySelector.visible = true
 ### MODE CHANGES ###
 # Changes mode to terrain
 func _on_terrainMode_button_down():
@@ -638,10 +639,10 @@ func _on_playerMode_button_down():
 	$selectedPos/terrainDisplay.visible = false
 	$Camera/selectorCast.collide_with_bodies = false
 	$Camera/selectorCast.collide_with_areas = false
+	ySelector.visible = false
 
 
-func _on_sceneMenu_changeCoords():
-	cam.translation = sceneMenu.camCoord
+func _on_sceneMenu_changeCoords(): cam.translation = sceneMenu.camCoord
 
 ### TERRAIN HANDLER ADJUSTMENTS ###
 func _on_heightSlider_value_changed(value):
