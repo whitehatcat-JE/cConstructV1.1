@@ -23,11 +23,17 @@ var _e = false
 
 # Added variables
 var goTo = Vector3()
+var onSide = false
+var onX = false
 var shift = false
 var cntr = false
 
 # Node connections
 onready var selectorCast = $selectorCast
+onready var sideCastA = $planeCastA
+onready var sideCastB = $planeCastB
+onready var sideCastC = $planeCastC
+onready var sideCastD = $planeCastD
 
 func _input(event):
 	# Receives mouse motion
@@ -80,7 +86,9 @@ func _process(delta):
 			goTo = selectorCast.get_collision_point()
 		else:
 			goTo = Vector3(1000000, 0, 0)
-
+		
+		checkSide()
+	
 # Updates camera movement
 func _update_movement(delta):
 	# Computes desired direction from key states
@@ -121,3 +129,23 @@ func _update_mouselook():
 		rotate_y(deg2rad(-yaw))
 		rotate_object_local(Vector3(1,0,0), deg2rad(-pitch))
 
+# Checks if raycast is on top of obj or on side
+func checkSide():
+	var mC = selectorCast.is_colliding()
+	var aC = sideCastA.is_colliding()
+	var bC = sideCastB.is_colliding()
+	var cC = sideCastC.is_colliding()
+	var dC = sideCastD.is_colliding()
+	
+	if mC and aC and bC and cC and dC:
+		var mP = selectorCast.get_collision_point() # Main collision
+		var aP = sideCastA.get_collision_point() # Vertical offset (DOWN)
+		var bP = sideCastB.get_collision_point() # Vertical offset (UP)
+		var cP = sideCastC.get_collision_point() # Horizontal offset (LEFT)
+		var dP = sideCastD.get_collision_point() # Horizontal offset (RIGHT)
+		
+		if round(mP.y * 100.0)/100.0 == round(aP.y * 100.0)/100.0 and round(mP.y * 100.0)/100.0 == round(bP.y * 100.0)/100.0: onSide = false
+		else: onSide = true
+		
+		if round(cP.x * 100.0)/100.0 == round(dP.x * 100.0)/100.0: onX = true
+		else: onX = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://scenes/scripts/worldEngine/ySelector.gd" type="Script" id=15]
 [ext_resource path="res://scenes/scripts/worldEngine/selectedPos.gd" type="Script" id=16]
 [ext_resource path="res://scenes/scripts/worldEngine/sceneMenu.gd" type="Script" id=17]
+[ext_resource path="res://assets/GUI/sprayRange.png" type="Texture" id=18]
 [ext_resource path="res://scenes/scripts/worldEngine/terrainMenu.gd" type="Script" id=19]
 [ext_resource path="res://assets/GUI/lock.png" type="Texture" id=20]
 [ext_resource path="res://assets/GUI/unlocked.png" type="Texture" id=21]
@@ -216,6 +217,30 @@ cast_to = Vector3( 0, -100, 0 )
 collide_with_areas = true
 collide_with_bodies = false
 
+[node name="planeCastA" type="RayCast" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.00999999, -2.38418e-09 )
+enabled = true
+cast_to = Vector3( 0, -100, 0 )
+collide_with_areas = true
+
+[node name="planeCastB" type="RayCast" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.00999999, 2.38418e-09 )
+enabled = true
+cast_to = Vector3( 0, -100, 0 )
+collide_with_areas = true
+
+[node name="planeCastC" type="RayCast" parent="Camera"]
+transform = Transform( -4.37114e-08, 1.94708e-07, -1, -1, -2.38419e-07, 4.37113e-08, -2.38419e-07, 1, 1.94708e-07, -0.00999999, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -100, 0 )
+collide_with_areas = true
+
+[node name="planeCastD" type="RayCast" parent="Camera"]
+transform = Transform( -4.37114e-08, 1.94708e-07, -1, -1, -2.38419e-07, 4.37113e-08, -2.38419e-07, 1, 1.94708e-07, 0.00999999, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -100, 0 )
+collide_with_areas = true
+
 [node name="deleteOrPlaceCast" type="RayCast" parent="Camera"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 enabled = true
@@ -243,14 +268,25 @@ material/0 = null
 [node name="selectedPos" type="Spatial" parent="."]
 script = ExtResource( 16 )
 
-[node name="MeshInstance" type="MeshInstance" parent="selectedPos"]
+[node name="terrainDisplay" type="MeshInstance" parent="selectedPos"]
+visible = false
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="MeshInstance2" type="MeshInstance" parent="selectedPos"]
+[node name="pointer" type="MeshInstance" parent="selectedPos/terrainDisplay"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55, 0, 0 )
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
+
+[node name="floraDisplay" type="Sprite3D" parent="selectedPos"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.01, 0 )
+pixel_size = 0.015
+texture = ExtResource( 18 )
+
+[node name="floraDisplay2" type="Sprite3D" parent="selectedPos/floraDisplay"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.74228e-10, -0.02 )
+pixel_size = 0.015
+texture = ExtResource( 18 )
 
 [node name="ySelector" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 0, 0 )
@@ -1415,10 +1451,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="sky" type="WorldEnvironment" parent="."]
 environment = ExtResource( 14 )
 
-[node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment"]
+[node name="sun" type="DirectionalLight" parent="sky"]
 transform = Transform( 0.559193, 0.59636, -0.575898, 0, 0.694658, 0.71934, 0.829038, -0.40225, 0.388448, 0, 4.1, 0 )
 shadow_bias = 0.0
 directional_shadow_max_distance = 250.0

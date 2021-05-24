@@ -145,6 +145,8 @@ func _process(delta):
 	var camLoc = $Camera.global_transform.origin
 	curLoc = Vector2(camLoc.x, camLoc.z)
 	
+	updateWorld()
+	
 	# Runs the relevant world code based on current mode
 	match mode:
 		W.MODETERRAIN:
@@ -161,16 +163,24 @@ func _process(delta):
 	if Input.is_action_just_pressed("yRePos"): ySelector.rePos(camLoc);
 	if Input.is_action_just_pressed("yReset"): ySelector.reset(camLoc);
 	
-	#	selectedPos adjustments
-	if selectedPos.curAim != cam.goTo: selectedPos.updateAim(cam.goTo);
-	
 	#	sceneMenu adjustments
 	if sceneMenu.camCoord != camLoc: sceneMenu.updateCoords(camLoc);
 	
 # Updates the world
 func updateWorld():
 	# Load new terrain
+	if pow(camLoc.x - $Camera.translation.x, 2) > renderPause or pow(camLoc.y - $Camera.translation.z, 2) > renderPause:
+		camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
+		updateTerrain(fetchTerrain())
+		updateTerrainQueue()
 	
+	if len(terrainQueue) > 0:
+		for x in range(round(len(terrainQueueOrder)/100) + 2):
+			if len(terrainQueue) > 0:
+				addTerrain(terrainQueue[terrainQueueOrder[0]])
+				terrainQueue.erase(terrainQueueOrder.pop_front())
+			else:
+				break
 	# Load new flora
 	
 	# Load new objects
@@ -197,6 +207,9 @@ func getObjects(x, z, render, dis):
 ### MODE PROCESSES ###
 # Terrain script for each frame
 func terrainProcess():
+	# selectedPos adjustments
+	if selectedPos.curAim != cam.goTo: selectedPos.updateAim(cam.goTo);
+	
 	# Input Handler
 	var isControl = Input.is_action_pressed("control")
 	
@@ -281,19 +294,6 @@ func terrainProcess():
 				[xPos, zPos]
 			)
 			delObj.queue_free()
-	
-	if pow(camLoc.x - $Camera.translation.x, 2) > renderPause or pow(camLoc.y - $Camera.translation.z, 2) > renderPause:
-		camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
-		updateTerrain(fetchTerrain())
-		updateTerrainQueue()
-	
-	if len(terrainQueue) > 0:
-		for x in range(round(len(terrainQueueOrder)/100) + 2):
-			if len(terrainQueue) > 0:
-				addTerrain(terrainQueue[terrainQueueOrder[0]])
-				terrainQueue.erase(terrainQueueOrder.pop_front())
-			else:
-				break
 
 # Creates requested terrain piece
 func generateTerrain( # Required Variables
@@ -569,6 +569,9 @@ func colorIndex(color):
 
 # Flora script for each frame
 func floraProcess():
+	# selectedPos adjustments
+	if selectedPos.curAim != cam.goTo: selectedPos.updateSpray(cam.goTo, cam.onSide, cam.onX, camLoc);
+	
 	if Input.is_action_pressed("inWorld") and Input.is_action_just_pressed("place") and floraCast.is_colliding():
 		var newGrass = load("res://grassTemp.tscn").instance()
 		self.add_child(newGrass)
@@ -584,19 +587,25 @@ func objectProcess():
 func _on_terrainMode_button_down():
 	mode = W.MODETERRAIN
 	terrainMenu.visible = true
-	$selectedPos.visible = true
+	$selectedPos/floraDisplay.visible = false
+	$selectedPos/terrainDisplay.visible = true
+	$Camera/selectorCast.collide_with_bodies = false
 
 # Changes mode to flora
 func _on_plantMode_button_down():
 	mode = W.MODEFLORA
 	terrainMenu.visible = false
-	$selectedPos.visible = false
+	$selectedPos/floraDisplay.visible = true
+	$selectedPos/terrainDisplay.visible = false
+	$Camera/selectorCast.collide_with_bodies = true
 
 # Changes mode to object
 func _on_objectMode_button_down():
 	mode = W.MODEOBJECT
 	terrainMenu.visible = false
-	$selectedPos.visible = false
+	$selectedPos/floraDisplay.visible = false
+	$selectedPos/terrainDisplay.visible = false
+	$Camera/selectorCast.collide_with_bodies = false
 
 
 func _on_sceneMenu_changeCoords():
