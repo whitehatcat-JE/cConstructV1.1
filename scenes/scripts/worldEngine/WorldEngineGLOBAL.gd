@@ -46,7 +46,7 @@ var mode = MODETERRAIN
 var colors = ["Grass", "Stone", "Dirt", "Sand"]
 
 # Flora
-var flora = ["Bulb plant", "Arid Tree"]
+var flora = ["Bulb plant", "Arid Tree", "Twig"]
 
 ### LOADING OF UNIVERSIAL ASSETS ###
 func _ready():
