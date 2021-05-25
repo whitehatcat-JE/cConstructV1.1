@@ -35,6 +35,10 @@ onready var sideCastB = $planeCastB
 onready var sideCastC = $planeCastC
 onready var sideCastD = $planeCastD
 
+# Runs when the scene is opened
+func _ready():
+	checkFlora()
+
 func _input(event):
 	if current:
 		# Receives mouse motion
@@ -153,3 +157,8 @@ func checkSide():
 		
 		if round(cP.x * 100.0)/100.0 == round(dP.x * 100.0)/100.0: onX = true
 		else: onX = false
+
+# Updates the size of flora to fit box
+func checkFlora():
+	var flora = $floraDisplayPoint/mainDisplay
+	$floraDisplayPoint.scale = Vector3(1/flora.get_aabb().size.x, 1/flora.get_aabb().size.y, 1/flora.get_aabb().size.z)

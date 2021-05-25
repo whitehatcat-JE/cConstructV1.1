@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -23,8 +23,10 @@
 [ext_resource path="res://assets/GUI/unlocked.png" type="Texture" id=21]
 [ext_resource path="res://scenes/scripts/worldEngine/colorOptions.gd" type="Script" id=22]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=23]
-[ext_resource path="res://grassTemp.tscn" type="PackedScene" id=24]
+[ext_resource path="res://scenes/scripts/worldEngine/floraMenu.gd" type="Script" id=24]
 [ext_resource path="res://assets/GUI/personIcon.png" type="Texture" id=25]
+[ext_resource path="res://scenes/scripts/worldEngine/floraOptions.gd" type="Script" id=26]
+[ext_resource path="res://testPlant.obj" type="ArrayMesh" id=27]
 
 [sub_resource type="SphereMesh" id=1]
 
@@ -184,6 +186,33 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0, 1 ) ]
 }
 tracks/1/type = "value"
+tracks/1/path = NodePath("../tileMenu/searchBar:editable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=20]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 2, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0, 1 ) ]
+}
+tracks/1/type = "value"
 tracks/1/path = NodePath("searchBar:editable")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
@@ -260,6 +289,20 @@ material/0 = null
 transform = Transform( 0.0996195, 0.00871559, 5.09534e-10, -0.00789901, 0.0902859, -0.0422618, -0.00368337, 0.042101, 0.0906308, -0.215, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = null
+
+[node name="floraDisplayPoint" type="Spatial" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.172, 0.322, -1.31 )
+visible = false
+
+[node name="mainDisplay" type="MeshInstance" parent="Camera/floraDisplayPoint"]
+transform = Transform( 0.149429, 0.0130734, 0, -0.0118485, 0.135429, -0.0633927, -0.00552504, 0.0631515, 0.135946, 0, 0, 0 )
+mesh = ExtResource( 27 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+material/4 = null
+material/5 = null
 
 [node name="selectedPos" type="Spatial" parent="."]
 script = ExtResource( 16 )
@@ -521,7 +564,7 @@ __meta__ = {
 }
 
 [node name="fps" type="Label" parent="GUI/FPS"]
-margin_right = 137.0
+margin_right = 152.0
 margin_bottom = 81.0
 rect_scale = Vector2( 0.175, 0.175 )
 custom_fonts/font = SubResource( 10 )
@@ -1146,6 +1189,272 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="floraMenu" type="Control" parent="GUI"]
+margin_left = -16.0
+margin_top = 68.0
+margin_right = 12.0
+margin_bottom = 72.0
+rect_scale = Vector2( 1e-05, 1 )
+script = ExtResource( 24 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="tileTransitions" type="AnimationPlayer" parent="GUI/floraMenu"]
+anims/hideTiles = SubResource( 19 )
+
+[node name="backdrop" type="Sprite" parent="GUI/floraMenu"]
+self_modulate = Color( 0.54902, 0.54902, 0.54902, 0.384314 )
+position = Vector2( 56, 326.253 )
+scale = Vector2( 255.805, 384 )
+texture = ExtResource( 3 )
+offset = Vector2( 0.344012, 0.0357979 )
+
+[node name="backdrop2" type="Sprite" parent="GUI/floraMenu/backdrop"]
+self_modulate = Color( 0.54902, 0.54902, 0.54902, 0.384314 )
+position = Vector2( 1.49012e-08, -0.806652 )
+scale = Vector2( 1, 0.105203 )
+texture = ExtResource( 3 )
+offset = Vector2( 0.344012, 0.0357979 )
+
+[node name="rightSide" type="Sprite" parent="GUI/floraMenu/backdrop"]
+self_modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 0.831137, -0.212087 )
+scale = Vector2( 0.0152553, 1.39583 )
+texture = ExtResource( 3 )
+offset = Vector2( 0.344012, 0.0357979 )
+
+[node name="rightSide2" type="Sprite" parent="GUI/floraMenu/backdrop"]
+self_modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 0.000322551, -0.855201 )
+scale = Vector2( 1.00007, 0.0104166 )
+texture = ExtResource( 3 )
+offset = Vector2( 0.344012, 0.0357979 )
+
+[node name="rightSide3" type="Sprite" parent="GUI/floraMenu/backdrop"]
+self_modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 0, -0.755865 )
+scale = Vector2( 1.00007, 0.0104166 )
+texture = ExtResource( 3 )
+offset = Vector2( 0.344012, 0.0357979 )
+
+[node name="rightSide4" type="Sprite" parent="GUI/floraMenu/backdrop"]
+self_modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 0, -0.464203 )
+scale = Vector2( 1.00007, 0.0104166 )
+texture = ExtResource( 3 )
+offset = Vector2( 0.344012, 0.0357979 )
+
+[node name="sortBoxBackdrop" type="Sprite" parent="GUI/floraMenu/backdrop"]
+self_modulate = Color( 0.121569, 0.145098, 0.2, 1 )
+position = Vector2( 0.594203, -0.807952 )
+scale = Vector2( 0.40656, 0.0625 )
+texture = ExtResource( 3 )
+
+[node name="arrow" type="Sprite" parent="GUI/floraMenu/backdrop"]
+position = Vector2( 0.749022, -0.808187 )
+rotation = -3.14159
+scale = Vector2( 0.000133403, 8.47908e-05 )
+texture = ExtResource( 10 )
+
+[node name="resultsDown" type="Button" parent="GUI/floraMenu"]
+margin_left = 40.0
+margin_top = 584.0
+margin_right = 62.0
+margin_bottom = 611.0
+rect_rotation = 89.9999
+rect_pivot_offset = Vector2( 88, 16 )
+focus_mode = 0
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = ">"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="resultsUp" type="Button" parent="GUI/floraMenu"]
+margin_left = 72.0
+margin_top = 428.0
+margin_right = 94.0
+margin_bottom = 455.0
+rect_rotation = -89.9999
+rect_pivot_offset = Vector2( 88, 16 )
+focus_mode = 0
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = ">"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="options" type="Node2D" parent="GUI/floraMenu"]
+position = Vector2( 20, 40 )
+script = ExtResource( 26 )
+
+[node name="optionA" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 116.0
+margin_right = 240.0
+margin_bottom = 136.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionB" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 144.0
+margin_right = 240.0
+margin_bottom = 164.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionC" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 172.0
+margin_right = 240.0
+margin_bottom = 192.0
+rect_pivot_offset = Vector2( 196, 60 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionD" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 200.0
+margin_right = 240.0
+margin_bottom = 220.0
+rect_pivot_offset = Vector2( 196, 32 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionE" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 228.0
+margin_right = 240.0
+margin_bottom = 248.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionF" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 256.0
+margin_right = 240.0
+margin_bottom = 276.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionG" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 284.0
+margin_right = 240.0
+margin_bottom = 304.0
+rect_pivot_offset = Vector2( 196, 60 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionH" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 312.0
+margin_right = 240.0
+margin_bottom = 332.0
+rect_pivot_offset = Vector2( 196, 32 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionI" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 340.0
+margin_right = 240.0
+margin_bottom = 360.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionJ" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 368.0
+margin_right = 240.0
+margin_bottom = 388.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionK" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 396.0
+margin_right = 240.0
+margin_bottom = 416.0
+rect_pivot_offset = Vector2( 196, 60 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionL" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 424.0
+margin_right = 240.0
+margin_bottom = 444.0
+rect_pivot_offset = Vector2( 196, 32 )
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="optionM" type="Button" parent="GUI/floraMenu/options"]
+margin_top = 452.0
+margin_right = 240.0
+margin_bottom = 472.0
+text = "Blue"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="searchBar" type="LineEdit" parent="GUI/floraMenu"]
+margin_left = 20.0
+margin_top = 4.0
+margin_right = 152.0
+margin_bottom = 28.0
+clear_button_enabled = true
+placeholder_text = "search"
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sortDropBox" type="MenuButton" parent="GUI/floraMenu"]
+margin_left = 156.0
+margin_top = 4.0
+margin_right = 260.0
+margin_bottom = 28.0
+focus_mode = 2
+text = "Favourited"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="tileMenu" type="Control" parent="GUI"]
 margin_left = -16.0
 margin_top = 68.0
@@ -1158,7 +1467,7 @@ __meta__ = {
 }
 
 [node name="tileTransitions" type="AnimationPlayer" parent="GUI/tileMenu"]
-anims/hideTiles = SubResource( 19 )
+anims/hideTiles = SubResource( 20 )
 
 [node name="editingColorA" type="Button" parent="GUI/tileMenu"]
 modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
@@ -1467,9 +1776,6 @@ transform = Transform( 0.559193, 0.59636, -0.575898, 0, 0.694658, 0.71934, 0.829
 shadow_bias = 0.0
 directional_shadow_max_distance = 250.0
 
-[node name="plant" parent="." instance=ExtResource( 24 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43, -0.05, -2.48 )
-
 [connection signal="objVisible" from="GUI" to="." method="_on_GUI_objVisible"]
 [connection signal="button_down" from="GUI/options/exitButton" to="GUI" method="_on_exitButton_button_down"]
 [connection signal="button_down" from="GUI/options/reloadButton" to="GUI" method="_on_reloadButton_button_down"]
@@ -1513,6 +1819,23 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43, -0.05, -2.48 )
 [connection signal="text_entered" from="GUI/sceneMenu/yOffset" to="GUI/sceneMenu" method="_on_yOffset_text_entered"]
 [connection signal="text_entered" from="GUI/sceneMenu/xOffset" to="GUI/sceneMenu" method="_on_xOffset_text_entered"]
 [connection signal="button_down" from="GUI/sceneMenu/hideSceneMenu" to="GUI" method="_on_hideSceneMenu_button_down"]
+[connection signal="changeSort" from="GUI/floraMenu" to="GUI" method="_on_tileMenu_changeSort"]
+[connection signal="button_down" from="GUI/floraMenu/resultsDown" to="GUI/floraMenu" method="_on_resultsDown_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/resultsUp" to="GUI/floraMenu" method="_on_resultsUp_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionA" to="." method="_on_optionA_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionB" to="." method="_on_optionB_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionC" to="." method="_on_optionC_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionD" to="." method="_on_optionD_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionE" to="." method="_on_optionE_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionF" to="." method="_on_optionF_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionG" to="." method="_on_optionG_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionH" to="." method="_on_optionH_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionI" to="." method="_on_optionI_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionJ" to="." method="_on_optionJ_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionK" to="." method="_on_optionK_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionL" to="." method="_on_optionL_button_down"]
+[connection signal="button_down" from="GUI/floraMenu/options/optionM" to="." method="_on_optionM_button_down"]
+[connection signal="text_changed" from="GUI/floraMenu/searchBar" to="GUI/floraMenu" method="_on_searchBar_text_changed"]
 [connection signal="changeSort" from="GUI/tileMenu" to="GUI" method="_on_tileMenu_changeSort"]
 [connection signal="button_down" from="GUI/tileMenu/editingColorA" to="." method="_on_editingColorA_button_down"]
 [connection signal="button_down" from="GUI/tileMenu/editingColorB" to="." method="_on_editingColorB_button_down"]

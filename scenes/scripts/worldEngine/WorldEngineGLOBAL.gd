@@ -39,8 +39,14 @@ var zOffset = 0
 # World loading
 var renderDis =  DEFRENDERDIS
 
+# Edit mode
+var mode = MODETERRAIN
+
 # Colors
 var colors = ["Grass", "Stone", "Dirt", "Sand"]
+
+# Flora
+var flora = ["Bulb plant", "Arid Tree"]
 
 ### LOADING OF UNIVERSIAL ASSETS ###
 func _ready():

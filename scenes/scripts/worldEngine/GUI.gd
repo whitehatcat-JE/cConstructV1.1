@@ -36,14 +36,16 @@ func _on_hideButton_button_down():
 #Hides/shows tile menu
 func _on_tileButton_button_down():
 	if tileHidden:
-		o.out("Opened tileMenu")
+		o.out("Opened item menu")
 		emit_signal("objVisible")
 		$tileMenu/tileTransitions.play_backwards("hideTiles")
+		$floraMenu/tileTransitions.play_backwards("hideTiles")
 		$options/tileButton.text = "<"
 	else:
 		o.out("Closed tileMenu")
 		emit_signal("objVisible")
 		$tileMenu/tileTransitions.play("hideTiles")
+		$floraMenu/tileTransitions.play("hideTiles")
 		$options/tileButton.text = ">"
 	
 	tileHidden = !tileHidden

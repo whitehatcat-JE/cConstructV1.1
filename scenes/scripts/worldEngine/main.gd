@@ -22,8 +22,6 @@ var MINHEIGHT = 0
 var MAXSTAIRS = 3
 
 # Variable declarations
-var mode = W.DEFMODE
-
 #	Terrain
 var height = MAXHEIGHT
 
@@ -93,6 +91,8 @@ onready var sceneMenu = $GUI/sceneMenu
 onready var terrainMenu = $GUI/terrainMenu
 onready var terrainMenuPivot = $GUI/terrainMenu/pivot
 onready var o = $GUI/output
+onready var floraOptionsMenu = $GUI/floraMenu
+onready var terrainOptionsMenu = $GUI/tileMenu
 
 ### SQL MODULE ###
 const SQLite = preload("res://lib/gdsqlite.gdns");
@@ -148,7 +148,7 @@ func _process(delta):
 	updateWorld()
 	
 	# Runs the relevant world code based on current mode
-	match mode:
+	match W.mode:
 		W.MODETERRAIN:
 			terrainProcess()
 		W.MODEFLORA:
@@ -548,10 +548,8 @@ func updateTerrainQueue():
 	
 	for piece in terrainQueue.values():
 		queueDistances.append(sqrt(pow(float(piece["posX"]) - camLoc.x, 2)) + sqrt(pow(float(piece["posZ"]) - camLoc.y, 2)))
-	queueDistances.sort()
-	
-	for x in range(len(terrainQueue)):
 		newQueueOrder.append(-1)
+	queueDistances.sort()
 	
 	for piece in terrainQueue.values():
 		var dis = sqrt(pow(float(piece["posX"]) - camLoc.x, 2)) + sqrt(pow(float(piece["posZ"]) - camLoc.y, 2))
@@ -583,7 +581,10 @@ func floraProcess():
 		newGrass.scale = Vector3(scaleVariation, scaleVariation, scaleVariation)
 		if Input.is_action_pressed("control"):
 			newGrass.get_child(0).visible = true
-			newGrass.get_child(1).visible = false
+		elif Input.is_action_pressed("shift"):
+			newGrass.get_child(1).visible = true
+		else:
+			newGrass.get_child(2).visible = true
 
 # Object script for each frame
 func objectProcess():
@@ -596,15 +597,20 @@ func playtestProcess():
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		$player.cam.current = false
 		cam.current = true
-		mode = W.MODETERRAIN
+		W.mode = W.MODETERRAIN
 		terrainMenu.visible = true
 		$GUI.visible = true
 		$Camera/selectorCast.collide_with_areas = true
 		ySelector.visible = true
+
 ### MODE CHANGES ###
 # Changes mode to terrain
 func _on_terrainMode_button_down():
-	mode = W.MODETERRAIN
+	$Camera/objDisplayPoint.visible = $Camera/floraDisplayPoint.visible
+	$Camera/floraDisplayPoint.visible = false
+	W.mode = W.MODETERRAIN
+	terrainOptionsMenu.visible = true
+	floraOptionsMenu.visible = false
 	terrainMenu.visible = true
 	$selectedPos/floraDisplay.visible = false
 	$selectedPos/terrainDisplay.visible = true
@@ -613,7 +619,11 @@ func _on_terrainMode_button_down():
 
 # Changes mode to flora
 func _on_plantMode_button_down():
-	mode = W.MODEFLORA
+	$Camera/floraDisplayPoint.visible = $Camera/objDisplayPoint.visible
+	$Camera/objDisplayPoint.visible = false
+	W.mode = W.MODEFLORA
+	terrainOptionsMenu.visible = false
+	floraOptionsMenu.visible = true
 	terrainMenu.visible = false
 	$selectedPos/floraDisplay.visible = true
 	$selectedPos/terrainDisplay.visible = false
@@ -622,7 +632,7 @@ func _on_plantMode_button_down():
 
 # Changes mode to object
 func _on_objectMode_button_down():
-	mode = W.MODEOBJECT
+	W.mode = W.MODEOBJECT
 	terrainMenu.visible = false
 	$selectedPos/floraDisplay.visible = false
 	$selectedPos/terrainDisplay.visible = false
@@ -635,7 +645,7 @@ func _on_playerMode_button_down():
 	$player.translation = cam.translation
 	cam.current = false
 	$player.cam.current = true
-	mode = W.MODEPLAY
+	W.mode = W.MODEPLAY
 	terrainMenu.visible = false
 	$GUI.visible = false
 	$selectedPos/floraDisplay.visible = false
@@ -689,7 +699,8 @@ func _on_lockTerrainMenu_toggled(button_pressed):
 		terrainMenuPivot.rotation_degrees = cam.rotation_degrees.y + 90
 
 func _on_GUI_objVisible():
-	$Camera/objDisplayPoint.visible = !$Camera/objDisplayPoint.visible
+	if W.mode == W.MODETERRAIN: $Camera/objDisplayPoint.visible = !$Camera/objDisplayPoint.visible
+	elif W.mode == W.MODEFLORA:  $Camera/floraDisplayPoint.visible = !$Camera/floraDisplayPoint.visible
 
 func changeColor(color):
 	if editingColor == TILE:
@@ -701,6 +712,9 @@ func changeColor(color):
 	else:
 		detailMenuColor = color
 		$Camera/objDisplayPoint/subDisplayB.material_override = W.loaded["c" + detailMenuColor]
+
+func changeFlora(floraName):
+	pass
 
 func _on_colorA_button_down(): changeColor($GUI/tileMenu/colorOptions/colorA.text);
 func _on_colorB_button_down(): changeColor($GUI/tileMenu/colorOptions/colorB.text);
@@ -716,6 +730,19 @@ func _on_colorK_button_down(): changeColor($GUI/tileMenu/colorOptions/colorK.tex
 func _on_colorL_button_down(): changeColor($GUI/tileMenu/colorOptions/colorL.text);
 func _on_colorM_button_down(): changeColor($GUI/tileMenu/colorOptions/colorM.text);
 
+func _on_optionA_button_down(): changeFlora($GUI/floraMenu/options/optionA.text);
+func _on_optionB_button_down(): changeFlora($GUI/floraMenu/options/optionB.text);
+func _on_optionC_button_down(): changeFlora($GUI/floraMenu/options/optionC.text);
+func _on_optionD_button_down(): changeFlora($GUI/floraMenu/options/optionD.text);
+func _on_optionE_button_down(): changeFlora($GUI/floraMenu/options/optionE.text);
+func _on_optionF_button_down(): changeFlora($GUI/floraMenu/options/optionF.text);
+func _on_optionG_button_down(): changeFlora($GUI/floraMenu/options/optionG.text);
+func _on_optionH_button_down(): changeFlora($GUI/floraMenu/options/optionH.text);
+func _on_optionI_button_down(): changeFlora($GUI/floraMenu/options/optionI.text);
+func _on_optionJ_button_down(): changeFlora($GUI/floraMenu/options/optionJ.text);
+func _on_optionK_button_down(): changeFlora($GUI/floraMenu/options/optionK.text);
+func _on_optionL_button_down(): changeFlora($GUI/floraMenu/options/optionL.text);
+func _on_optionM_button_down(): changeFlora($GUI/floraMenu/options/optionM.text);
 
 func _on_editingColorA_button_down():
 	editingColor = DETAILS
