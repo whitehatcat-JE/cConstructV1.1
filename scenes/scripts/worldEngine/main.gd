@@ -125,7 +125,7 @@ var stairQuery = """CREATE TABLE IF NOT EXISTS  "terrainStairs" (
 	"stairType"	INTEGER,
 	"stairCount"	INTEGER);"""
 
-### ALLMODE CODE ###
+### UNIVERSIAL CODE ###
 # Runs when scene is created
 func _ready():
 	# Asset loading
@@ -206,7 +206,7 @@ func getFlora(x, z, render, dis):
 func getObjects(x, z, render, dis):
 	pass
 
-### MODE PROCESSES ###
+### TERRAIN MODE FUNCTIONS ###
 # Terrain script for each frame
 func terrainProcess():
 	# selectedPos adjustments
@@ -567,6 +567,7 @@ func colorIndex(color):
 			if W.colors[colIndex] == color:
 				return colIndex
 
+### FLORA MODE FUNCTIONS ###
 # Flora script for each frame
 func floraProcess():
 	# selectedPos adjustments
