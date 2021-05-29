@@ -76,10 +76,10 @@ func _input(event):
 # Updates mouselook and movement every frame
 func _process(delta):
 	if current:
-		if Input.is_action_just_pressed("summonTemp"):
-			var newBall = load("res://temp.tscn").instance()
+		if Input.is_action_pressed("summonTemp"):
+			var newBall = load("res://scenes/fauna/butterfly.tscn").instance()
 			get_parent().add_child(newBall)
-			newBall.transform = self.global_transform
+			newBall.translation = self.translation
 		if GV.paused:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		else:
