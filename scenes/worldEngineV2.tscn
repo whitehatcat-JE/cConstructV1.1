@@ -313,8 +313,7 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="floraDisplay" type="Sprite3D" parent="selectedPos"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.01, 0 )
-visible = false
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.25, -0.01, 0 )
 pixel_size = 0.015
 texture = ExtResource( 18 )
 
@@ -1773,8 +1772,8 @@ environment = ExtResource( 14 )
 
 [node name="sun" type="DirectionalLight" parent="sky"]
 transform = Transform( 0.559193, 0.59636, -0.575898, 0, 0.694658, 0.71934, 0.829038, -0.40225, 0.388448, 0, 4.1, 0 )
+shadow_enabled = true
 shadow_bias = 0.0
-directional_shadow_mode = 1
 directional_shadow_max_distance = 250.0
 
 [connection signal="objVisible" from="GUI" to="." method="_on_GUI_objVisible"]

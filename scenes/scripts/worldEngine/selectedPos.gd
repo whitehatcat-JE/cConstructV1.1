@@ -18,5 +18,7 @@ func updateSpray(newAim, onSide, onX, camLoc):
 	rotation_degrees.z = 0
 	
 	if onSide:
-		if onX: rotation_degrees.z = 90
+		if onX: 
+			rotation_degrees.z = 90
+			rotation_degrees.x = -90
 		else: rotation_degrees.x = 90

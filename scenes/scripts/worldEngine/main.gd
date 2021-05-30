@@ -60,7 +60,7 @@ var curLoc = Vector2()
 var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
 var renderPause = 3.2
-var renderDis = 64.0
+var renderDis = 256.0
 
 var tXMatrix = {}
 var tZMatrix = {}
@@ -577,7 +577,17 @@ func floraProcess():
 		var newGrass = load("res://grassTemp.tscn").instance()
 		self.add_child(newGrass)
 		newGrass.translation = floraCast.get_collision_point()
-		newGrass.rotation_degrees.y = round(rand_range(0, 3))*90
+		var rot = Vector3()
+		if selectedPos.rotation_degrees.x == 90:
+			if sqrt(pow(cam.rotation_degrees.y, 2)) > 90: rot.x = -90
+			else: rot.x = 90
+		elif selectedPos.rotation_degrees.z == 90:
+			if cam.rotation_degrees.y > 0: rot.z = -90
+			else: rot.z = 90
+		else:
+			if cam.rotation_degrees.x > 0: rot.x = 180
+		
+		newGrass.rotation_degrees = rot
 		var scaleVariation = rand_range(0.75, 1.5)
 		newGrass.scale = Vector3(scaleVariation, scaleVariation, scaleVariation)
 		if Input.is_action_pressed("control"):
