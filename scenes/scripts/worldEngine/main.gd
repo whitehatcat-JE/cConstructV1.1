@@ -573,6 +573,9 @@ func floraProcess():
 	# selectedPos adjustments
 	if selectedPos.curAim != cam.goTo: selectedPos.updateSpray(cam.goTo, cam.onSide, cam.onX, camLoc);
 	
+	# Inputs
+	if Input.is_action_just_pressed("rotate"): selectedPos.rotateSpray()
+	
 	if Input.is_action_pressed("inWorld") and Input.is_action_just_pressed("place") and floraCast.is_colliding():
 		var newGrass = load("res://grassTemp.tscn").instance()
 		self.add_child(newGrass)
@@ -586,16 +589,16 @@ func floraProcess():
 			else: rot.z = 90
 		else:
 			if cam.rotation_degrees.x > 0: rot.x = 180
-		
 		newGrass.rotation_degrees = rot
+		newGrass.get_child(0).rotation = $selectedPos/floraDisplay.rotation
 		var scaleVariation = rand_range(0.75, 1.5)
 		newGrass.scale = Vector3(scaleVariation, scaleVariation, scaleVariation)
 		if Input.is_action_pressed("control"):
-			newGrass.get_child(0).visible = true
+			newGrass.get_child(0).get_child(0).visible = true
 		elif Input.is_action_pressed("shift"):
-			newGrass.get_child(1).visible = true
+			newGrass.get_child(0).get_child(1).visible = true
 		else:
-			newGrass.get_child(2).visible = true
+			newGrass.get_child(0).get_child(2).visible = true
 
 # Object script for each frame
 func objectProcess():

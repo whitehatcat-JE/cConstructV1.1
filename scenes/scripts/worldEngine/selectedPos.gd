@@ -22,3 +22,7 @@ func updateSpray(newAim, onSide, onX, camLoc):
 			rotation_degrees.z = 90
 			rotation_degrees.x = -90
 		else: rotation_degrees.x = 90
+
+# Adjust rotation of Flora
+func rotateSpray():
+	$floraDisplay.rotate_y(deg2rad(90))

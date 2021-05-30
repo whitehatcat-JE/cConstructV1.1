@@ -6,7 +6,7 @@
 [ext_resource path="res://assets/cityTiles/CityTexture.png" type="Texture" id=4]
 [ext_resource path="res://assets/worldEngine/flora/stick-0.obj" type="ArrayMesh" id=5]
 
-[sub_resource type="SpatialMaterial" id=8]
+[sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.219608, 0.478431, 0.00392157, 1 )
 
 [sub_resource type="SpatialMaterial" id=2]
@@ -32,35 +32,37 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="SpatialMaterial" id=1]
+[sub_resource type="SpatialMaterial" id=7]
 params_cull_mode = 2
 albedo_texture = ExtResource( 4 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=8]
 albedo_texture = ExtResource( 2 )
 
 [node name="plant" type="Spatial"]
 
-[node name="testPlant" type="MeshInstance" parent="."]
+[node name="rotation" type="Spatial" parent="."]
+
+[node name="testPlant" type="MeshInstance" parent="rotation"]
 transform = Transform( 0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, -1.8999e-07, 0.0131384, -0.900001 )
 visible = false
 mesh = ExtResource( 1 )
-material/0 = SubResource( 8 )
+material/0 = SubResource( 1 )
 material/1 = SubResource( 2 )
 material/2 = SubResource( 3 )
 material/3 = SubResource( 4 )
 material/4 = SubResource( 5 )
 material/5 = SubResource( 6 )
 
-[node name="stick" type="MeshInstance" parent="."]
+[node name="stick" type="MeshInstance" parent="rotation"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8999e-07, 0.153138, -1.00397e-06 )
 visible = false
 mesh = ExtResource( 5 )
-material/0 = SubResource( 1 )
+material/0 = SubResource( 7 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="MeshInstance" type="MeshInstance" parent="rotation"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4 )
 visible = false
-material_override = SubResource( 7 )
+material_override = SubResource( 8 )
 mesh = ExtResource( 3 )
 material/0 = null
