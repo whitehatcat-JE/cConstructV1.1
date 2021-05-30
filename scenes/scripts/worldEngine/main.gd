@@ -574,31 +574,55 @@ func floraProcess():
 	if selectedPos.curAim != cam.goTo: selectedPos.updateSpray(cam.goTo, cam.onSide, cam.onX, camLoc);
 	
 	# Inputs
-	if Input.is_action_just_pressed("rotate"): selectedPos.rotateSpray()
-	
-	if Input.is_action_pressed("inWorld") and Input.is_action_just_pressed("place") and floraCast.is_colliding():
-		var newGrass = load("res://grassTemp.tscn").instance()
-		self.add_child(newGrass)
-		newGrass.translation = floraCast.get_collision_point()
-		var rot = Vector3()
-		if selectedPos.rotation_degrees.x == 90:
-			if sqrt(pow(cam.rotation_degrees.y, 2)) > 90: rot.x = -90
-			else: rot.x = 90
-		elif selectedPos.rotation_degrees.z == 90:
-			if cam.rotation_degrees.y > 0: rot.z = -90
-			else: rot.z = 90
-		else:
-			if cam.rotation_degrees.x > 0: rot.x = 180
-		newGrass.rotation_degrees = rot
-		newGrass.get_child(0).rotation = $selectedPos/floraDisplay.rotation
-		var scaleVariation = rand_range(0.75, 1.5)
-		newGrass.scale = Vector3(scaleVariation, scaleVariation, scaleVariation)
-		if Input.is_action_pressed("control"):
-			newGrass.get_child(0).get_child(0).visible = true
-		elif Input.is_action_pressed("shift"):
-			newGrass.get_child(0).get_child(1).visible = true
-		else:
-			newGrass.get_child(0).get_child(2).visible = true
+	if Input.is_action_pressed("inWorld"):
+		# Rotates flora
+		if Input.is_action_just_pressed("rotate"): selectedPos.rotateSpray()
+		
+		# Enables randomized flora
+		if Input.is_action_just_pressed("randomize"):
+			$selectedPos/floraDisplay.scale = Vector3(1, 1, 1)
+			if $selectedPos/floraDisplay/imageUp.visible:
+				$selectedPos/floraDisplay/imageUp2.visible = true
+				$selectedPos/floraDisplay/imageUp.visible = false
+			else:
+				$selectedPos/floraDisplay/imageUp2.visible = false
+				$selectedPos/floraDisplay/imageUp.visible = true
+		
+		if Input.is_action_pressed("control") and $selectedPos/floraDisplay/imageUp.visible:
+			if Input.is_action_just_released("scroll_down") and $selectedPos/floraDisplay.scale.x >= 0.1:
+				$selectedPos/floraDisplay.scale -= Vector3(0.1, 0, 0.1)
+			if Input.is_action_just_released("scroll_up"):
+				$selectedPos/floraDisplay.scale += Vector3(0.1, 0, 0.1)
+		
+		# Places flora
+		if Input.is_action_just_pressed("place") and floraCast.is_colliding():
+			var newGrass = load("res://grassTemp.tscn").instance()
+			self.add_child(newGrass)
+			newGrass.translation = floraCast.get_collision_point()
+			var rot = Vector3()
+			if selectedPos.rotation_degrees.x == 90:
+				if sqrt(pow(cam.rotation_degrees.y, 2)) > 90: rot.x = -90
+				else: rot.x = 90
+			elif selectedPos.rotation_degrees.z == 90:
+				if cam.rotation_degrees.y > 0: rot.z = -90
+				else: rot.z = 90
+			else:
+				if cam.rotation_degrees.x > 0: rot.x = 180
+			newGrass.rotation_degrees = rot
+			if $selectedPos/floraDisplay/imageUp.visible:
+				newGrass.get_child(0).rotation = $selectedPos/floraDisplay.rotation
+				var scaleVar = $selectedPos/floraDisplay.scale.x
+				newGrass.scale = Vector3(scaleVar, scaleVar, scaleVar)
+			else:
+				newGrass.get_child(0).rotation_degrees.y = round(rand_range(0, 360)/90)*90
+				var scaleVariation = rand_range(0.75, 1.5)
+				newGrass.scale = Vector3(scaleVariation, scaleVariation, scaleVariation)
+			if Input.is_action_pressed("control"):
+				newGrass.get_child(0).get_child(0).visible = true
+			elif Input.is_action_pressed("shift"):
+				newGrass.get_child(0).get_child(1).visible = true
+			else:
+				newGrass.get_child(0).get_child(2).visible = true
 
 # Object script for each frame
 func objectProcess():

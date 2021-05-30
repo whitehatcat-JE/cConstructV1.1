@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://assets/GUI/personIcon.png" type="Texture" id=25]
 [ext_resource path="res://scenes/scripts/worldEngine/floraOptions.gd" type="Script" id=26]
 [ext_resource path="res://testPlant.obj" type="ArrayMesh" id=27]
+[ext_resource path="res://assets/GUI/sprayRangeAuto.png" type="Texture" id=28]
 
 [sub_resource type="SphereMesh" id=1]
 
@@ -315,7 +316,7 @@ material/0 = null
 [node name="floraDisplay" type="Spatial" parent="selectedPos"]
 
 [node name="imageUp" type="Sprite3D" parent="selectedPos/floraDisplay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.25, -0.01, 0 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.235, -0.01, -0.03 )
 pixel_size = 0.015
 texture = ExtResource( 18 )
 
@@ -323,6 +324,17 @@ texture = ExtResource( 18 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.74228e-10, -0.02 )
 pixel_size = 0.015
 texture = ExtResource( 18 )
+
+[node name="imageUp2" type="Sprite3D" parent="selectedPos/floraDisplay"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.235, -0.01, -0.03 )
+visible = false
+pixel_size = 0.015
+texture = ExtResource( 28 )
+
+[node name="imageDown" type="Sprite3D" parent="selectedPos/floraDisplay/imageUp2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.74228e-10, -0.02 )
+pixel_size = 0.015
+texture = ExtResource( 28 )
 
 [node name="ySelector" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 0, 0 )

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/sprayRange.png-93990e45e2396218dcd045d8a67efed5.s3tc.stex"
-path.etc2="res://.import/sprayRange.png-93990e45e2396218dcd045d8a67efed5.etc2.stex"
+path.s3tc="res://.import/sprayRangeAuto.png-60a99ab1dcdd31195e1c87a12a74aa3b.s3tc.stex"
+path.etc2="res://.import/sprayRangeAuto.png-60a99ab1dcdd31195e1c87a12a74aa3b.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/GUI/sprayRange.png"
-dest_files=[ "res://.import/sprayRange.png-93990e45e2396218dcd045d8a67efed5.s3tc.stex", "res://.import/sprayRange.png-93990e45e2396218dcd045d8a67efed5.etc2.stex" ]
+source_file="res://assets/GUI/sprayRangeAuto.png"
+dest_files=[ "res://.import/sprayRangeAuto.png-60a99ab1dcdd31195e1c87a12a74aa3b.s3tc.stex", "res://.import/sprayRangeAuto.png-60a99ab1dcdd31195e1c87a12a74aa3b.etc2.stex" ]
 
 [params]
 

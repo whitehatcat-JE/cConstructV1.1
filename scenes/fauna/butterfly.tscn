@@ -54,7 +54,7 @@ autostart = true
 transform = Transform( -3.1093e-08, 1, 2.18557e-08, -0.866025, -3.78552e-08, 0.5, 0.5, -3.38107e-09, 0.866025, 0.11, 0.151238, 0 )
 
 [node name="wingImg" type="Sprite3D" parent="body/leftWing"]
-transform = Transform( -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 1, 4.37114e-08, -4.37114e-08, 0, -0.06, -0.08 )
+transform = Transform( 0, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 1, 4.37114e-08, 0, 0, -0.06, -0.08 )
 transparent = false
 alpha_cut = 1
 texture = ExtResource( 2 )
