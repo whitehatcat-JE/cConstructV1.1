@@ -21,6 +21,9 @@ var MAXHEIGHT = 8
 var MINHEIGHT = 0
 var MAXSTAIRS = 3
 
+#	Flora
+var FLORASPACING = 16
+
 # Variable declarations
 #	Terrain
 var height = MAXHEIGHT
@@ -77,6 +80,10 @@ var oTileQueueOrder = []
 
 var terrainLoaded = {}
 
+#	Flora Engine
+
+
+
 #	Asset loading
 var terrainHandler = "res://scenes/terrainPieceHandler.tscn"
 
@@ -124,6 +131,10 @@ var stairQuery = """CREATE TABLE IF NOT EXISTS  "terrainStairs" (
 	"terrainID"	INTEGER,
 	"stairType"	INTEGER,
 	"stairCount"	INTEGER);"""
+
+var floraMatrixRetrieve = """SELECT MatrixID FROM floraMatrices WHERE FloraID = ? and XPos = ? and ZPos = ?;"""
+var floraMatrixAdd = """INSERT INTO floraMatrices (FloraID, XPos, ZPos) VALUES (?, ?, ?);"""
+var floraAdd = """INSERT INTO flora (MatrixID, XDev, YDev, ZDev, AttachedAxis, Rot, Scale) VALUES (?, ?, ?, ?, ?, ?, ?);"""
 
 ### UNIVERSIAL CODE ###
 # Runs when scene is created
@@ -624,6 +635,36 @@ func floraProcess():
 			else:
 				newGrass.get_child(0).get_child(2).visible = true
 
+# Manages placing a new flora into the world
+func placeFlora():
+	pass
+
+# Retrieves any new flora matrices
+func fetchFloraMatrices(trans):
+	pass
+
+# Adds new flora and removes old flora
+func updateFlora():
+	pass
+
+# Adds a new flora piece to the db
+func addFlora(trans, attachedPiv, rot, floraID, scal):
+	var xPos = round(trans.x / FLORASPACING)
+	var zPos = round(trans.z / FLORASPACING)
+	
+	var xDev = trans.x - xPos * FLORASPACING
+	var yDev = trans.y
+	var zDev = trans.z - zPos * FLORASPACING
+	# Adds new matrix location if required
+	if len(db.fetch_array_with_args(floraMatrixRetrieve, [floraID, xPos, zPos])) == 0:
+		db.query_with_args(floraMatrixAdd, [floraID, xPos, zPos])
+	
+	var matrixID = db.fetch_array_with_args(floraMatrixRetrieve, [floraID, xPos, zPos])[0]
+	# Adds flora data
+	db.query_with_args(floraAdd, [matrixID, xDev, yDev, zDev, attachedPiv, rot, scal])
+
+
+### OTHER FUNCTIONS ### CHANGE IN FUTURE
 # Object script for each frame
 func objectProcess():
 	pass

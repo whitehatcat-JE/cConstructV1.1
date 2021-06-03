@@ -309,11 +309,11 @@ material/5 = null
 script = ExtResource( 16 )
 
 [node name="terrainDisplay" type="MeshInstance" parent="selectedPos"]
-visible = false
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="floraDisplay" type="Spatial" parent="selectedPos"]
+visible = false
 
 [node name="imageUp" type="Sprite3D" parent="selectedPos/floraDisplay"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.235, -0.01, -0.03 )
