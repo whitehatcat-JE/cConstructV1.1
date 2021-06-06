@@ -23,6 +23,7 @@ var MAXSTAIRS = 3
 
 #	Flora
 var FLORASPACING = 16
+var FLORARENDERDIS = 4
 
 # Variable declarations
 #	Terrain
@@ -58,30 +59,27 @@ var editingColor = TILE
 
 # 	World positions
 var lastLoc = Vector2(pow(10, 10), pow(10, 10)) # Y being Z
-var fLastLoc = lastLoc # For flora
 var curLoc = Vector2()
 var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
-var renderPause = 3.2
-var renderDis = 32.0
+var renderPause = 10.0
+var renderDis = 64.0
 
 var tXMatrix = {}
 var tZMatrix = {}
-var oXMatrix = {}
-var oZMatrix = {}
 
 var stairData = []
 var sortedStairData = {}
 
 var terrainQueue = {}
 var terrainQueueOrder = []
-var oTileQueue = {}
-var oTileQueueOrder = []
 
 var terrainLoaded = {}
 
 #	Flora Engine
-
+var floraMatricesLoaded = {} # MatrixID:MatrixNode
+var floraRenderPause = 3.2
+var fCamLoc = Vector3(1000000, 0, 1000000)
 
 
 #	Asset loading
@@ -132,9 +130,16 @@ var stairQuery = """CREATE TABLE IF NOT EXISTS  "terrainStairs" (
 	"stairType"	INTEGER,
 	"stairCount"	INTEGER);"""
 
-var floraMatrixRetrieve = """SELECT MatrixID FROM floraMatrices WHERE FloraID = ? and XPos = ? and ZPos = ?;"""
-var floraMatrixAdd = """INSERT INTO floraMatrices (FloraID, XPos, ZPos) VALUES (?, ?, ?);"""
-var floraAdd = """INSERT INTO flora (MatrixID, XDev, YDev, ZDev, AttachedAxis, Rot, Scale) VALUES (?, ?, ?, ?, ?, ?, ?);"""
+var floraMatrixRetrieve = "SELECT MatrixID FROM floraMatrices WHERE FloraID = ? and XPos = ? and ZPos = ?;"
+var floraMatrixPositionRetrieve = "SELECT * FROM floraMatrices WHERE XPos > ? AND XPos < ? AND ZPos > ? AND ZPos < ?;"
+var floraMatrixAdd = "INSERT INTO floraMatrices (FloraID, XPos, ZPos) VALUES (?, ?, ?);"
+var floraAdd = "INSERT INTO flora (MatrixID, XDev, YDev, ZDev, AttachedAxis, Rot, Scale) VALUES (?, ?, ?, ?, ?, ?, ?);"
+var floraSelect = "SELECT * FROM flora WHERE MatrixID = ?;"
+var floraDelete = """SELECT flora.MatrixID, UniqueID, XDev + XPos * ? AS XPosition, YDev AS YPosition, ZDev + ZPos * ? AS ZPosition FROM flora
+LEFT JOIN floraMatrices WHERE flora.MatrixID = floraMatrices.MatrixID 
+AND XPosition > ? AND XPosition < ?
+AND ZPosition > ? AND ZPosition < ?;"""
+var floraIndividualDelete = "DELETE FROM flora WHERE UniqueID = ?"
 
 ### UNIVERSIAL CODE ###
 # Runs when scene is created
@@ -182,8 +187,8 @@ func _process(delta):
 # Updates the world
 func updateWorld():
 	# Load new terrain
-	if pow(camLoc.x - $Camera.translation.x, 2) > renderPause or pow(camLoc.y - $Camera.translation.z, 2) > renderPause:
-		camLoc = Vector2($Camera.translation.x, $Camera.translation.z)
+	if pow(camLoc.x - cam.translation.x, 2) > renderPause or pow(camLoc.y - cam.translation.z, 2) > renderPause:
+		camLoc = Vector2(cam.translation.x, cam.translation.z)
 		updateTerrain(fetchTerrain())
 		updateTerrainQueue()
 	
@@ -195,9 +200,11 @@ func updateWorld():
 			else:
 				break
 	# Load new flora
-	
+	if pow(fCamLoc.x - cam.translation.x, 2) > floraRenderPause or pow(fCamLoc.z - cam.translation.z, 2) > floraRenderPause:
+		fCamLoc = cam.translation
+		updateFlora(fCamLoc)
 	# Load new objects
-	pass
+	
 
 # Gets terrain from database
 # Needs xz coords, terrain render distance, distance travelled
@@ -607,46 +614,146 @@ func floraProcess():
 		
 		# Places flora
 		if Input.is_action_just_pressed("place") and floraCast.is_colliding():
-			var newGrass = load("res://grassTemp.tscn").instance()
-			self.add_child(newGrass)
-			newGrass.translation = floraCast.get_collision_point()
-			var rot = Vector3()
-			if selectedPos.rotation_degrees.x == 90:
-				if sqrt(pow(cam.rotation_degrees.y, 2)) > 90: rot.x = -90
-				else: rot.x = 90
-			elif selectedPos.rotation_degrees.z == 90:
-				if cam.rotation_degrees.y > 0: rot.z = -90
-				else: rot.z = 90
-			else:
-				if cam.rotation_degrees.x > 0: rot.x = 180
-			newGrass.rotation_degrees = rot
-			if $selectedPos/floraDisplay/imageUp.visible:
-				newGrass.get_child(0).rotation = $selectedPos/floraDisplay.rotation
-				var scaleVar = $selectedPos/floraDisplay.scale.x
-				newGrass.scale = Vector3(scaleVar, scaleVar, scaleVar)
-			else:
-				newGrass.get_child(0).rotation_degrees.y = round(rand_range(0, 360)/90)*90
-				var scaleVariation = rand_range(0.75, 1.5)
-				newGrass.scale = Vector3(scaleVariation, scaleVariation, scaleVariation)
-			if Input.is_action_pressed("control"):
-				newGrass.get_child(0).get_child(0).visible = true
-			elif Input.is_action_pressed("shift"):
-				newGrass.get_child(0).get_child(1).visible = true
-			else:
-				newGrass.get_child(0).get_child(2).visible = true
+			placeFlora()
+		
+		# Deletes flora
+		if Input.is_action_pressed("delete") and floraCast.is_colliding():
+			deleteFlora()
 
 # Manages placing a new flora into the world
 func placeFlora():
-	pass
+	var exactPosition = floraCast.get_collision_point()
+	var position = Vector3()
+	position.x = round(exactPosition.x*100.0)/100.0
+	position.y = round(exactPosition.y*100.0)/100.0
+	position.z = round(exactPosition.z*100.0)/100.0
+	
+	var rotate = round($selectedPos/floraDisplay.rotation_degrees.y)
+	var floraID = 0
+	
+	
+	var attachedAxis = 0
+	if selectedPos.rotation_degrees.x == 90:
+		if sqrt(pow(cam.rotation_degrees.y, 2)) > 90: attachedAxis = 1
+		else: attachedAxis = 2
+	elif selectedPos.rotation_degrees.z == 90:
+		if cam.rotation_degrees.y > 0: attachedAxis = 3
+		else: attachedAxis = 4
+	elif cam.rotation_degrees.x > 0: attachedAxis = 5
+	
+	var scal = 1
+	if $selectedPos/floraDisplay/imageUp.visible:
+		scal = $selectedPos/floraDisplay.scale.x
+	else: 
+		scal = round(rand_range(0.75, 1.25)*10.0)/10.0
+	
+	var matrixInfo = addFlora(position, attachedAxis, rotate, floraID, scal)
+	loadMatrix(matrixInfo[0], Vector3(matrixInfo[1] * FLORASPACING, 0, matrixInfo[2] * FLORASPACING), floraID)
 
+# Manages deleting flora in a given 2d area
+func deleteFlora():
+	var position = floraCast.get_collision_point()
+	var scal = $selectedPos/floraDisplay.scale.x
+	
+	var sqlCases = [FLORASPACING, FLORASPACING, position.x, position.x, position.z, position.z]
+	sqlCases[2] -= scal
+	sqlCases[3] += scal
+	sqlCases[4] -= scal
+	sqlCases[5] += scal
+	
+	var deletingFlora = db.fetch_array_with_args(floraDelete, sqlCases)
+	
+	if len(deletingFlora) > 0:
+		for deadFlora in deletingFlora:
+			db.query_with_args(floraIndividualDelete, [deadFlora["UniqueID"]])
+			if deadFlora["MatrixID"] in floraMatricesLoaded:
+				floraMatricesLoaded[deadFlora["MatrixID"]].queue_free()
+				floraMatricesLoaded.erase(deadFlora["MatrixID"])
+		
+		updateFlora(cam.translation)
+		
+	
+	
 # Retrieves any new flora matrices
 func fetchFloraMatrices(trans):
-	pass
+	var displaceRange = [0, 0, 0, 0]
+	
+	displaceRange[0] = (trans.x - FLORASPACING * FLORARENDERDIS)/FLORASPACING
+	displaceRange[1] = (trans.x + FLORASPACING * FLORARENDERDIS)/FLORASPACING
+	displaceRange[2] = (trans.z - FLORASPACING * FLORARENDERDIS)/FLORASPACING
+	displaceRange[3] = (trans.z + FLORASPACING * FLORARENDERDIS)/FLORASPACING
+	
+	var tempResult = db.fetch_array_with_args(floraMatrixPositionRetrieve, displaceRange)
+	return tempResult
+	
+	
+# Loads/reloads a given floraMatrix
+func loadMatrix(matrixID, position, floraID):
+	var flora = db.fetch_array_with_args(floraSelect, [matrixID]) # Retrieves flora
+	
+	if matrixID in floraMatricesLoaded: # Deletes any pre-existing flora matrices
+		floraMatricesLoaded[matrixID].queue_free()
+		floraMatricesLoaded.erase(matrixID)
+	
+	var newFlora = MultiMeshInstance.new()
+	newFlora.multimesh = MultiMesh.new()
+	newFlora.multimesh.transform_format = MultiMesh.TRANSFORM_3D
+	self.add_child(newFlora)
+	
+	floraMatricesLoaded[matrixID] = newFlora
+	
+	newFlora.multimesh.mesh = load("res://testTree.obj")
+	newFlora.material_override = load("res://assets/japaneseTown/japaneseMat.tres")
+	newFlora.multimesh.instance_count = len(flora)
+	newFlora.translation = position
+	
+	for floraCount in range(len(flora)):
+		var floraInfo = flora[floraCount]
+		var instancePosition = Transform()
+		var attachedAxis = floraInfo["AttachedAxis"]
+		var rot = floraInfo["Rot"]
+		var scal = floraInfo["Scale"]
+		
+		instancePosition = instancePosition.rotated(Vector3(0, 1, 0), PI/4 * rot)
+		
+		match attachedAxis:
+			1:
+				instancePosition = instancePosition.rotated(Vector3(1, 0, 0), -PI/2)
+			2:
+				instancePosition = instancePosition.rotated(Vector3(1, 0, 0), PI/2)
+			3:
+				instancePosition = instancePosition.rotated(Vector3(0, 0, 1), -PI/2)
+			4:
+				instancePosition = instancePosition.rotated(Vector3(0, 0, 1), PI/2)
+			5:
+				instancePosition = instancePosition.rotated(Vector3(0, 0, 1), -PI)
+		
+		instancePosition = instancePosition.scaled(Vector3(scal, scal, scal))
+		
+		instancePosition.origin.x = floraInfo["XDev"]
+		instancePosition.origin.y = floraInfo["YDev"]
+		instancePosition.origin.z = floraInfo["ZDev"]
+		
+		newFlora.multimesh.set_instance_transform(floraCount, instancePosition)
+		
+	
+	return newFlora
 
 # Adds new flora and removes old flora
-func updateFlora():
-	pass
-
+func updateFlora(trans):
+	var matrices = fetchFloraMatrices(trans)
+	var newIDList = []
+	for matrix in matrices:
+		newIDList.append(matrix["MatrixID"])
+		if !(matrix["MatrixID"] in floraMatricesLoaded):
+			var newMatrix = loadMatrix(matrix["MatrixID"], Vector3(matrix["XPos"]*FLORASPACING, 0, matrix["ZPos"]*FLORASPACING), matrix["FloraID"])
+			floraMatricesLoaded[matrix["MatrixID"]] = newMatrix
+	
+	for oldMatrix in floraMatricesLoaded.keys():
+		if !(oldMatrix in newIDList):
+			floraMatricesLoaded[oldMatrix].queue_free()
+			floraMatricesLoaded.erase(oldMatrix)
+		
 # Adds a new flora piece to the db
 func addFlora(trans, attachedPiv, rot, floraID, scal):
 	var xPos = round(trans.x / FLORASPACING)
@@ -659,10 +766,11 @@ func addFlora(trans, attachedPiv, rot, floraID, scal):
 	if len(db.fetch_array_with_args(floraMatrixRetrieve, [floraID, xPos, zPos])) == 0:
 		db.query_with_args(floraMatrixAdd, [floraID, xPos, zPos])
 	
-	var matrixID = db.fetch_array_with_args(floraMatrixRetrieve, [floraID, xPos, zPos])[0]
+	var matrixID = db.fetch_array_with_args(floraMatrixRetrieve, [floraID, xPos, zPos])[0]["MatrixID"]
 	# Adds flora data
 	db.query_with_args(floraAdd, [matrixID, xDev, yDev, zDev, attachedPiv, rot, scal])
-
+	
+	return [matrixID, xPos, zPos]
 
 ### OTHER FUNCTIONS ### CHANGE IN FUTURE
 # Object script for each frame
