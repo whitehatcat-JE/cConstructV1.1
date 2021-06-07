@@ -41,7 +41,7 @@ func updateCoords(newCoord):
 
 func _on_renderDisInput_text_entered(new_text):
 	if checkInt(new_text):
-		W.placementOffset = int(new_text)
+		W.placementOffset = float(new_text)
 	
 	placementDisInput.text = ""
 	placementDisInput.placeholder_text = new_text

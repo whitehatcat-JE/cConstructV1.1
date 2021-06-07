@@ -646,7 +646,6 @@ func fetchFloraMatrices(trans):
 	var tempResult = W.db.fetch_array_with_args(floraMatrixPositionRetrieve, displaceRange)
 	return tempResult
 	
-	
 # Loads/reloads a given floraMatrix
 func loadMatrix(matrixID, position, floraID):
 	var flora = W.db.fetch_array_with_args(floraSelect, [matrixID]) # Retrieves flora
@@ -714,7 +713,7 @@ func updateFlora(trans):
 			floraMatricesLoaded[oldMatrix].queue_free()
 			floraMatricesLoaded.erase(oldMatrix)
 	
-# Readjusts the floraMatricesQueuePositions to load around the player (Closest to furtherest)
+# Readjusts the floraMatricesQueuePositions to load around the player (Closest to furthest)
 func updateFloraPositions():
 	var newFloraPositioning = []
 	var floraDistances = []
@@ -735,7 +734,6 @@ func updateFloraPositions():
 	
 	floraMatricesQueuePositions = newFloraPositioning
 	
-
 # Adds a new flora piece to the db
 func addFlora(trans, attachedPiv, rot, floraID, scal):
 	var xPos = round(trans.x / FLORASPACING)
