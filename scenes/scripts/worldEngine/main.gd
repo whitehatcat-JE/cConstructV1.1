@@ -8,11 +8,6 @@ enum {
 }
 
 # Constants
-# 	Render settings
-var tRENDER = 100 # Terrain
-var fRENDER = 35 # Flora
-var oRENDER = 65 # Objects
-
 var UPDATEDIS = 5 # Distance before new world parts are loaded
 var fUPDATEDIS = 1 # Distance before flora is updated
 
@@ -23,7 +18,7 @@ var MAXSTAIRS = 3
 
 #	Flora
 var FLORASPACING = 16
-var FLORARENDERDIS = 4
+var FLORARENDERDIS = 12
 
 # Variable declarations
 #	Terrain
@@ -63,7 +58,7 @@ var curLoc = Vector2()
 var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
 var renderPause = 10.0
-var renderDis = 64.0
+var renderDis = 256.0
 
 var tXMatrix = {}
 var tZMatrix = {}
