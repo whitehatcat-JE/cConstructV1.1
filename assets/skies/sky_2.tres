@@ -1,27 +1,34 @@
 [gd_resource type="Environment" load_steps=2 format=2]
 
 [sub_resource type="ProceduralSky" id=1]
-sky_top_color = Color( 0.207843, 0.717647, 1, 1 )
-sky_horizon_color = Color( 0.968627, 0.764706, 0.407843, 1 )
+sky_top_color = Color( 0.105882, 0.509804, 0.898039, 1 )
+sky_horizon_color = Color( 0.407843, 0.968627, 0.756863, 1 )
 sky_curve = 0.045
-ground_bottom_color = Color( 0.964706, 0.615686, 0.478431, 1 )
-ground_horizon_color = Color( 0.968627, 0.764706, 0.411765, 1 )
+ground_bottom_color = Color( 0.27451, 0.862745, 0.639216, 1 )
+ground_horizon_color = Color( 0.407843, 0.968627, 0.756863, 1 )
+sun_color = Color( 1, 0.839216, 0.560784, 1 )
+sun_latitude = 27.0
+sun_longitude = -116.25
+sun_curve = 0.0249999
 
 [resource]
 background_mode = 2
 background_sky = SubResource( 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
-ambient_light_sky_contribution = 0.1
-fog_color = Color( 1, 1, 1, 1 )
-fog_depth_begin = 200.0
-fog_depth_end = 250.0
-tonemap_mode = 2
+ambient_light_sky_contribution = 0.2
+fog_enabled = true
+fog_color = Color( 0.407843, 0.968627, 0.756863, 1 )
+fog_depth_begin = 75.0
+tonemap_mode = 3
+tonemap_exposure = 1.5
 auto_exposure_speed = 3.0
-ssao_radius = 96.12
-ssao_radius2 = 41.85
+ssao_enabled = true
+ssao_radius = 8.19
+ssao_radius2 = 14.38
 ssao_quality = 2
 dof_blur_far_distance = 200.0
 dof_blur_far_transition = 15.58
 dof_blur_far_amount = 0.21
 dof_blur_far_quality = 2
-glow_bloom = 0.06
+glow_enabled = true
+glow_bloom = 0.02

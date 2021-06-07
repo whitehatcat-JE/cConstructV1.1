@@ -18,7 +18,7 @@ var MAXSTAIRS = 3
 
 #	Flora
 var FLORASPACING = 16
-var FLORARENDERDIS = 12
+var FLORARENDERDIS = 5
 
 # Variable declarations
 #	Terrain
@@ -58,7 +58,7 @@ var curLoc = Vector2()
 var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
 var renderPause = 10.0
-var renderDis = 256.0
+var renderDis = 72.0
 
 var tXMatrix = {}
 var tZMatrix = {}
