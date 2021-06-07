@@ -81,6 +81,8 @@ var floraMatricesLoaded = {} # MatrixID:MatrixNode
 var floraRenderPause = 3.2
 var fCamLoc = Vector3(1000000, 0, 1000000)
 
+onready var currentFloraID = W.floraIDFiles.keys()[0]
+
 
 #	Asset loading
 var terrainHandler = "res://scenes/terrainPieceHandler.tscn"
@@ -100,36 +102,6 @@ onready var floraOptionsMenu = $GUI/floraMenu
 onready var terrainOptionsMenu = $GUI/tileMenu
 
 ### SQL MODULE ###
-const SQLite = preload("res://lib/gdsqlite.gdns");
-# Create gdsqlite instance
-var db = SQLite.new();
-var terrainQuery = """CREATE TABLE IF NOT EXISTS  "terrain" (
-	"terrainID"	INTEGER,
-	"height"	INTEGER,
-	"posX"	TEXT,
-	"posY"	REAL,
-	"posZ"	REAL,
-	"colorIDA"	INTEGER,
-	"colorIDB"	INTEGER,
-	"colorIDC"	INTEGER,
-	"cliffA"	INTEGER,
-	"cliffB"	INTEGER,
-	"cliffC"	INTEGER,
-	"cliffD"	INTEGER,
-	"ledgeA"	INTEGER,
-	"ledgeB"	INTEGER,
-	"ledgeC"	INTEGER,
-	"ledgeD"	INTEGER,
-	"transA"	INTEGER,
-	"transB"	INTEGER,
-	"transC"	INTEGER,
-	"transD"	INTEGER,
-	PRIMARY KEY("terrainID" AUTOINCREMENT));"""
-var stairQuery = """CREATE TABLE IF NOT EXISTS  "terrainStairs" (
-	"terrainID"	INTEGER,
-	"stairType"	INTEGER,
-	"stairCount"	INTEGER);"""
-
 var floraMatrixRetrieve = "SELECT MatrixID FROM floraMatrices WHERE FloraID = ? and XPos = ? and ZPos = ?;"
 var floraMatrixPositionRetrieve = "SELECT * FROM floraMatrices WHERE XPos > ? AND XPos < ? AND ZPos > ? AND ZPos < ?;"
 var floraMatrixAdd = "INSERT INTO floraMatrices (FloraID, XPos, ZPos) VALUES (?, ?, ?);"
@@ -149,11 +121,6 @@ func _ready():
 	
 	# Node updates
 	heightSlider.value = MAXHEIGHT
-	
-	# SQL Connections
-	db.open("user://worldDB.db")
-	db.query(terrainQuery)
-	db.query(stairQuery)
 
 # Runs every frame
 func _process(delta):
@@ -258,38 +225,38 @@ func terrainProcess():
 			ledgeA, ledgeB, ledgeC, ledgeD,
 			transA, transB, transC, transD
 		]
-		db.query_with_args(
+		W.db.query_with_args(
 			"""INSERT INTO terrain (height, posX, posY, posZ, colorIDA, colorIDB, colorIDC,
 				cliffA, cliffB, cliffC, cliffD, ledgeA, ledgeB, ledgeC, ledgeD,
 				transA, transB, transC, transD) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);""",
 			 pieceData)
 		var newID = 0
-		for id in db.fetch_array("SELECT MAX(terrainID) FROM terrain"):
+		for id in W.db.fetch_array("SELECT MAX(terrainID) FROM terrain"):
 			newID = id[newID]
 		
 		if stairsA > 0:
-			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
 			[newID, 0, stairsA])
 		if stairsB > 0:
-			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
 			[newID, 1, stairsB])
 		if stairsC > 0:
-			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
 			[newID, 2, stairsC])
 		if stairsD > 0:
-			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
 			[newID, 3, stairsD])
 		if oStairsA > 0:
-			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
 			[newID, 4, oStairsA])
 		if oStairsB > 0:
-			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
 			[newID, 5, oStairsB])
 		if oStairsC > 0:
-			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
 			[newID, 6, oStairsC])
 		if oStairsD > 0:
-			db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
 			[newID, 7, oStairsD])
 		
 		var newPiece = generateTerrain()
@@ -310,7 +277,7 @@ func terrainProcess():
 			var delObj = deleteCast.get_collider().get_parent().get_parent()
 			var xPos = round(delObj.global_transform.origin.x*10)/10
 			var zPos = round(delObj.global_transform.origin.z*10)/10
-			db.query_with_args("DELETE FROM terrain WHERE posX == ? AND posZ == ?", 
+			W.db.query_with_args("DELETE FROM terrain WHERE posX == ? AND posZ == ?", 
 				[xPos, zPos]
 			)
 			delObj.queue_free()
@@ -397,17 +364,17 @@ func fetchTerrain():
 	retrieveRegionZ[3] = round(retrieveRegionZ[3] * 10.0)/10.0
 	
 	# Retrieves the regions tiles
-	var xdb = db.fetch_array_with_args(
+	var xdb = W.db.fetch_array_with_args(
 		"SELECT * FROM terrain WHERE terrain.posX <= ? and terrain.posX >= ? and terrain.posZ <= ? and terrain.posZ >= ?;", 
 		retrieveRegionX
 	)
 	
-	var zdb = db.fetch_array_with_args(
+	var zdb = W.db.fetch_array_with_args(
 		"SELECT * FROM terrain WHERE terrain.posX <= ? and terrain.posX >= ? and terrain.posZ <= ? and terrain.posZ >= ?;", 
 		retrieveRegionZ
 	)
 	
-	var newStairData = db.fetch_array_with_args(
+	var newStairData = W.db.fetch_array_with_args(
 		"""SELECT terrainID, stairType, stairCount FROM terrainStairs
 			WHERE terrainID IN (
 				SELECT terrainID FROM terrain
@@ -624,12 +591,15 @@ func floraProcess():
 func placeFlora():
 	var exactPosition = floraCast.get_collision_point()
 	var position = Vector3()
-	position.x = round(exactPosition.x*100.0)/100.0
-	position.y = round(exactPosition.y*100.0)/100.0
-	position.z = round(exactPosition.z*100.0)/100.0
+	position.x = round(exactPosition.x*10.0)/10.0
+	position.y = round(exactPosition.y*10.0)/10.0
+	position.z = round(exactPosition.z*10.0)/10.0
 	
 	var rotate = round($selectedPos/floraDisplay.rotation_degrees.y)
-	var floraID = 0
+	var floraID = currentFloraID
+	var floraMesh = W.floraIDFiles[floraID]
+	
+	position.y += W.placementOffset
 	
 	
 	var attachedAxis = 0
@@ -661,17 +631,16 @@ func deleteFlora():
 	sqlCases[4] -= scal
 	sqlCases[5] += scal
 	
-	var deletingFlora = db.fetch_array_with_args(floraDelete, sqlCases)
+	var deletingFlora = W.db.fetch_array_with_args(floraDelete, sqlCases)
 	
 	if len(deletingFlora) > 0:
 		for deadFlora in deletingFlora:
-			db.query_with_args(floraIndividualDelete, [deadFlora["UniqueID"]])
+			W.db.query_with_args(floraIndividualDelete, [deadFlora["UniqueID"]])
 			if deadFlora["MatrixID"] in floraMatricesLoaded:
 				floraMatricesLoaded[deadFlora["MatrixID"]].queue_free()
 				floraMatricesLoaded.erase(deadFlora["MatrixID"])
 		
 		updateFlora(cam.translation)
-		
 	
 	
 # Retrieves any new flora matrices
@@ -683,13 +652,13 @@ func fetchFloraMatrices(trans):
 	displaceRange[2] = (trans.z - FLORASPACING * FLORARENDERDIS)/FLORASPACING
 	displaceRange[3] = (trans.z + FLORASPACING * FLORARENDERDIS)/FLORASPACING
 	
-	var tempResult = db.fetch_array_with_args(floraMatrixPositionRetrieve, displaceRange)
+	var tempResult = W.db.fetch_array_with_args(floraMatrixPositionRetrieve, displaceRange)
 	return tempResult
 	
 	
 # Loads/reloads a given floraMatrix
 func loadMatrix(matrixID, position, floraID):
-	var flora = db.fetch_array_with_args(floraSelect, [matrixID]) # Retrieves flora
+	var flora = W.db.fetch_array_with_args(floraSelect, [matrixID]) # Retrieves flora
 	
 	if matrixID in floraMatricesLoaded: # Deletes any pre-existing flora matrices
 		floraMatricesLoaded[matrixID].queue_free()
@@ -702,8 +671,8 @@ func loadMatrix(matrixID, position, floraID):
 	
 	floraMatricesLoaded[matrixID] = newFlora
 	
-	newFlora.multimesh.mesh = load("res://testTree.obj")
-	newFlora.material_override = load("res://assets/japaneseTown/japaneseMat.tres")
+	newFlora.multimesh.mesh = W.floraIDFiles[floraID]
+	newFlora.material_override = load("res://assets/japaneseTown/japaneseMat.tres") # NEED TO CHANGE
 	newFlora.multimesh.instance_count = len(flora)
 	newFlora.translation = position
 	
@@ -763,12 +732,12 @@ func addFlora(trans, attachedPiv, rot, floraID, scal):
 	var yDev = trans.y
 	var zDev = trans.z - zPos * FLORASPACING
 	# Adds new matrix location if required
-	if len(db.fetch_array_with_args(floraMatrixRetrieve, [floraID, xPos, zPos])) == 0:
-		db.query_with_args(floraMatrixAdd, [floraID, xPos, zPos])
+	if len(W.db.fetch_array_with_args(floraMatrixRetrieve, [floraID, xPos, zPos])) == 0:
+		W.db.query_with_args(floraMatrixAdd, [floraID, xPos, zPos])
 	
-	var matrixID = db.fetch_array_with_args(floraMatrixRetrieve, [floraID, xPos, zPos])[0]["MatrixID"]
+	var matrixID = W.db.fetch_array_with_args(floraMatrixRetrieve, [floraID, xPos, zPos])[0]["MatrixID"]
 	# Adds flora data
-	db.query_with_args(floraAdd, [matrixID, xDev, yDev, zDev, attachedPiv, rot, scal])
+	W.db.query_with_args(floraAdd, [matrixID, xDev, yDev, zDev, attachedPiv, rot, scal])
 	
 	return [matrixID, xPos, zPos]
 
@@ -901,7 +870,8 @@ func changeColor(color):
 		$Camera/objDisplayPoint/subDisplayB.material_override = W.loaded["c" + detailMenuColor]
 
 func changeFlora(floraName):
-	pass
+	$Camera/floraDisplayPoint/mainDisplay.mesh = W.floraIDFiles[W.floraNameIDs[floraName]]
+	currentFloraID = W.floraNameIDs[floraName]
 
 func _on_colorA_button_down(): changeColor($GUI/tileMenu/colorOptions/colorA.text);
 func _on_colorB_button_down(): changeColor($GUI/tileMenu/colorOptions/colorB.text);

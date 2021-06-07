@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/rocksFlat2-0.obj-23e3d8ffe158a2995f299316e30d4a0b.mesh"
+
+[deps]
+
+files=[ "res://.import/rocksFlat2-0.obj-23e3d8ffe158a2995f299316e30d4a0b.mesh" ]
+
+source_file="res://assets/worldEngine/flora/rocksFlat2-0.obj"
+dest_files=[ "res://.import/rocksFlat2-0.obj-23e3d8ffe158a2995f299316e30d4a0b.mesh", "res://.import/rocksFlat2-0.obj-23e3d8ffe158a2995f299316e30d4a0b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

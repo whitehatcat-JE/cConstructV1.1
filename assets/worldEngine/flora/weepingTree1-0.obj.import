@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/weepingTree1-0.obj-07f8f9480802a7744c88be37b82e04df.mesh"
+
+[deps]
+
+files=[ "res://.import/weepingTree1-0.obj-07f8f9480802a7744c88be37b82e04df.mesh" ]
+
+source_file="res://assets/worldEngine/flora/weepingTree1-0.obj"
+dest_files=[ "res://.import/weepingTree1-0.obj-07f8f9480802a7744c88be37b82e04df.mesh", "res://.import/weepingTree1-0.obj-07f8f9480802a7744c88be37b82e04df.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

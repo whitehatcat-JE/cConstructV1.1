@@ -1,7 +1,7 @@
 extends Control
 
 # Node connections
-onready var renderDisInput = $renderDisInput
+onready var placementDisInput = $offsetDisInput
 onready var gridLockInput = $gridLockInput
 
 onready var xCoord = $xCoord
@@ -17,7 +17,7 @@ signal changeCoords
 var camCoord = Vector3()
 
 func _ready():
-	renderDisInput.placeholder_text = str(W.renderDis)
+	placementDisInput.placeholder_text = str(W.placementOffset)
 	gridLockInput.placeholder_text = str(W.gridLock)
 
 func checkInt(text):
@@ -41,12 +41,12 @@ func updateCoords(newCoord):
 
 func _on_renderDisInput_text_entered(new_text):
 	if checkInt(new_text):
-		W.renderDis = int(new_text)
+		W.placementOffset = int(new_text)
 	
-	renderDisInput.text = ""
-	renderDisInput.placeholder_text = new_text
+	placementDisInput.text = ""
+	placementDisInput.placeholder_text = new_text
 	
-	renderDisInput.release_focus()
+	placementDisInput.release_focus()
 
 func _on_gridLockInput_text_entered(new_text):
 	if checkInt(new_text):
@@ -114,3 +114,6 @@ func _on_zOffset_text_entered(new_text):
 	zOffset.placeholder_text = "oz:" + new_text
 	
 	zOffset.release_focus()
+
+
+func _on_invertCheck_toggled(button_pressed): W.invert = button_pressed;

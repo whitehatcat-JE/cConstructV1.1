@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/flowerYellow1-0.obj-c8d71b4f13b2ca71119c602ced93737c.mesh"
+
+[deps]
+
+files=[ "res://.import/flowerYellow1-0.obj-c8d71b4f13b2ca71119c602ced93737c.mesh" ]
+
+source_file="res://assets/worldEngine/flora/flowerYellow1-0.obj"
+dest_files=[ "res://.import/flowerYellow1-0.obj-c8d71b4f13b2ca71119c602ced93737c.mesh", "res://.import/flowerYellow1-0.obj-c8d71b4f13b2ca71119c602ced93737c.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

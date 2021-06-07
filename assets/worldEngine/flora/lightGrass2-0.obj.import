@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/lightGrass2-0.obj-9eed08b0f07e89a88d5973ccc685263c.mesh"
+
+[deps]
+
+files=[ "res://.import/lightGrass2-0.obj-9eed08b0f07e89a88d5973ccc685263c.mesh" ]
+
+source_file="res://assets/worldEngine/flora/lightGrass2-0.obj"
+dest_files=[ "res://.import/lightGrass2-0.obj-9eed08b0f07e89a88d5973ccc685263c.mesh", "res://.import/lightGrass2-0.obj-9eed08b0f07e89a88d5973ccc685263c.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

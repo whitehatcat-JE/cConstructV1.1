@@ -4,8 +4,8 @@ extends Node2D
 var PAGELENGTH = 13
 
 # Variables
-var allOptions = W.flora
-var optionChoices = allOptions.duplicate()
+onready var allOptions = W.floraFileNames.keys()
+onready var optionChoices = allOptions.duplicate()
 var page = 0
 
 # Node Connections

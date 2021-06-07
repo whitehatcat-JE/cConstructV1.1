@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -26,10 +26,14 @@
 [ext_resource path="res://scenes/scripts/worldEngine/floraMenu.gd" type="Script" id=24]
 [ext_resource path="res://assets/GUI/personIcon.png" type="Texture" id=25]
 [ext_resource path="res://scenes/scripts/worldEngine/floraOptions.gd" type="Script" id=26]
-[ext_resource path="res://testPlant.obj" type="ArrayMesh" id=27]
+[ext_resource path="res://materials/magicaColorMap.png" type="Texture" id=27]
 [ext_resource path="res://assets/GUI/sprayRangeAuto.png" type="Texture" id=28]
+[ext_resource path="res://assets/worldEngine/flora/cactus1-0.obj" type="ArrayMesh" id=29]
 
 [sub_resource type="SphereMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=21]
+albedo_texture = ExtResource( 27 )
 
 [sub_resource type="SphereMesh" id=2]
 
@@ -292,28 +296,24 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="floraDisplayPoint" type="Spatial" parent="Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.172, 0.322, -1.31 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.172, 0.322, -1.16 )
 visible = false
 
 [node name="mainDisplay" type="MeshInstance" parent="Camera/floraDisplayPoint"]
-transform = Transform( 0.149429, 0.0130734, 0, -0.0118485, 0.135429, -0.0633927, -0.00552504, 0.0631515, 0.135946, 0, 0, 0 )
-mesh = ExtResource( 27 )
+transform = Transform( 0.149429, 0.0130734, 4.16383e-10, -0.0123611, 0.141288, -0.0488351, -0.00425627, 0.0486494, 0.141828, 0.2, 0, 0.15 )
+material_override = SubResource( 21 )
+mesh = ExtResource( 29 )
 material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
-material/5 = null
 
 [node name="selectedPos" type="Spatial" parent="."]
 script = ExtResource( 16 )
 
 [node name="terrainDisplay" type="MeshInstance" parent="selectedPos"]
+visible = false
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="floraDisplay" type="Spatial" parent="selectedPos"]
-visible = false
 
 [node name="imageUp" type="Sprite3D" parent="selectedPos/floraDisplay"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.235, -0.01, -0.03 )
@@ -1049,15 +1049,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="renderDisLabel" type="Label" parent="GUI/sceneMenu"]
-margin_left = 929.0
+[node name="offsetDisLabel" type="Label" parent="GUI/sceneMenu"]
+margin_left = 906.0
 margin_top = 528.0
-margin_right = 1249.0
+margin_right = 1356.0
 margin_bottom = 617.0
 rect_scale = Vector2( 0.175, 0.175 )
 custom_fonts/font = SubResource( 17 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Render Distance:"
+text = "Flora Placement Offset:"
 align = 2
 valign = 1
 clip_text = true
@@ -1065,23 +1065,50 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="renderDisInput" type="LineEdit" parent="GUI/sceneMenu"]
+[node name="offsetDisInput" type="LineEdit" parent="GUI/sceneMenu"]
 margin_left = 989.0
 margin_top = 528.0
 margin_right = 1047.0
 margin_bottom = 559.0
 rect_scale = Vector2( 0.5, 0.5 )
 custom_fonts/font = SubResource( 18 )
-placeholder_text = "50"
+placeholder_text = "0.4"
 caret_blink = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="gridLockLabel" type="Label" parent="GUI/sceneMenu"]
-margin_left = 929.0
+[node name="invert" type="Label" parent="GUI/sceneMenu"]
+margin_left = 906.0
 margin_top = 544.0
-margin_right = 1249.0
+margin_right = 1068.0
+margin_bottom = 633.0
+rect_scale = Vector2( 0.175, 0.175 )
+custom_fonts/font = SubResource( 17 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Invert:"
+align = 2
+valign = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="invertCheck" type="CheckBox" parent="GUI/sceneMenu"]
+margin_left = 930.777
+margin_top = 539.753
+margin_right = 954.777
+margin_bottom = 563.753
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="gridLockLabel" type="Label" parent="GUI/sceneMenu"]
+margin_left = 954.0
+margin_top = 544.0
+margin_right = 1131.0
 margin_bottom = 633.0
 rect_scale = Vector2( 0.175, 0.175 )
 custom_fonts/font = SubResource( 17 )
@@ -1824,7 +1851,8 @@ directional_shadow_max_distance = 250.0
 [connection signal="value_changed" from="GUI/terrainMenu/pivot/oStairsC" to="." method="_on_oStairsC_value_changed"]
 [connection signal="value_changed" from="GUI/terrainMenu/pivot/oStairsD" to="." method="_on_oStairsD_value_changed"]
 [connection signal="changeCoords" from="GUI/sceneMenu" to="." method="_on_sceneMenu_changeCoords"]
-[connection signal="text_entered" from="GUI/sceneMenu/renderDisInput" to="GUI/sceneMenu" method="_on_renderDisInput_text_entered"]
+[connection signal="text_entered" from="GUI/sceneMenu/offsetDisInput" to="GUI/sceneMenu" method="_on_renderDisInput_text_entered"]
+[connection signal="toggled" from="GUI/sceneMenu/invertCheck" to="GUI/sceneMenu" method="_on_invertCheck_toggled"]
 [connection signal="text_entered" from="GUI/sceneMenu/gridLockInput" to="GUI/sceneMenu" method="_on_gridLockInput_text_entered"]
 [connection signal="text_entered" from="GUI/sceneMenu/zCoord" to="GUI/sceneMenu" method="_on_zCoord_text_entered"]
 [connection signal="text_entered" from="GUI/sceneMenu/yCoord" to="GUI/sceneMenu" method="_on_yCoord_text_entered"]

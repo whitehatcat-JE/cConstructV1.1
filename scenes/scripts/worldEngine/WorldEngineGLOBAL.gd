@@ -29,6 +29,7 @@ var COLORFOLDER = "res://materials/"
 var DEFMODE = MODETERRAIN
 var DEFGRIDDIS = 3.2
 var DEFRENDERDIS = 50
+var DEFPLACEMENTOFFSET = 0.4
 
 # Grid constrants
 var gridLock = DEFGRIDDIS
@@ -46,10 +47,58 @@ var mode = MODETERRAIN
 var colors = ["Grass", "Stone", "Dirt", "Sand"]
 
 # Flora
-var flora = ["Bulb plant", "Arid Tree", "Twig"]
+var floraPath = "res://assets/worldEngine/flora/"
+var floraSQLCheck = "SELECT * FROM floraFiles;"
+var floraSQLInsert = "INSERT INTO floraFiles (FloraName) VALUES (?);"
+
+var floraFileLocs = {}
+var floraFileNames = {}
+var floraNameIDs = {}
+var floraIDFiles = {}
+
+var placementOffset = DEFPLACEMENTOFFSET
+var invert = false
+
+### DATABASE LOADING ###
+# SQL MODULE
+const SQLite = preload("res://lib/gdsqlite.gdns");
+# Create gdsqlite instance
+var terrainQuery = """CREATE TABLE IF NOT EXISTS  "terrain" (
+	"terrainID"	INTEGER,
+	"height"	INTEGER,
+	"posX"	TEXT,
+	"posY"	REAL,
+	"posZ"	REAL,
+	"colorIDA"	INTEGER,
+	"colorIDB"	INTEGER,
+	"colorIDC"	INTEGER,
+	"cliffA"	INTEGER,
+	"cliffB"	INTEGER,
+	"cliffC"	INTEGER,
+	"cliffD"	INTEGER,
+	"ledgeA"	INTEGER,
+	"ledgeB"	INTEGER,
+	"ledgeC"	INTEGER,
+	"ledgeD"	INTEGER,
+	"transA"	INTEGER,
+	"transB"	INTEGER,
+	"transC"	INTEGER,
+	"transD"	INTEGER,
+	PRIMARY KEY("terrainID" AUTOINCREMENT));"""
+var stairQuery = """CREATE TABLE IF NOT EXISTS  "terrainStairs" (
+	"terrainID"	INTEGER,
+	"stairType"	INTEGER,
+	"stairCount"	INTEGER);"""
+
+var db = SQLite.new();
 
 ### LOADING OF UNIVERSIAL ASSETS ###
 func _ready():
+	db.open("user://worldDB.db")
+	db.query(terrainQuery) # NEED TO ADD THIS FOR FLORA
+	db.query(stairQuery)
+	
+	# TERRAIN ASSETS
 	loaded["tFlat"] = load(TERRAINFOLDER + "flat" + OBJTYPE)
 	loaded["tCliff"] = load(TERRAINFOLDER + "cliffV1" + OBJTYPE)
 	loaded["tLedge"] = load(TERRAINFOLDER + "ledgeV1" + OBJTYPE)
@@ -62,3 +111,53 @@ func _ready():
 	
 	for color in colors:
 		loaded["c" + color.capitalize()] = load(COLORFOLDER + color + COLORTYPE)
+	
+	# FLORA ASSETS
+	var floraFiles = retrieveFilesInFolder(floraPath)
+	var floraExisting = db.fetch_array(floraSQLCheck)
+	
+	for file in floraFiles:
+		if !(".import" in file):
+			var newFloraName = ""
+			var endFile = false
+			for letter in file:
+				if !endFile:
+					if letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890":
+						newFloraName += " "
+					elif letter == "-":
+						endFile = true
+					if !endFile:
+						newFloraName += letter
+			
+			floraFileNames[newFloraName] = file
+			
+			var exists = false
+			for obj in floraExisting:
+				if obj["FloraName"] == newFloraName:
+					exists = true
+			
+			if !exists:
+				db.query_with_args(floraSQLInsert, [newFloraName])
+	
+	var allFlora = db.fetch_array(floraSQLCheck)
+	for obj in allFlora:
+		floraFileLocs[obj["FloraName"]] = floraFileNames[obj["FloraName"]]
+		floraNameIDs[obj["FloraName"]] = obj["FloraID"]
+		floraIDFiles[obj["FloraID"]] = load(floraPath + floraFileNames[obj["FloraName"]])
+	
+func retrieveFilesInFolder(path):
+	var files = []
+	var dir = Directory.new()
+	dir.open(path)
+	dir.list_dir_begin()
+
+	while true:
+		var file = dir.get_next()
+		if file == "":
+			break
+		elif not file.begins_with("."):
+			files.append(file)
+
+	dir.list_dir_end()
+
+	return files

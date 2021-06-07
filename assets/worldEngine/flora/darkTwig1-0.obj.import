@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/darkTwig1-0.obj-8189d2c2a5aaeed238ba5b4a03a35966.mesh"
+
+[deps]
+
+files=[ "res://.import/darkTwig1-0.obj-8189d2c2a5aaeed238ba5b4a03a35966.mesh" ]
+
+source_file="res://assets/worldEngine/flora/darkTwig1-0.obj"
+dest_files=[ "res://.import/darkTwig1-0.obj-8189d2c2a5aaeed238ba5b4a03a35966.mesh", "res://.import/darkTwig1-0.obj-8189d2c2a5aaeed238ba5b4a03a35966.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

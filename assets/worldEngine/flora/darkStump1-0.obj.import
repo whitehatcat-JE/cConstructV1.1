@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/darkStump1-0.obj-3c280e3743ba5472f110da56dec7bb96.mesh"
+
+[deps]
+
+files=[ "res://.import/darkStump1-0.obj-3c280e3743ba5472f110da56dec7bb96.mesh" ]
+
+source_file="res://assets/worldEngine/flora/darkStump1-0.obj"
+dest_files=[ "res://.import/darkStump1-0.obj-3c280e3743ba5472f110da56dec7bb96.mesh", "res://.import/darkStump1-0.obj-3c280e3743ba5472f110da56dec7bb96.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/sandRocksPillar2-0.obj-325459e437bcd69a60a097a7301d81ca.mesh"
+
+[deps]
+
+files=[ "res://.import/sandRocksPillar2-0.obj-325459e437bcd69a60a097a7301d81ca.mesh" ]
+
+source_file="res://assets/worldEngine/flora/sandRocksPillar2-0.obj"
+dest_files=[ "res://.import/sandRocksPillar2-0.obj-325459e437bcd69a60a097a7301d81ca.mesh", "res://.import/sandRocksPillar2-0.obj-325459e437bcd69a60a097a7301d81ca.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

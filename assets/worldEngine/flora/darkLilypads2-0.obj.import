@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/darkLilypads2-0.obj-5475bf61e7fd38f0f7c295eedf0a1054.mesh"
+
+[deps]
+
+files=[ "res://.import/darkLilypads2-0.obj-5475bf61e7fd38f0f7c295eedf0a1054.mesh" ]
+
+source_file="res://assets/worldEngine/flora/darkLilypads2-0.obj"
+dest_files=[ "res://.import/darkLilypads2-0.obj-5475bf61e7fd38f0f7c295eedf0a1054.mesh", "res://.import/darkLilypads2-0.obj-5475bf61e7fd38f0f7c295eedf0a1054.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

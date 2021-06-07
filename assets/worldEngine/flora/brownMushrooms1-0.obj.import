@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/brownMushrooms1-0.obj-e19b8c3d9fed2160b6a6ed0718d14ad5.mesh"
+
+[deps]
+
+files=[ "res://.import/brownMushrooms1-0.obj-e19b8c3d9fed2160b6a6ed0718d14ad5.mesh" ]
+
+source_file="res://assets/worldEngine/flora/brownMushrooms1-0.obj"
+dest_files=[ "res://.import/brownMushrooms1-0.obj-e19b8c3d9fed2160b6a6ed0718d14ad5.mesh", "res://.import/brownMushrooms1-0.obj-e19b8c3d9fed2160b6a6ed0718d14ad5.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/redMushroomsWall2-0.obj-28236a3f88d7ca90e6a2c5d3e1628d2a.mesh"
+
+[deps]
+
+files=[ "res://.import/redMushroomsWall2-0.obj-28236a3f88d7ca90e6a2c5d3e1628d2a.mesh" ]
+
+source_file="res://assets/worldEngine/flora/redMushroomsWall2-0.obj"
+dest_files=[ "res://.import/redMushroomsWall2-0.obj-28236a3f88d7ca90e6a2c5d3e1628d2a.mesh", "res://.import/redMushroomsWall2-0.obj-28236a3f88d7ca90e6a2c5d3e1628d2a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
