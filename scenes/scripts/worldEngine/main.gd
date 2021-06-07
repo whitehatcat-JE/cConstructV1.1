@@ -18,7 +18,7 @@ var MAXSTAIRS = 3
 
 #	Flora
 var FLORASPACING = 16
-var FLORARENDERDIS = 5
+var FLORARENDERDIS = 3
 
 # Variable declarations
 #	Terrain
@@ -58,7 +58,7 @@ var curLoc = Vector2()
 var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
 var renderPause = 10.0
-var renderDis = 72.0
+var renderDis = 48.0
 
 var tXMatrix = {}
 var tZMatrix = {}
@@ -73,6 +73,9 @@ var terrainLoaded = {}
 
 #	Flora Engine
 var floraMatricesLoaded = {} # MatrixID:MatrixNode
+var floraMatricesQueue = {} # MatrixID:[Position, FloraID]
+var floraMatricesQueuePositions = []
+
 var floraRenderPause = 3.2
 var fCamLoc = Vector3(1000000, 0, 1000000)
 
@@ -165,26 +168,19 @@ func updateWorld():
 	if pow(fCamLoc.x - cam.translation.x, 2) > floraRenderPause or pow(fCamLoc.z - cam.translation.z, 2) > floraRenderPause:
 		fCamLoc = cam.translation
 		updateFlora(fCamLoc)
-	# Load new objects
+		updateFloraPositions()
+		
 	
-
-# Gets terrain from database
-# Needs xz coords, terrain render distance, distance travelled
-# Returns new terrain tiles
-func getTerrain(x, z, render, dis):
-	pass
-
-# Gets flora from database
-# Needs xz coords, flora render distance, distance travelled
-# Returns new flora
-func getFlora(x, z, render, dis):
-	pass
-
-# Gets objects from database
-# Needs xz coords, object render distance, distance travelled
-# Returns new objects
-func getObjects(x, z, render, dis):
-	pass
+	if len(floraMatricesQueue) > 0:
+		for matrixCount in range(round(len(floraMatricesQueuePositions)/50) + 1):
+			if len(floraMatricesQueuePositions) > 0:
+				var newMatrixID = floraMatricesQueuePositions.pop_front()
+				var newMatrix = loadMatrix(newMatrixID, floraMatricesQueue[newMatrixID][0], floraMatricesQueue[newMatrixID][1])
+				floraMatricesLoaded[newMatrixID] = newMatrix
+				floraMatricesQueue.erase(newMatrixID)
+			else:
+				break
+	# Load new objects
 
 ### TERRAIN MODE FUNCTIONS ###
 # Terrain script for each frame
@@ -709,15 +705,37 @@ func updateFlora(trans):
 	var newIDList = []
 	for matrix in matrices:
 		newIDList.append(matrix["MatrixID"])
-		if !(matrix["MatrixID"] in floraMatricesLoaded):
-			var newMatrix = loadMatrix(matrix["MatrixID"], Vector3(matrix["XPos"]*FLORASPACING, 0, matrix["ZPos"]*FLORASPACING), matrix["FloraID"])
-			floraMatricesLoaded[matrix["MatrixID"]] = newMatrix
+		if !(matrix["MatrixID"] in floraMatricesLoaded) and !(matrix["MatrixID"] in floraMatricesQueuePositions):
+			floraMatricesQueue[matrix["MatrixID"]] = [Vector3(matrix["XPos"]*FLORASPACING, 0, matrix["ZPos"]*FLORASPACING), matrix["FloraID"]]
+			floraMatricesQueuePositions.append(matrix["MatrixID"])
 	
 	for oldMatrix in floraMatricesLoaded.keys():
 		if !(oldMatrix in newIDList):
 			floraMatricesLoaded[oldMatrix].queue_free()
 			floraMatricesLoaded.erase(oldMatrix)
+	
+# Readjusts the floraMatricesQueuePositions to load around the player (Closest to furtherest)
+func updateFloraPositions():
+	var newFloraPositioning = []
+	var floraDistances = []
+	for floraID in floraMatricesQueuePositions:
+		var position = floraMatricesQueue[floraID][0]
+		floraDistances.append(sqrt(pow(float(position.x) - cam.translation.x, 2)) + sqrt(pow(float(position.z) - cam.translation.z, 2)))
+		newFloraPositioning.append(-1)
+	floraDistances.sort()
+	
+	for flora in floraMatricesQueue:
+		var position = floraMatricesQueue[flora][0]
+		var dis = sqrt(pow(float(position.x) - cam.translation.x, 2)) + sqrt(pow(float(position.z) - cam.translation.z, 2))
+		var pos = floraDistances.bsearch(dis)
 		
+		while newFloraPositioning[pos] != -1:
+			pos += 1
+		newFloraPositioning[pos] = flora
+	
+	floraMatricesQueuePositions = newFloraPositioning
+	
+
 # Adds a new flora piece to the db
 func addFlora(trans, attachedPiv, rot, floraID, scal):
 	var xPos = round(trans.x / FLORASPACING)
