@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/tent-0.obj-a3c011d4fd4cd45b2c76aed5dacae38d.mesh"
+
+[deps]
+
+files=[ "res://.import/tent-0.obj-a3c011d4fd4cd45b2c76aed5dacae38d.mesh" ]
+
+source_file="res://assets/worldEngine/flora/tent-0.obj"
+dest_files=[ "res://.import/tent-0.obj-a3c011d4fd4cd45b2c76aed5dacae38d.mesh", "res://.import/tent-0.obj-a3c011d4fd4cd45b2c76aed5dacae38d.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
