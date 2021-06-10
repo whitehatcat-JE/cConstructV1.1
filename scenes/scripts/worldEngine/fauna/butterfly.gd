@@ -9,6 +9,11 @@ enum {
 	STRAIGHT
 }
 
+var CHANGESPEED = 0.25
+
+var yChange = 0
+var zChange = 0
+
 var directionsX = [LEFT, RIGHT, FORWARD]
 var directionsY = [UP, DOWN, STRAIGHT]
 
@@ -50,9 +55,13 @@ func _process(delta):
 	else:
 		match directionX:
 			LEFT:
-				self.rotate_y(deg2rad(90*delta))
+				zChange += CHANGESPEED
+				zChange = clamp(zChange, -10.0, 10.0)
+				self.rotate_y(deg2rad(90*delta*(zChange/10.0)))
 			RIGHT:
-				self.rotate_y(-deg2rad(90*delta))
+				zChange -= CHANGESPEED
+				zChange = clamp(zChange, -10.0, 10.0)
+				self.rotate_y(deg2rad(90*delta*(zChange/10.0)))
 	
 		match directionY:
 			STRAIGHT:
@@ -61,7 +70,7 @@ func _process(delta):
 				elif $body.rotation_degrees.z < 0:
 					$body.rotation_degrees.z += delta*10
 			UP:
-				$body.rotation_degrees.z += delta*10
+				$body.rotation_degrees.z += delta*7.5
 			DOWN:
 				$body.rotation_degrees.z -= delta*10
 func _on_changeAim_timeout():

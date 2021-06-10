@@ -51,26 +51,21 @@ cast_to = Vector3( 3, 0, -1 )
 autostart = true
 
 [node name="leftWing" type="Spatial" parent="body"]
-transform = Transform( -3.1093e-08, 1, 2.18557e-08, -0.866025, -3.78552e-08, 0.5, 0.5, -3.38107e-09, 0.866025, 0.11, 0.151238, 0 )
+transform = Transform( -5.32148e-08, 1, 2.3379e-08, -0.926387, -4.04937e-08, -0.376573, -0.376573, -4.16973e-08, 0.926387, 0.11, 0.151238, 0 )
 
 [node name="wingImg" type="Sprite3D" parent="body/leftWing"]
 transform = Transform( 0, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 1, 4.37114e-08, 0, 0, -0.06, -0.08 )
-transparent = false
-alpha_cut = 1
 texture = ExtResource( 2 )
 
 [node name="rightWing" type="Spatial" parent="body"]
-transform = Transform( -3.1093e-08, 1, -2.18557e-08, -0.866025, -3.78552e-08, -0.5, -0.5, 3.38107e-09, 0.866025, 0.11, 0.151238, 0 )
+transform = Transform( -5.32148e-08, 1, -2.3379e-08, -0.926387, -4.04937e-08, 0.376573, 0.376573, 4.16973e-08, 0.926387, 0.11, 0.151238, 0 )
 
 [node name="wingImg" type="Sprite3D" parent="body/rightWing"]
 transform = Transform( -4.37114e-08, -4.37114e-08, 1, -4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, 0, -0.06, 0.08 )
-transparent = false
-alpha_cut = 1
 texture = ExtResource( 2 )
 
 [node name="flapAnim" type="AnimationPlayer" parent="body"]
 autoplay = "butterflyFlap"
 playback_speed = 1.5
 anims/butterflyFlap = SubResource( 1 )
-
 [connection signal="timeout" from="body/changeAim" to="." method="_on_changeAim_timeout"]
