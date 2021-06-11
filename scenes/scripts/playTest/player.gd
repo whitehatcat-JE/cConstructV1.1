@@ -27,6 +27,11 @@ func _physics_process(delta):
 		aim(delta)
 		walk(delta)
 		
+		if Input.is_action_pressed("summonTemp"):
+			var newBall = load("res://scenes/fauna/butterfly.tscn").instance()
+			get_parent().add_child(newBall)
+			newBall.translation = self.translation
+		
 		cameraChange = Vector2()
 
 #Used for mouse movement detection
