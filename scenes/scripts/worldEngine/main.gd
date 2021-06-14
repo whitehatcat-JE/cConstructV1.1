@@ -19,7 +19,7 @@ var MAXSTAIRS = 3
 
 #	Flora
 var FLORASPACING = 16
-var FLORARENDERDIS = 3
+var FLORARENDERDIS = 3 * RENDERMULT
 
 # Variable declarations
 #	Terrain
@@ -77,7 +77,7 @@ var floraMatricesLoaded = {} # MatrixID:MatrixNode
 var floraMatricesQueue = {} # MatrixID:[Position, FloraID]
 var floraMatricesQueuePositions = []
 
-var floraRenderPause = 3.2 * RENDERMULT
+var floraRenderPause = 3.2
 var fCamLoc = Vector3(1000000, 0, 1000000)
 
 onready var currentFloraID = W.floraIDFiles.keys()[0]
