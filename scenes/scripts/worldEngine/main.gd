@@ -15,7 +15,7 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
 var RENDERMULT = 1
-var MAXSTAIRS = 3 * RENDERMULT
+var MAXSTAIRS = 3
 
 #	Flora
 var FLORASPACING = 16
@@ -77,7 +77,7 @@ var floraMatricesLoaded = {} # MatrixID:MatrixNode
 var floraMatricesQueue = {} # MatrixID:[Position, FloraID]
 var floraMatricesQueuePositions = []
 
-var floraRenderPause = 3.2
+var floraRenderPause = 3.2 * RENDERMULT
 var fCamLoc = Vector3(1000000, 0, 1000000)
 
 onready var currentFloraID = W.floraIDFiles.keys()[0]
