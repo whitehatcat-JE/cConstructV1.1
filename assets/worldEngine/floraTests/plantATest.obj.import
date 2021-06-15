@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/plantATest.obj-345195e84cefea681eb1df226f4fe909.mesh"
+
+[deps]
+
+files=[ "res://.import/plantATest.obj-345195e84cefea681eb1df226f4fe909.mesh" ]
+
+source_file="res://assets/worldEngine/floraTests/plantATest.obj"
+dest_files=[ "res://.import/plantATest.obj-345195e84cefea681eb1df226f4fe909.mesh", "res://.import/plantATest.obj-345195e84cefea681eb1df226f4fe909.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
