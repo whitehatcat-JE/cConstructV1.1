@@ -19,6 +19,7 @@ var movingForward = false
 var movingLeft = false
 var movingRight = false
 
+var preSelected = null
 onready var cam = $head/camera
 
 #Updates every physics frame
@@ -88,5 +89,21 @@ func walk(delta):
 		velocity.y += JUMPHEIGHT
 	
 	velocity = move_and_slide(velocity, Vector3(0, 1, 0))
-	
 
+#Updates every frame
+func _process(delta):
+	if $head/camera.current:
+		$Control.visible = true
+	else:
+		$Control.visible = false
+	if $head/camera/itemCast.is_colliding():
+		var collider = $head/camera/itemCast.get_collider()
+		collider.get_child(2).visible = true
+		if Input.is_action_just_pressed("place"):
+			collider.queue_free()
+			preSelected = null
+		else:
+			preSelected = collider
+	elif preSelected != null:
+		preSelected.get_child(2).visible = false
+		preSelected = null

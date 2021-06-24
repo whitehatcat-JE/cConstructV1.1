@@ -14,7 +14,7 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT = 1
+var RENDERMULT = 3
 var MAXSTAIRS = 3
 
 #	Flora
@@ -123,7 +123,6 @@ func _ready():
 
 # Runs every frame
 func _process(delta):
-	var newMat = Material.new()
 	# World loading
 	var camLoc = $Camera.global_transform.origin
 	curLoc = Vector2(camLoc.x, camLoc.z)

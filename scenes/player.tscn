@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/scripts/playTest/player.gd" type="Script" id=1]
+[ext_resource path="res://assets/GUI/baseSquare.png" type="Texture" id=2]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.35
@@ -14,9 +15,29 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0 )
 [node name="camera" type="Camera" parent="head"]
 far = 1000.0
 
+[node name="itemCast" type="RayCast" parent="head/camera"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -4, 0 )
+collision_mask = 4
+collide_with_areas = true
+collide_with_bodies = false
+
 [node name="hitbox" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="floorCheck" type="RayCast" parent="."]
 enabled = true
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="baseSquare" type="Sprite" parent="Control"]
+position = Vector2( 512, 300 )
+scale = Vector2( 5, 5 )
+texture = ExtResource( 2 )
