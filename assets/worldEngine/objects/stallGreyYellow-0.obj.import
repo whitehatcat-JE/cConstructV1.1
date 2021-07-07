@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/stallGreyYellow-0.obj-6e93bff867cf7ef93ef8f172baa4b936.mesh"
+
+[deps]
+
+files=[ "res://.import/stallGreyYellow-0.obj-6e93bff867cf7ef93ef8f172baa4b936.mesh" ]
+
+source_file="res://assets/worldEngine/objects/stallGreyYellow-0.obj"
+dest_files=[ "res://.import/stallGreyYellow-0.obj-6e93bff867cf7ef93ef8f172baa4b936.mesh", "res://.import/stallGreyYellow-0.obj-6e93bff867cf7ef93ef8f172baa4b936.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/stoneWallTip-0.obj-149cd3993fb7d49509ea54bedbe2a029.mesh"
+
+[deps]
+
+files=[ "res://.import/stoneWallTip-0.obj-149cd3993fb7d49509ea54bedbe2a029.mesh" ]
+
+source_file="res://assets/worldEngine/objects/stoneWallTip-0.obj"
+dest_files=[ "res://.import/stoneWallTip-0.obj-149cd3993fb7d49509ea54bedbe2a029.mesh", "res://.import/stoneWallTip-0.obj-149cd3993fb7d49509ea54bedbe2a029.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

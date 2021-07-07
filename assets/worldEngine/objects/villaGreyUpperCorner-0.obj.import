@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/villaGreyUpperCorner-0.obj-9d745df3c14c6ff6b8e2ab2f2ec278ff.mesh"
+
+[deps]
+
+files=[ "res://.import/villaGreyUpperCorner-0.obj-9d745df3c14c6ff6b8e2ab2f2ec278ff.mesh" ]
+
+source_file="res://assets/worldEngine/objects/villaGreyUpperCorner-0.obj"
+dest_files=[ "res://.import/villaGreyUpperCorner-0.obj-9d745df3c14c6ff6b8e2ab2f2ec278ff.mesh", "res://.import/villaGreyUpperCorner-0.obj-9d745df3c14c6ff6b8e2ab2f2ec278ff.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

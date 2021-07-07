@@ -2,6 +2,7 @@ extends Control
 
 # Signals
 signal objVisible
+signal objHide
 
 # Ready Variables
 onready var navHidden = ($options/hideButton.text == ">")
@@ -36,16 +37,18 @@ func _on_hideButton_button_down():
 #Hides/shows tile menu
 func _on_tileButton_button_down():
 	if tileHidden:
-		o.out("Opened item menu")
+		o.out("Opened tile menu")
 		emit_signal("objVisible")
 		$tileMenu/tileTransitions.play_backwards("hideTiles")
 		$floraMenu/tileTransitions.play_backwards("hideTiles")
+		$objMenu/tileTransitions.play_backwards("hideTiles")
 		$options/tileButton.text = "<"
 	else:
-		o.out("Closed tileMenu")
-		emit_signal("objVisible")
+		o.out("Closed tile menu")
+		emit_signal("objHide")
 		$tileMenu/tileTransitions.play("hideTiles")
 		$floraMenu/tileTransitions.play("hideTiles")
+		$objMenu/tileTransitions.play("hideTiles")
 		$options/tileButton.text = ">"
 	
 	tileHidden = !tileHidden

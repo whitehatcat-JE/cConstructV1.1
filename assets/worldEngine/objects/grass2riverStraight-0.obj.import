@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/grass2riverStraight-0.obj-6495badf2eaefb1c02df9b0c11155bba.mesh"
+
+[deps]
+
+files=[ "res://.import/grass2riverStraight-0.obj-6495badf2eaefb1c02df9b0c11155bba.mesh" ]
+
+source_file="res://assets/worldEngine/objects/grass2riverStraight-0.obj"
+dest_files=[ "res://.import/grass2riverStraight-0.obj-6495badf2eaefb1c02df9b0c11155bba.mesh", "res://.import/grass2riverStraight-0.obj-6495badf2eaefb1c02df9b0c11155bba.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

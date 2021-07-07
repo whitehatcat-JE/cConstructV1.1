@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/japaneseGate-0.obj-82bc7e93486acd54a3439aebb1d9e0ff.mesh"
+
+[deps]
+
+files=[ "res://.import/japaneseGate-0.obj-82bc7e93486acd54a3439aebb1d9e0ff.mesh" ]
+
+source_file="res://assets/worldEngine/objects/japaneseGate-0.obj"
+dest_files=[ "res://.import/japaneseGate-0.obj-82bc7e93486acd54a3439aebb1d9e0ff.mesh", "res://.import/japaneseGate-0.obj-82bc7e93486acd54a3439aebb1d9e0ff.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -17,12 +17,16 @@ enum {
 ### ASSET LOCATIONS ###
 var loaded = {}
 # Terrain
-var OBJTYPE = ".obj"
+var TERRAINTYPE = ".obj"
 var TERRAINFOLDER = "res://assets/worldEngine/terrain/"
 
 # Color
 var COLORTYPE = ".tres"
 var COLORFOLDER = "res://materials/"
+
+# Objects
+var OBJTYPE = ".obj"
+var OBJFOLDER = "res://assets/worldEngine/objects/"
 
 ### UNIVERSIAL CONSTRANTS/VARIABLES ###
 # Constants
@@ -36,6 +40,8 @@ var gridLock = DEFGRIDDIS
 var yOffset = 0
 var xOffset = 0
 var zOffset = 0
+
+var DEFOBJGRIDLOC = 1.9
 
 # World loading
 var renderDis =  DEFRENDERDIS
@@ -58,6 +64,17 @@ var floraIDFiles = {}
 
 var placementOffset = DEFPLACEMENTOFFSET
 var invert = false
+
+# Objects
+var objectSQLCheck = "SELECT * FROM objectFiles;"
+var objectSQLInsert = "INSERT INTO objectFiles (structureName, metaData) VALUES (?, ?);"
+
+var objectFileLocs = {}
+var objectFileNames = {}
+var objectNameIDs = {}
+var objectIDFiles = {}
+
+var objGridLoc = DEFOBJGRIDLOC
 
 ### DATABASE LOADING ###
 # SQL MODULE
@@ -99,15 +116,15 @@ func _ready():
 	db.query(stairQuery)
 	
 	# TERRAIN ASSETS
-	loaded["tFlat"] = load(TERRAINFOLDER + "flat" + OBJTYPE)
-	loaded["tCliff"] = load(TERRAINFOLDER + "cliffV1" + OBJTYPE)
-	loaded["tLedge"] = load(TERRAINFOLDER + "ledgeV1" + OBJTYPE)
-	loaded["tCornerA"] = load(TERRAINFOLDER + "cornerA" + OBJTYPE)
-	loaded["tCornerB"] = load(TERRAINFOLDER + "cornerB" + OBJTYPE)
-	loaded["tEdgeA"] = load(TERRAINFOLDER + "edgeA" + OBJTYPE)
-	loaded["tEdgeB"] = load(TERRAINFOLDER + "edgeB" + OBJTYPE)
-	loaded["tOppCornerA"] = load(TERRAINFOLDER + "oppCornerA" + OBJTYPE)
-	loaded["tOppCornerB"] = load(TERRAINFOLDER + "oppCornerB" + OBJTYPE)
+	loaded["tFlat"] = load(TERRAINFOLDER + "flat" + TERRAINTYPE)
+	loaded["tCliff"] = load(TERRAINFOLDER + "cliffV1" + TERRAINTYPE)
+	loaded["tLedge"] = load(TERRAINFOLDER + "ledgeV1" + TERRAINTYPE)
+	loaded["tCornerA"] = load(TERRAINFOLDER + "cornerA" + TERRAINTYPE)
+	loaded["tCornerB"] = load(TERRAINFOLDER + "cornerB" + TERRAINTYPE)
+	loaded["tEdgeA"] = load(TERRAINFOLDER + "edgeA" + TERRAINTYPE)
+	loaded["tEdgeB"] = load(TERRAINFOLDER + "edgeB" + TERRAINTYPE)
+	loaded["tOppCornerA"] = load(TERRAINFOLDER + "oppCornerA" + TERRAINTYPE)
+	loaded["tOppCornerB"] = load(TERRAINFOLDER + "oppCornerB" + TERRAINTYPE)
 	
 	for color in colors:
 		loaded["c" + color.capitalize()] = load(COLORFOLDER + color + COLORTYPE)
@@ -144,6 +161,39 @@ func _ready():
 		floraFileLocs[obj["FloraName"]] = floraFileNames[obj["FloraName"]]
 		floraNameIDs[obj["FloraName"]] = obj["FloraID"]
 		floraIDFiles[obj["FloraID"]] = load(floraPath + floraFileNames[obj["FloraName"]])
+	
+	# OBJECT ASSETS
+	var objectFiles = retrieveFilesInFolder(OBJFOLDER)
+	var objectExisting = db.fetch_array(objectSQLCheck)
+	
+	for file in objectFiles:
+		if !(".import" in file):
+			var newObjectName = ""
+			var endFile = false
+			for letter in file:
+				if !endFile:
+					if letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890":
+						newObjectName += " "
+					elif letter == "-":
+						endFile = true
+					if !endFile:
+						newObjectName += letter
+			
+			objectFileNames[newObjectName] = file
+			
+			var exists = false
+			for obj in objectExisting:
+				if obj["structureName"] == newObjectName:
+					exists = true
+			
+			if !exists:
+				db.query_with_args(objectSQLInsert, [newObjectName])
+	
+	var allObjects = db.fetch_array(objectSQLCheck)
+	for obj in allObjects:
+		objectFileLocs[obj["structureName"]] = objectFileLocs[obj["structureName"]]
+		objectNameIDs[obj["structureName"]] = obj["structureID"]
+		objectIDFiles[obj["structureID"]] = load(OBJFOLDER + objectFileNames[obj["structureName"]])
 	
 func retrieveFilesInFolder(path):
 	var files = []

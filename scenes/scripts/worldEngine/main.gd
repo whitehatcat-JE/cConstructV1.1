@@ -99,6 +99,7 @@ onready var terrainMenuPivot = $GUI/terrainMenu/pivot
 onready var o = $GUI/output
 onready var floraOptionsMenu = $GUI/floraMenu
 onready var terrainOptionsMenu = $GUI/tileMenu
+onready var objectOptionsMenu = $GUI/objMenu
 
 ### SQL MODULE ###
 var floraMatrixRetrieve = "SELECT MatrixID FROM floraMatrices WHERE FloraID = ? and XPos = ? and ZPos = ?;"
@@ -634,7 +635,6 @@ func deleteFlora():
 		
 		updateFlora(cam.translation)
 	
-	
 # Retrieves any new flora matrices
 func fetchFloraMatrices(trans):
 	var displaceRange = [0, 0, 0, 0]
@@ -756,7 +756,17 @@ func addFlora(trans, attachedPiv, rot, floraID, scal):
 ### OTHER FUNCTIONS ### CHANGE IN FUTURE
 # Object script for each frame
 func objectProcess():
-	pass
+	if selectedPos.curAim != cam.goTo: selectedPos.updateGrid(cam.goTo);
+	
+	if Input.is_action_pressed("control"):
+			if Input.is_action_just_released("scroll_down") and W.objGridLoc >= 0.1:
+				W.objGridLoc *= 0.95
+				var change = W.objGridLoc / W.DEFOBJGRIDLOC
+				$selectedPos/gridOverlay.scale = Vector3(change, change, change)
+			if Input.is_action_just_released("scroll_up"):
+				W.objGridLoc *= 1.05
+				var change = W.objGridLoc / W.DEFOBJGRIDLOC
+				$selectedPos/gridOverlay.scale = Vector3(change, change, change)
 
 # Playtest script for each frame
 func playtestProcess():
@@ -774,38 +784,60 @@ func playtestProcess():
 ### MODE CHANGES ###
 # Changes mode to terrain
 func _on_terrainMode_button_down():
-	$Camera/objDisplayPoint.visible = $Camera/floraDisplayPoint.visible
+	$Camera/terrainDisplayPoint.visible = false
 	$Camera/floraDisplayPoint.visible = false
+	$Camera/objDisplayPoint.visible = false
 	W.mode = W.MODETERRAIN
 	terrainOptionsMenu.visible = true
 	floraOptionsMenu.visible = false
+	objectOptionsMenu.visible = false
 	terrainMenu.visible = true
 	$selectedPos/floraDisplay.visible = false
 	$selectedPos/terrainDisplay.visible = true
+	$selectedPos/gridOverlay.visible = false
 	$Camera/selectorCast.collide_with_bodies = false
 	$Camera/selectorCast.collide_with_areas = true
+	
+	if !$GUI.tileHidden:
+		$GUI._on_tileButton_button_down()
 
 # Changes mode to flora
 func _on_plantMode_button_down():
-	$Camera/floraDisplayPoint.visible = $Camera/objDisplayPoint.visible
+	$Camera/floraDisplayPoint.visible = false
+	$Camera/terrainDisplayPoint.visible = false
 	$Camera/objDisplayPoint.visible = false
 	W.mode = W.MODEFLORA
 	terrainOptionsMenu.visible = false
 	floraOptionsMenu.visible = true
+	objectOptionsMenu.visible = false
 	terrainMenu.visible = false
 	$selectedPos/floraDisplay.visible = true
 	$selectedPos/terrainDisplay.visible = false
+	$selectedPos/gridOverlay.visible = false
 	$Camera/selectorCast.collide_with_bodies = true
 	$Camera/selectorCast.collide_with_areas = false
+	
+	if !$GUI.tileHidden:
+		$GUI._on_tileButton_button_down()
 
 # Changes mode to object
 func _on_objectMode_button_down():
+	$Camera/objDisplayPoint.visible = false
+	$Camera/floraDisplayPoint.visible = false
+	$Camera/terrainDisplayPoint.visible = false
 	W.mode = W.MODEOBJECT
+	terrainOptionsMenu.visible = false
+	floraOptionsMenu.visible = false
+	objectOptionsMenu.visible = true
 	terrainMenu.visible = false
 	$selectedPos/floraDisplay.visible = false
 	$selectedPos/terrainDisplay.visible = false
-	$Camera/selectorCast.collide_with_bodies = false
-	$Camera/selectorCast.collide_with_areas = false
+	$selectedPos/gridOverlay.visible = true
+	$Camera/selectorCast.collide_with_bodies = true
+	$Camera/selectorCast.collide_with_areas = true
+	
+	if !$GUI.tileHidden:
+		$GUI._on_tileButton_button_down()
 
 # Changes mode to player
 func _on_playerMode_button_down():
@@ -867,22 +899,46 @@ func _on_lockTerrainMenu_toggled(button_pressed):
 		terrainMenuPivot.rotation_degrees = cam.rotation_degrees.y + 90
 
 func _on_GUI_objVisible():
-	if W.mode == W.MODETERRAIN: $Camera/objDisplayPoint.visible = !$Camera/objDisplayPoint.visible
-	elif W.mode == W.MODEFLORA:  $Camera/floraDisplayPoint.visible = !$Camera/floraDisplayPoint.visible
+	match W.mode:
+		W.MODETERRAIN:
+			$Camera/terrainDisplayPoint.visible = true
+		W.MODEFLORA:
+			$Camera/floraDisplayPoint.visible = true
+		W.MODEOBJECT:
+			$Camera/objDisplayPoint.visible = true
+
+func _on_GUI_objHide():
+	match W.mode:
+		W.MODETERRAIN:
+			$Camera/terrainDisplayPoint.visible = false
+		W.MODEFLORA:
+			$Camera/floraDisplayPoint.visible = false
+		W.MODEOBJECT:
+			$Camera/objDisplayPoint.visible = false 
 
 func changeColor(color):
 	if editingColor == TILE:
 		tileMenuColor = color
-		$Camera/objDisplayPoint/mainDisplay.material_override = W.loaded["c" + tileMenuColor]
+		$Camera/terrainDisplayPoint/mainDisplay.material_override = W.loaded["c" + tileMenuColor]
 	elif editingColor == TRANSITION:
 		transMenuColor =  color
-		$Camera/objDisplayPoint/subDisplayA.material_override = W.loaded["c" + transMenuColor]
+		$Camera/terrainDisplayPoint/subDisplayA.material_override = W.loaded["c" + transMenuColor]
 	else:
 		detailMenuColor = color
-		$Camera/objDisplayPoint/subDisplayB.material_override = W.loaded["c" + detailMenuColor]
+		$Camera/terrainDisplayPoint/subDisplayB.material_override = W.loaded["c" + detailMenuColor]
 
 func changeFlora(floraName):
 	$Camera/floraDisplayPoint/mainDisplay.mesh = W.floraIDFiles[W.floraNameIDs[floraName]]
+	var newSize = $Camera/floraDisplayPoint/mainDisplay.get_aabb().size
+	var largest = 0.0
+	if newSize.x > largest:
+		largest = newSize.x
+	if newSize.y > largest:
+		largest = newSize.y
+	if newSize.z > largest:
+		largest = newSize.z
+	
+	$Camera/floraDisplayPoint/mainDisplay.scale = Vector3(0.1, 0.1, 0.1) / Vector3(largest, largest, largest)
 	currentFloraID = W.floraNameIDs[floraName]
 
 func _on_colorA_button_down(): changeColor($GUI/tileMenu/colorOptions/colorA.text);

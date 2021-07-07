@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/villaRedUpperCorner-0.obj-1dd06df245574627fa0abe3861a7a08e.mesh"
+
+[deps]
+
+files=[ "res://.import/villaRedUpperCorner-0.obj-1dd06df245574627fa0abe3861a7a08e.mesh" ]
+
+source_file="res://assets/worldEngine/objects/villaRedUpperCorner-0.obj"
+dest_files=[ "res://.import/villaRedUpperCorner-0.obj-1dd06df245574627fa0abe3861a7a08e.mesh", "res://.import/villaRedUpperCorner-0.obj-1dd06df245574627fa0abe3861a7a08e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

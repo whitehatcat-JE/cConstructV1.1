@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/riverbed-0.obj-127c86a0ee7e649be80230cb29c6718a.mesh"
+
+[deps]
+
+files=[ "res://.import/riverbed-0.obj-127c86a0ee7e649be80230cb29c6718a.mesh" ]
+
+source_file="res://assets/worldEngine/objects/riverbed-0.obj"
+dest_files=[ "res://.import/riverbed-0.obj-127c86a0ee7e649be80230cb29c6718a.mesh", "res://.import/riverbed-0.obj-127c86a0ee7e649be80230cb29c6718a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

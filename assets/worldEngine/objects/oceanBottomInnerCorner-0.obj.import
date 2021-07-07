@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/oceanBottomInnerCorner-0.obj-fe2729f4c65dc239c3d7ed94b8357d31.mesh"
+
+[deps]
+
+files=[ "res://.import/oceanBottomInnerCorner-0.obj-fe2729f4c65dc239c3d7ed94b8357d31.mesh" ]
+
+source_file="res://assets/worldEngine/objects/oceanBottomInnerCorner-0.obj"
+dest_files=[ "res://.import/oceanBottomInnerCorner-0.obj-fe2729f4c65dc239c3d7ed94b8357d31.mesh", "res://.import/oceanBottomInnerCorner-0.obj-fe2729f4c65dc239c3d7ed94b8357d31.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

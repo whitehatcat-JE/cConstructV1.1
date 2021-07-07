@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/bridgeEntrance-0.obj-a9ad4b8fa2f5a79933546a3dbad5fbd6.mesh"
+
+[deps]
+
+files=[ "res://.import/bridgeEntrance-0.obj-a9ad4b8fa2f5a79933546a3dbad5fbd6.mesh" ]
+
+source_file="res://assets/worldEngine/objects/bridgeEntrance-0.obj"
+dest_files=[ "res://.import/bridgeEntrance-0.obj-a9ad4b8fa2f5a79933546a3dbad5fbd6.mesh", "res://.import/bridgeEntrance-0.obj-a9ad4b8fa2f5a79933546a3dbad5fbd6.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

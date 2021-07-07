@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/bridgePoles-0.obj-ad3b9afe5bceb3f980c81034ac0103be.mesh"
+
+[deps]
+
+files=[ "res://.import/bridgePoles-0.obj-ad3b9afe5bceb3f980c81034ac0103be.mesh" ]
+
+source_file="res://assets/worldEngine/objects/bridgePoles-0.obj"
+dest_files=[ "res://.import/bridgePoles-0.obj-ad3b9afe5bceb3f980c81034ac0103be.mesh", "res://.import/bridgePoles-0.obj-ad3b9afe5bceb3f980c81034ac0103be.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
