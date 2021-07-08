@@ -24,14 +24,20 @@ func updateSpray(newAim, onSide, onX, camLoc):
 		else: rotation_degrees.x = 90
 
 func updateGrid(newAim):
-	self.translation.x = round(newAim.x / W.objGridLoc) * W.objGridLoc
-	self.translation.y = newAim.y
-	self.translation.z = round(newAim.z / W.objGridLoc) * W.objGridLoc
+	$gridCursor.global_transform.origin = newAim
+	$gridOverlay.global_transform.origin.x = round(newAim.x / W.objGridLoc) * W.objGridLoc
+	$gridOverlay.global_transform.origin.y = newAim.y
+	$gridOverlay.global_transform.origin.z = round(newAim.z / W.objGridLoc) * W.objGridLoc
 	curAim = newAim
 	
 	rotation_degrees.x = 0
 	rotation_degrees.z = 0
-	
+
+func rotateGridCursor(clockwise:bool=true):
+	if clockwise:
+		$gridCursor.rotation_degrees.y += 90.0
+	else:
+		$gridCursor.rotation_degrees.y -= 90.0
 # Adjust rotation of Flora
 func rotateSpray():
 	$floraDisplay.rotate_y(deg2rad(90))

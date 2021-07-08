@@ -14,7 +14,7 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT = 3
+var RENDERMULT = 0.5
 var MAXSTAIRS = 3
 
 #	Flora
@@ -696,7 +696,6 @@ func loadMatrix(matrixID, position, floraID):
 		
 		newFlora.multimesh.set_instance_transform(floraCount, instancePosition)
 		
-	
 	return newFlora
 
 # Adds new flora and removes old flora
@@ -759,15 +758,44 @@ func objectProcess():
 	if selectedPos.curAim != cam.goTo: selectedPos.updateGrid(cam.goTo);
 	
 	if Input.is_action_pressed("control"):
-			if Input.is_action_just_released("scroll_down") and W.objGridLoc >= 0.1:
-				W.objGridLoc *= 0.95
-				var change = W.objGridLoc / W.DEFOBJGRIDLOC
-				$selectedPos/gridOverlay.scale = Vector3(change, change, change)
-			if Input.is_action_just_released("scroll_up"):
-				W.objGridLoc *= 1.05
-				var change = W.objGridLoc / W.DEFOBJGRIDLOC
-				$selectedPos/gridOverlay.scale = Vector3(change, change, change)
+		if Input.is_action_just_released("scroll_down") and W.objGridLoc >= 0.1:
+			W.objGridLoc *= 0.95
+			var change = W.objGridLoc / W.DEFOBJGRIDLOC
+			$selectedPos/gridOverlay.scale = Vector3(change, change, change)
+		if Input.is_action_just_released("scroll_up"):
+			W.objGridLoc *= 1.05
+			var change = W.objGridLoc / W.DEFOBJGRIDLOC
+			$selectedPos/gridOverlay.scale = Vector3(change, change, change)
+		
+	if Input.is_action_just_pressed("rotate"):
+		$selectedPos.rotateGridCursor()
+	
+	if Input.is_action_just_pressed("place"):
+		placeObject()
 
+func placeObject():
+	var rot = $selectedPos/gridCursor.rotation
+	var position = $selectedPos/gridOverlay.global_transform.origin
+	
+	position.x = round(position.x * 10.0) / 10.0
+	position.y = round(position.y * 10.0) / 10.0
+	position.z = round(position.z * 10.0) / 10.0
+	
+	var objMesh = load("res://assets/worldEngine/objects/miniTemple-0.obj")
+	var obj = MeshInstance.new()
+	obj.mesh = objMesh
+	obj.material_override = load("res://materials/magicaMat.tres")
+	self.add_child(obj)
+	
+	var col = obj.create_trimesh_collision()
+	var body = StaticBody.new()
+	obj.add_child(body)
+	body.add_child(col)
+	var displacement = obj.mesh.get_aabb().size.y
+	position.y += displacement / 2
+	obj.global_transform.origin = position
+	obj.rotation = rot
+	
 # Playtest script for each frame
 func playtestProcess():
 	cam.translation = $player.translation
@@ -795,6 +823,7 @@ func _on_terrainMode_button_down():
 	$selectedPos/floraDisplay.visible = false
 	$selectedPos/terrainDisplay.visible = true
 	$selectedPos/gridOverlay.visible = false
+	$selectedPos/gridCursor.visible = false
 	$Camera/selectorCast.collide_with_bodies = false
 	$Camera/selectorCast.collide_with_areas = true
 	
@@ -814,6 +843,7 @@ func _on_plantMode_button_down():
 	$selectedPos/floraDisplay.visible = true
 	$selectedPos/terrainDisplay.visible = false
 	$selectedPos/gridOverlay.visible = false
+	$selectedPos/gridCursor.visible = false
 	$Camera/selectorCast.collide_with_bodies = true
 	$Camera/selectorCast.collide_with_areas = false
 	
@@ -833,6 +863,7 @@ func _on_objectMode_button_down():
 	$selectedPos/floraDisplay.visible = false
 	$selectedPos/terrainDisplay.visible = false
 	$selectedPos/gridOverlay.visible = true
+	$selectedPos/gridCursor.visible = true
 	$Camera/selectorCast.collide_with_bodies = true
 	$Camera/selectorCast.collide_with_areas = true
 	
