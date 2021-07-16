@@ -106,7 +106,6 @@ var stairQuery = """CREATE TABLE IF NOT EXISTS  "terrainStairs" (
 	"terrainID"	INTEGER,
 	"stairType"	INTEGER,
 	"stairCount"	INTEGER);"""
-
 var db = SQLite.new();
 
 ### LOADING OF UNIVERSIAL ASSETS ###

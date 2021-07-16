@@ -14,7 +14,7 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT = 0.5
+var RENDERMULT = 10 ### <----- HERE ###
 var MAXSTAIRS = 3
 
 #	Flora
@@ -81,7 +81,7 @@ var floraRenderPause = 3.2
 var fCamLoc = Vector3(1000000, 0, 1000000)
 
 onready var currentFloraID = W.floraIDFiles.keys()[0]
-
+var objCount = 0
 
 #	Asset loading
 var terrainHandler = "res://scenes/terrainPieceHandler.tscn"
@@ -781,7 +781,15 @@ func placeObject():
 	position.y = round(position.y * 10.0) / 10.0
 	position.z = round(position.z * 10.0) / 10.0
 	
-	var objMesh = load("res://assets/worldEngine/objects/miniTemple-0.obj")
+	var objMesh = load("res://assets/worldEngine/objects/medievalVillaB-0.obj")
+	if objCount == 1:
+		objMesh = load("res://assets/worldEngine/objects/medievalVillaA.obj")
+		objCount = 2
+	elif objCount == 2:
+		objCount = 0
+		objMesh = load("res://assets/worldEngine/objects/medievalVillaC-0.obj")
+	else:
+		objCount = 1
 	var obj = MeshInstance.new()
 	obj.mesh = objMesh
 	obj.material_override = load("res://materials/magicaMat.tres")

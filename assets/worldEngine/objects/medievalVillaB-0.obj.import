@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/medievalVillaB-0.obj-501a834de19336fae51181a9e918baeb.mesh"
+
+[deps]
+
+files=[ "res://.import/medievalVillaB-0.obj-501a834de19336fae51181a9e918baeb.mesh" ]
+
+source_file="res://assets/worldEngine/objects/medievalVillaB-0.obj"
+dest_files=[ "res://.import/medievalVillaB-0.obj-501a834de19336fae51181a9e918baeb.mesh", "res://.import/medievalVillaB-0.obj-501a834de19336fae51181a9e918baeb.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

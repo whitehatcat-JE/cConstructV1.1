@@ -43,6 +43,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 40, 0 )
 script = ExtResource( 1 )
 
 [node name="clouds" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.92, 0, 27.18 )
 
 [node name="cloudT1-0" type="MeshInstance" parent="clouds"]
 transform = Transform( 25, 0, 0, 0, 5, 0, 0, 0, 25, 194.742, 119.626, -170.907 )

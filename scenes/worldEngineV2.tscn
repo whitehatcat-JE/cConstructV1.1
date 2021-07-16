@@ -377,6 +377,7 @@ mesh = ExtResource( 29 )
 material/0 = null
 
 [node name="selectedPos" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.97, 0 )
 script = ExtResource( 16 )
 
 [node name="terrainDisplay" type="MeshInstance" parent="selectedPos"]

@@ -1,6 +1,6 @@
 extends Spatial
 
-var maxAmt = 5000
+var maxAmt = 1000
 var amt = 0
 var size = 10.0
 var r = 0
