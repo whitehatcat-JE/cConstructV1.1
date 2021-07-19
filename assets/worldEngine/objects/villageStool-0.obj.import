@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/villageStool-0.obj-7aca0c5a735be1f2042c5b4d3c602704.mesh"
+
+[deps]
+
+files=[ "res://.import/villageStool-0.obj-7aca0c5a735be1f2042c5b4d3c602704.mesh" ]
+
+source_file="res://assets/worldEngine/objects/villageStool-0.obj"
+dest_files=[ "res://.import/villageStool-0.obj-7aca0c5a735be1f2042c5b4d3c602704.mesh", "res://.import/villageStool-0.obj-7aca0c5a735be1f2042c5b4d3c602704.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

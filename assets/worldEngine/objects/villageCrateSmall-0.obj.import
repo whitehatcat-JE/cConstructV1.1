@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/villageCrateSmall-0.obj-773ca18a8111e31b462ea59117d52bde.mesh"
+
+[deps]
+
+files=[ "res://.import/villageCrateSmall-0.obj-773ca18a8111e31b462ea59117d52bde.mesh" ]
+
+source_file="res://assets/worldEngine/objects/villageCrateSmall-0.obj"
+dest_files=[ "res://.import/villageCrateSmall-0.obj-773ca18a8111e31b462ea59117d52bde.mesh", "res://.import/villageCrateSmall-0.obj-773ca18a8111e31b462ea59117d52bde.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

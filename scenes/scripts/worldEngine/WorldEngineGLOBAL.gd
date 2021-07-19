@@ -186,11 +186,11 @@ func _ready():
 					exists = true
 			
 			if !exists:
-				db.query_with_args(objectSQLInsert, [newObjectName])
+				db.query_with_args(objectSQLInsert, [newObjectName, ""])
 	
 	var allObjects = db.fetch_array(objectSQLCheck)
 	for obj in allObjects:
-		objectFileLocs[obj["structureName"]] = objectFileLocs[obj["structureName"]]
+		objectFileLocs[obj["structureName"]] = objectFileNames[obj["structureName"]]
 		objectNameIDs[obj["structureName"]] = obj["structureID"]
 		objectIDFiles[obj["structureID"]] = load(OBJFOLDER + objectFileNames[obj["structureName"]])
 	

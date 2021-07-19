@@ -10,19 +10,19 @@ var page = 0
 
 # Node Connections
 onready var options = [
-	$optionA,
-	$optionB,
-	$optionC,
-	$optionD,
-	$optionE,
-	$optionF,
-	$optionG,
-	$optionH,
-	$optionI,
-	$optionJ,
-	$optionK,
-	$optionL,
-	$optionM
+	$objA,
+	$objB,
+	$objC,
+	$objD,
+	$objE,
+	$objF,
+	$objG,
+	$objH,
+	$objI,
+	$objJ,
+	$objK,
+	$objL,
+	$objM
 ]
 
 # Turns to next page

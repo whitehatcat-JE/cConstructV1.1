@@ -370,7 +370,7 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.172, 0.322, -1.16 )
 visible = false
 
-[node name="mainDisplay2" type="MeshInstance" parent="Camera/objDisplayPoint"]
+[node name="mainDisplay" type="MeshInstance" parent="Camera/objDisplayPoint"]
 transform = Transform( 0.149429, 0.0130734, 4.16383e-10, -0.0123611, 0.141288, -0.0488351, -0.00425627, 0.0486494, 0.141828, 0.2, 0, 0.15 )
 material_override = SubResource( 2 )
 mesh = ExtResource( 29 )
@@ -1859,7 +1859,7 @@ __meta__ = {
 position = Vector2( 20, 40 )
 script = ExtResource( 30 )
 
-[node name="optionA" type="Button" parent="GUI/objMenu/options"]
+[node name="objA" type="Button" parent="GUI/objMenu/options"]
 margin_top = 116.0
 margin_right = 240.0
 margin_bottom = 136.0
@@ -1869,7 +1869,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionB" type="Button" parent="GUI/objMenu/options"]
+[node name="objB" type="Button" parent="GUI/objMenu/options"]
 margin_top = 144.0
 margin_right = 240.0
 margin_bottom = 164.0
@@ -1879,7 +1879,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionC" type="Button" parent="GUI/objMenu/options"]
+[node name="objC" type="Button" parent="GUI/objMenu/options"]
 margin_top = 172.0
 margin_right = 240.0
 margin_bottom = 192.0
@@ -1890,7 +1890,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionD" type="Button" parent="GUI/objMenu/options"]
+[node name="objD" type="Button" parent="GUI/objMenu/options"]
 margin_top = 200.0
 margin_right = 240.0
 margin_bottom = 220.0
@@ -1901,7 +1901,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionE" type="Button" parent="GUI/objMenu/options"]
+[node name="objE" type="Button" parent="GUI/objMenu/options"]
 margin_top = 228.0
 margin_right = 240.0
 margin_bottom = 248.0
@@ -1911,7 +1911,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionF" type="Button" parent="GUI/objMenu/options"]
+[node name="objF" type="Button" parent="GUI/objMenu/options"]
 margin_top = 256.0
 margin_right = 240.0
 margin_bottom = 276.0
@@ -1921,7 +1921,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionG" type="Button" parent="GUI/objMenu/options"]
+[node name="objG" type="Button" parent="GUI/objMenu/options"]
 margin_top = 284.0
 margin_right = 240.0
 margin_bottom = 304.0
@@ -1932,7 +1932,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionH" type="Button" parent="GUI/objMenu/options"]
+[node name="objH" type="Button" parent="GUI/objMenu/options"]
 margin_top = 312.0
 margin_right = 240.0
 margin_bottom = 332.0
@@ -1943,7 +1943,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionI" type="Button" parent="GUI/objMenu/options"]
+[node name="objI" type="Button" parent="GUI/objMenu/options"]
 margin_top = 340.0
 margin_right = 240.0
 margin_bottom = 360.0
@@ -1953,7 +1953,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionJ" type="Button" parent="GUI/objMenu/options"]
+[node name="objJ" type="Button" parent="GUI/objMenu/options"]
 margin_top = 368.0
 margin_right = 240.0
 margin_bottom = 388.0
@@ -1963,7 +1963,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionK" type="Button" parent="GUI/objMenu/options"]
+[node name="objK" type="Button" parent="GUI/objMenu/options"]
 margin_top = 396.0
 margin_right = 240.0
 margin_bottom = 416.0
@@ -1974,7 +1974,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionL" type="Button" parent="GUI/objMenu/options"]
+[node name="objL" type="Button" parent="GUI/objMenu/options"]
 margin_top = 424.0
 margin_right = 240.0
 margin_bottom = 444.0
@@ -1985,7 +1985,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="optionM" type="Button" parent="GUI/objMenu/options"]
+[node name="objM" type="Button" parent="GUI/objMenu/options"]
 margin_top = 452.0
 margin_right = 240.0
 margin_bottom = 472.0
@@ -2510,19 +2510,19 @@ material/0 = SubResource( 27 )
 [connection signal="changeSort" from="GUI/objMenu" to="GUI" method="_on_tileMenu_changeSort"]
 [connection signal="button_down" from="GUI/objMenu/resultsDown" to="GUI/objMenu" method="_on_resultsDown_button_down"]
 [connection signal="button_down" from="GUI/objMenu/resultsUp" to="GUI/objMenu" method="_on_resultsUp_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionA" to="." method="_on_optionA_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionB" to="." method="_on_optionB_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionC" to="." method="_on_optionC_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionD" to="." method="_on_optionD_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionE" to="." method="_on_optionE_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionF" to="." method="_on_optionF_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionG" to="." method="_on_optionG_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionH" to="." method="_on_optionH_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionI" to="." method="_on_optionI_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionJ" to="." method="_on_optionJ_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionK" to="." method="_on_optionK_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionL" to="." method="_on_optionL_button_down"]
-[connection signal="button_down" from="GUI/objMenu/options/optionM" to="." method="_on_optionM_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objA" to="." method="_on_objA_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objB" to="." method="_on_objB_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objC" to="." method="_on_objC_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objD" to="." method="_on_objD_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objE" to="." method="_on_objE_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objF" to="." method="_on_objF_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objG" to="." method="_on_objG_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objH" to="." method="_on_objH_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objI" to="." method="_on_objI_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objJ" to="." method="_on_objJ_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objK" to="." method="_on_objK_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objL" to="." method="_on_objL_button_down"]
+[connection signal="button_down" from="GUI/objMenu/options/objM" to="." method="_on_objM_button_down"]
 [connection signal="text_changed" from="GUI/objMenu/searchBar" to="GUI/objMenu" method="_on_searchBar_text_changed"]
 [connection signal="changeSort" from="GUI/tileMenu" to="GUI" method="_on_tileMenu_changeSort"]
 [connection signal="button_down" from="GUI/tileMenu/editingColorA" to="." method="_on_editingColorA_button_down"]

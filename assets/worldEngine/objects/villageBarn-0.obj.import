@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/villageBarn-0.obj-fa97b0f4161653b18e59e4c5f85db6ad.mesh"
+
+[deps]
+
+files=[ "res://.import/villageBarn-0.obj-fa97b0f4161653b18e59e4c5f85db6ad.mesh" ]
+
+source_file="res://assets/worldEngine/objects/villageBarn-0.obj"
+dest_files=[ "res://.import/villageBarn-0.obj-fa97b0f4161653b18e59e4c5f85db6ad.mesh", "res://.import/villageBarn-0.obj-fa97b0f4161653b18e59e4c5f85db6ad.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

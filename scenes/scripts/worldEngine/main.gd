@@ -14,12 +14,15 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT = 10 ### <----- HERE ###
+var RENDERMULT:float = 1.0 ### <----- HERE ###
 var MAXSTAIRS = 3
 
 #	Flora
 var FLORASPACING = 16
-var FLORARENDERDIS = 3 * RENDERMULT
+var FLORARENDERDIS:float = 3.0 * RENDERMULT
+
+#	Objects
+var OBJECTRENDERDIS:float = 48.0 * RENDERMULT
 
 # Variable declarations
 #	Terrain
@@ -81,7 +84,10 @@ var floraRenderPause = 3.2
 var fCamLoc = Vector3(1000000, 0, 1000000)
 
 onready var currentFloraID = W.floraIDFiles.keys()[0]
-var objCount = 0
+
+#	Object Engine
+var loadedObjects = {} # ObjectNode:ObjectID
+onready var currentObjectID = W.objectIDFiles.keys()[0]
 
 #	Asset loading
 var terrainHandler = "res://scenes/terrainPieceHandler.tscn"
@@ -112,6 +118,11 @@ LEFT JOIN floraMatrices WHERE flora.MatrixID = floraMatrices.MatrixID
 AND XPosition > ? AND XPosition < ?
 AND ZPosition > ? AND ZPosition < ?;"""
 var floraIndividualDelete = "DELETE FROM flora WHERE UniqueID = ?"
+
+var objectAdd = "INSERT INTO objects (structureID, posX, posY, posZ, rotation) VALUES (?, ?, ?, ?, ?);"
+var objectRemove = "DELETE FROM objects WHERE objectID = ?;"
+var objectRetrieve = "SELECT * FROM objects WHERE posX < ? AND posX > ? AND posZ < ? AND posZ > ?;"
+var latestObjectRetrieve = "SELECT objectID FROM objects WHERE objectID=(SELECT max(objectID) FROM objects);"
 
 ### UNIVERSIAL CODE ###
 # Runs when scene is created
@@ -153,7 +164,7 @@ func _process(delta):
 	
 # Updates the world
 func updateWorld():
-	# Load new terrain
+	# Load terrain
 	if pow(camLoc.x - cam.translation.x, 2) > renderPause or pow(camLoc.y - cam.translation.z, 2) > renderPause:
 		camLoc = Vector2(cam.translation.x, cam.translation.z)
 		updateTerrain(fetchTerrain())
@@ -166,7 +177,8 @@ func updateWorld():
 				terrainQueue.erase(terrainQueueOrder.pop_front())
 			else:
 				break
-	# Load new flora
+	
+	# Load flora
 	if pow(fCamLoc.x - cam.translation.x, 2) > floraRenderPause or pow(fCamLoc.z - cam.translation.z, 2) > floraRenderPause:
 		fCamLoc = cam.translation
 		updateFlora(fCamLoc)
@@ -182,7 +194,10 @@ func updateWorld():
 				floraMatricesQueue.erase(newMatrixID)
 			else:
 				break
-	# Load new objects
+	
+	# Load objects
+	if int(cam.translation.x) % 16 == 0 or int(cam.translation.z) % 16 == 0:
+		updateObjects(retrieveObjects(cam.translation))
 
 ### TERRAIN MODE FUNCTIONS ###
 # Terrain script for each frame
@@ -589,8 +604,7 @@ func placeFlora():
 	position.z = round(exactPosition.z*10.0)/10.0
 	
 	var rotate = round($selectedPos/floraDisplay.rotation_degrees.y)
-	var floraID = currentFloraID
-	var floraMesh = W.floraIDFiles[floraID]
+	var floraMesh = W.floraIDFiles[currentFloraID]
 	
 	position.y += W.placementOffset
 	
@@ -610,8 +624,8 @@ func placeFlora():
 	else: 
 		scal = round(rand_range(0.75, 1.25)*10.0)/10.0
 	
-	var matrixInfo = addFlora(position, attachedAxis, rotate, floraID, scal)
-	loadMatrix(matrixInfo[0], Vector3(matrixInfo[1] * FLORASPACING, 0, matrixInfo[2] * FLORASPACING), floraID)
+	var matrixInfo = addFlora(position, attachedAxis, rotate, currentFloraID, scal)
+	loadMatrix(matrixInfo[0], Vector3(matrixInfo[1] * FLORASPACING, 0, matrixInfo[2] * FLORASPACING), currentFloraID)
 
 # Manages deleting flora in a given 2d area
 func deleteFlora():
@@ -755,55 +769,116 @@ func addFlora(trans, attachedPiv, rot, floraID, scal):
 ### OTHER FUNCTIONS ### CHANGE IN FUTURE
 # Object script for each frame
 func objectProcess():
+	# Updates position of grid
 	if selectedPos.curAim != cam.goTo: selectedPos.updateGrid(cam.goTo);
-	
-	if Input.is_action_pressed("control"):
-		if Input.is_action_just_released("scroll_down") and W.objGridLoc >= 0.1:
-			W.objGridLoc *= 0.95
-			var change = W.objGridLoc / W.DEFOBJGRIDLOC
-			$selectedPos/gridOverlay.scale = Vector3(change, change, change)
-		if Input.is_action_just_released("scroll_up"):
-			W.objGridLoc *= 1.05
-			var change = W.objGridLoc / W.DEFOBJGRIDLOC
-			$selectedPos/gridOverlay.scale = Vector3(change, change, change)
-		
-	if Input.is_action_just_pressed("rotate"):
-		$selectedPos.rotateGridCursor()
-	
-	if Input.is_action_just_pressed("place"):
-		placeObject()
+	# Input recognition
+	if Input.is_action_pressed("inWorld"):
+		# Grid size adjustments (NEED TO RE-DESIGN THIS)
+		if Input.is_action_pressed("control"):
+			if Input.is_action_just_released("scroll_down") and W.objGridLoc >= 0.1:
+				W.objGridLoc *= 0.95
+				var change = W.objGridLoc / W.DEFOBJGRIDLOC
+				$selectedPos/gridOverlay.scale = Vector3(change, change, change)
+			if Input.is_action_just_released("scroll_up"):
+				W.objGridLoc *= 1.05
+				var change = W.objGridLoc / W.DEFOBJGRIDLOC
+				$selectedPos/gridOverlay.scale = Vector3(change, change, change)
+		# Rotates grid cursor
+		if Input.is_action_just_pressed("rotate"):
+			$selectedPos.rotateGridCursor()
+		# Places new objects into world
+		if Input.is_action_just_pressed("place"):
+			placeObject()
+		# Removes selected objects from world
+		if Input.is_action_just_pressed("delete"):
+			deleteObject()
 
+# Deletes any objects delete ray is colliding with ### CONFUSING NAMING ###
+func deleteObject():
+	if deleteCast.is_colliding(): # Replace with collision ray
+		var collidingObj = deleteCast.get_collider().get_parent()
+		if collidingObj in loadedObjects:
+			var deletingID = loadedObjects[collidingObj]
+			removeObject(collidingObj)
+			W.db.query_with_args(objectRemove, [deletingID])
+
+# Places object at current grid loc
 func placeObject():
 	var rot = $selectedPos/gridCursor.rotation
 	var position = $selectedPos/gridOverlay.global_transform.origin
-	
+	### ERROR: STILL ALLOWS FLOATING POINT DATA OVERFLOWS ###
 	position.x = round(position.x * 10.0) / 10.0
 	position.y = round(position.y * 10.0) / 10.0
 	position.z = round(position.z * 10.0) / 10.0
 	
-	var objMesh = load("res://assets/worldEngine/objects/medievalVillaB-0.obj")
-	if objCount == 1:
-		objMesh = load("res://assets/worldEngine/objects/medievalVillaA.obj")
-		objCount = 2
-	elif objCount == 2:
-		objCount = 0
-		objMesh = load("res://assets/worldEngine/objects/medievalVillaC-0.obj")
-	else:
-		objCount = 1
-	var obj = MeshInstance.new()
-	obj.mesh = objMesh
-	obj.material_override = load("res://materials/magicaMat.tres")
-	self.add_child(obj)
+	var objMesh:Object = W.objectIDFiles[currentObjectID]
+	position.y += objMesh.get_aabb().size.y / 2
 	
-	var col = obj.create_trimesh_collision()
-	var body = StaticBody.new()
-	obj.add_child(body)
-	body.add_child(col)
-	var displacement = obj.mesh.get_aabb().size.y
-	position.y += displacement / 2
-	obj.global_transform.origin = position
-	obj.rotation = rot
-	
+	W.db.query_with_args(objectAdd, [currentObjectID, position.x, position.y, position.z, rot.y])
+	var newID = W.db.fetch_array(latestObjectRetrieve)[0]["objectID"]
+	loadObject(rot, position, objMesh, newID)
+
+# Loads object into world
+func loadObject(rot:Vector3, pos:Vector3, file:Object, id:int, collision:bool=true):
+	# Create mesh node
+	var newObj:Object = MeshInstance.new()
+	# Apply mesh and material to object
+	newObj.mesh = file
+	newObj.material_override = load("res://materials/magicaMat.tres")
+	self.add_child(newObj)
+	# Generate precise collision
+	if collision:
+		newObj.create_trimesh_collision()
+	# Position into world
+	newObj.global_transform.origin = pos
+	newObj.rotation = rot
+	# Store new object by id
+	loadedObjects[newObj] = id
+
+# Removes given object from world ### CONFUSING NAMING ###
+func removeObject(obj:Object):
+	loadedObjects.erase(obj) # Remove from loaded objects list
+	obj.queue_free() # Remove from scene
+
+# Retrieves all objects that should be loaded from db
+func retrieveObjects(loc:Vector3):
+	# Widens boundaries to object rendering constant
+	var xMax:float = loc.x + OBJECTRENDERDIS
+	var xMin:float = loc.x - OBJECTRENDERDIS
+	var zMax:float = loc.z + OBJECTRENDERDIS
+	var zMin:float = loc.z - OBJECTRENDERDIS
+	# Retrieves objects and returns array
+	var allObjects:Array = W.db.fetch_array_with_args(objectRetrieve, [xMax, xMin, zMax, zMin])
+	return allObjects
+
+# Adds and removes objects based on given object array
+func updateObjects(requiredObjects:Array):
+	# Objects that need adjusting
+	var allowedObjectIDs:Array = []
+	var addObjectQueue:Array = []
+	var deleteObjectQueue:Array = []
+	# Finds objects that need to be generated/removed
+	for obj in requiredObjects:
+		allowedObjectIDs.append(obj["objectID"])
+		if !(obj["objectID"] in loadedObjects.values()):
+			addObjectQueue.append(obj)
+	# Adds all required objects
+	for obj in addObjectQueue:
+		# Retrieve object information
+		var rot:Vector3 = Vector3(0, obj["rotation"], 0)
+		var pos:Vector3 = Vector3(obj["posX"], obj["posY"], obj["posZ"])
+		var file:Object = W.objectIDFiles[obj["structureID"]]
+		var id:int = obj["objectID"]
+		# Generate object
+		loadObject(rot, pos, file, id)
+	# Selects removing objects
+	for obj in loadedObjects:
+		if !(loadedObjects[obj] in allowedObjectIDs):
+			deleteObjectQueue.append(obj)
+	# Removes selected objects
+	for obj in deleteObjectQueue:
+		removeObject(obj)
+
 # Playtest script for each frame
 func playtestProcess():
 	cam.translation = $player.translation
@@ -889,6 +964,8 @@ func _on_playerMode_button_down():
 	$GUI.visible = false
 	$selectedPos/floraDisplay.visible = false
 	$selectedPos/terrainDisplay.visible = false
+	$selectedPos/gridOverlay.visible = false
+	$selectedPos/gridCursor.visible = false
 	$Camera/selectorCast.collide_with_bodies = false
 	$Camera/selectorCast.collide_with_areas = false
 	ySelector.visible = false
@@ -966,6 +1043,7 @@ func changeColor(color):
 		detailMenuColor = color
 		$Camera/terrainDisplayPoint/subDisplayB.material_override = W.loaded["c" + detailMenuColor]
 
+# Changes the mesh icon displayed in the flora selection menu
 func changeFlora(floraName):
 	$Camera/floraDisplayPoint/mainDisplay.mesh = W.floraIDFiles[W.floraNameIDs[floraName]]
 	var newSize = $Camera/floraDisplayPoint/mainDisplay.get_aabb().size
@@ -980,6 +1058,29 @@ func changeFlora(floraName):
 	$Camera/floraDisplayPoint/mainDisplay.scale = Vector3(0.1, 0.1, 0.1) / Vector3(largest, largest, largest)
 	currentFloraID = W.floraNameIDs[floraName]
 
+# Changes the mesh icon displayed in the object selection menu
+func changeObject(objectName):
+	# Selects new mesh
+	$Camera/objDisplayPoint/mainDisplay.mesh = W.objectIDFiles[W.objectNameIDs[objectName]]
+	
+	# Adjusts mesh size to fit menu box
+	var newSize = $Camera/objDisplayPoint/mainDisplay.get_aabb().size
+	var largest = 0.0
+	if newSize.x > largest:
+		largest = newSize.x
+	if newSize.y > largest:
+		largest = newSize.y
+	if newSize.z > largest:
+		largest = newSize.z
+	
+	$Camera/objDisplayPoint/mainDisplay.scale = Vector3(0.1, 0.1, 0.1) / Vector3(largest, largest, largest)
+	
+	# Sets object as current one to place down
+	currentObjectID = W.objectNameIDs[objectName]
+
+
+# Menu selections for different assets (NEED TO TIDY)
+# Terrain colour
 func _on_colorA_button_down(): changeColor($GUI/tileMenu/colorOptions/colorA.text);
 func _on_colorB_button_down(): changeColor($GUI/tileMenu/colorOptions/colorB.text);
 func _on_colorC_button_down(): changeColor($GUI/tileMenu/colorOptions/colorC.text);
@@ -994,6 +1095,7 @@ func _on_colorK_button_down(): changeColor($GUI/tileMenu/colorOptions/colorK.tex
 func _on_colorL_button_down(): changeColor($GUI/tileMenu/colorOptions/colorL.text);
 func _on_colorM_button_down(): changeColor($GUI/tileMenu/colorOptions/colorM.text);
 
+# Flora
 func _on_optionA_button_down(): changeFlora($GUI/floraMenu/options/optionA.text);
 func _on_optionB_button_down(): changeFlora($GUI/floraMenu/options/optionB.text);
 func _on_optionC_button_down(): changeFlora($GUI/floraMenu/options/optionC.text);
@@ -1007,6 +1109,22 @@ func _on_optionJ_button_down(): changeFlora($GUI/floraMenu/options/optionJ.text)
 func _on_optionK_button_down(): changeFlora($GUI/floraMenu/options/optionK.text);
 func _on_optionL_button_down(): changeFlora($GUI/floraMenu/options/optionL.text);
 func _on_optionM_button_down(): changeFlora($GUI/floraMenu/options/optionM.text);
+
+# Object
+func _on_objA_button_down(): changeObject($GUI/objMenu/options/objA.text);
+func _on_objB_button_down(): changeObject($GUI/objMenu/options/objB.text);
+func _on_objC_button_down(): changeObject($GUI/objMenu/options/objC.text);
+func _on_objD_button_down(): changeObject($GUI/objMenu/options/objD.text);
+func _on_objE_button_down(): changeObject($GUI/objMenu/options/objE.text);
+func _on_objF_button_down(): changeObject($GUI/objMenu/options/objF.text);
+func _on_objG_button_down(): changeObject($GUI/objMenu/options/objG.text);
+func _on_objH_button_down(): changeObject($GUI/objMenu/options/objH.text);
+func _on_objI_button_down(): changeObject($GUI/objMenu/options/objI.text);
+func _on_objJ_button_down(): changeObject($GUI/objMenu/options/objJ.text);
+func _on_objK_button_down(): changeObject($GUI/objMenu/options/objK.text);
+func _on_objL_button_down(): changeObject($GUI/objMenu/options/objL.text);
+func _on_objM_button_down(): changeObject($GUI/objMenu/options/objM.text);
+
 
 func _on_editingColorA_button_down():
 	editingColor = DETAILS
