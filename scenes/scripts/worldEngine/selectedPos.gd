@@ -1,6 +1,7 @@
 extends Spatial
 
 var curAim = Vector3()
+var objOffset = 0.01
 
 # Terrain Selector
 func updateAim(newAim):
@@ -23,6 +24,7 @@ func updateSpray(newAim, onSide, onX, camLoc):
 			rotation_degrees.x = -90
 		else: rotation_degrees.x = 90
 
+# Object grid selector
 func updateGrid(newAim):
 	$gridCursor.global_transform.origin = newAim
 	$gridOverlay.global_transform.origin.x = round(newAim.x / W.objGridLoc) * W.objGridLoc
@@ -38,6 +40,10 @@ func rotateGridCursor(clockwise:bool=true):
 		$gridCursor.rotation_degrees.y += 90.0
 	else:
 		$gridCursor.rotation_degrees.y -= 90.0
+
+# Scales the grid
+func scaleGrid(size):
+	$gridOverlay.scale = Vector3(size + objOffset, size + objOffset, size + objOffset)
 # Adjust rotation of Flora
 func rotateSpray():
 	$floraDisplay.rotate_y(deg2rad(90))

@@ -14,7 +14,7 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT:float = 1.0 ### <----- HERE ###
+var RENDERMULT:float = 2.0 ### <----- HERE ###
 var MAXSTAIRS = 3
 
 #	Flora
@@ -62,7 +62,7 @@ var curLoc = Vector2()
 var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
 var renderPause = 10.0
-var renderDis = 48.0 * RENDERMULT
+var renderDis = 64.0 * RENDERMULT
 
 var tXMatrix = {}
 var tZMatrix = {}
@@ -776,13 +776,11 @@ func objectProcess():
 		# Grid size adjustments (NEED TO RE-DESIGN THIS)
 		if Input.is_action_pressed("control"):
 			if Input.is_action_just_released("scroll_down") and W.objGridLoc >= 0.1:
-				W.objGridLoc *= 0.95
-				var change = W.objGridLoc / W.DEFOBJGRIDLOC
-				$selectedPos/gridOverlay.scale = Vector3(change, change, change)
+				W.objGridLoc -= 0.1
+				selectedPos.scaleGrid(W.objGridLoc / 2.0)
 			if Input.is_action_just_released("scroll_up"):
-				W.objGridLoc *= 1.05
-				var change = W.objGridLoc / W.DEFOBJGRIDLOC
-				$selectedPos/gridOverlay.scale = Vector3(change, change, change)
+				W.objGridLoc += 0.1
+				selectedPos.scaleGrid(W.objGridLoc / 2.0)
 		# Rotates grid cursor
 		if Input.is_action_just_pressed("rotate"):
 			$selectedPos.rotateGridCursor()
