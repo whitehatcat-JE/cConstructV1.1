@@ -412,7 +412,7 @@ texture = ExtResource( 28 )
 [node name="gridOverlay" type="Spatial" parent="selectedPos"]
 
 [node name="imageUp" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.09, 0.0500002, 8.46 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 0.01, 0.0500002, 0.0100003 )
 pixel_size = 0.015
 texture = ExtResource( 32 )
 
@@ -422,7 +422,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="imageUp2" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.83, 0.0500002, 8.46 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 2.01769, 0.0500002, 0.0100003 )
 modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
 opacity = 0.5
 pixel_size = 0.015
@@ -436,7 +436,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="imageUp7" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.09, 0.0500002, 6.54 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 0.01, 0.0500002, -1.98917 )
 modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
 opacity = 0.5
 pixel_size = 0.015
@@ -450,7 +450,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="imageUp3" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -2.01, 0.0500002, 8.46 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, -1.99769, 0.0500002, 0.0100003 )
 modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
 opacity = 0.5
 pixel_size = 0.015
@@ -464,7 +464,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="imageUp4" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.09, 0.0500002, 10.38 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 0.01, 0.0500002, 2.00917 )
 modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
 opacity = 0.5
 pixel_size = 0.015
@@ -478,7 +478,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a3" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 3.75, 0.0500002, 8.46 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 4.02539, 0.0500002, 0.0100003 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -492,7 +492,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a4" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -3.93, 0.0500002, 8.46 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, -4.00539, 0.0500002, 0.0100003 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -506,7 +506,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a5" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.09, 0.0500002, 12.3 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 0.01, 0.0500002, 4.00834 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -520,7 +520,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a1" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.83, 0.0500002, 10.38 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 2.01769, 0.0500002, 2.00917 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -534,7 +534,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a6" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -2.01, 0.0500002, 10.38 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, -1.99769, 0.0500002, 2.00917 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -548,7 +548,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a8" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.09, 0.0500002, 4.62 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 0.01, 0.0500002, -3.98834 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -562,7 +562,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a2" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 1.33611e-05, -3.46181e-06, -3.46181e-06, -1.07261e-05, -1, -1.33611e-05, 1, -1.07261e-05, 1.83, 0.0500002, 6.54 )
+transform = Transform( 1.04567, 1.39714e-05, -3.61993e-06, -3.46181e-06, -1.07261e-05, -1, -1.3912e-05, 1.04124, -1.11684e-05, 2.01769, 0.0500002, -1.98917 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -576,7 +576,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a9" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -2.01, 0.0500002, 6.54 )
+transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, -1.99769, 0.0500002, -1.98917 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -2335,7 +2335,6 @@ environment = ExtResource( 14 )
 
 [node name="sun" type="DirectionalLight" parent="sky"]
 transform = Transform( 0.997564, -0.0501786, 0.0484568, 0.0180543, 0.856714, 0.515476, -0.0673795, -0.513346, 0.855533, 0, 4.1, 0 )
-shadow_enabled = true
 shadow_bias = 1.0
 directional_shadow_blend_splits = true
 directional_shadow_max_distance = 250.0

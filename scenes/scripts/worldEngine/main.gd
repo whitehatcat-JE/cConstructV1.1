@@ -14,7 +14,7 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT:float = 2.0 ### <----- HERE ###
+var RENDERMULT:float = 0.5 ### <----- HERE ###
 var MAXSTAIRS = 3
 
 #	Flora
