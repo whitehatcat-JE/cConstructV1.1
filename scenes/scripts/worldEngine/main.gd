@@ -396,7 +396,7 @@ func fetchTerrain():
 			sortedStairData[stair["terrainID"]].append(stair)
 		else:
 			sortedStairData[stair["terrainID"]] = [stair]
-
+	
 	return xdb + zdb
 
 # Adds a terrain piece to the world

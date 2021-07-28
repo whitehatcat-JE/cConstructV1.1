@@ -412,7 +412,7 @@ texture = ExtResource( 28 )
 [node name="gridOverlay" type="Spatial" parent="selectedPos"]
 
 [node name="imageUp" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 0.01, 0.0500002, 0.0100003 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, 0.01, 0.0500002, 0.0100003 )
 pixel_size = 0.015
 texture = ExtResource( 32 )
 
@@ -422,7 +422,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="imageUp2" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 2.01769, 0.0500002, 0.0100003 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, 2.01367, 0.0500002, 0.0100003 )
 modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
 opacity = 0.5
 pixel_size = 0.015
@@ -436,7 +436,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="imageUp7" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 0.01, 0.0500002, -1.98917 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, 0.01, 0.0500002, -1.98917 )
 modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
 opacity = 0.5
 pixel_size = 0.015
@@ -450,7 +450,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="imageUp3" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, -1.99769, 0.0500002, 0.0100003 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, -1.99367, 0.0500002, 0.0100003 )
 modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
 opacity = 0.5
 pixel_size = 0.015
@@ -464,7 +464,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="imageUp4" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 0.01, 0.0500002, 2.00917 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, 0.01, 0.0500002, 2.00917 )
 modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
 opacity = 0.5
 pixel_size = 0.015
@@ -478,7 +478,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a3" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 4.02539, 0.0500002, 0.0100003 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, 4.01734, 0.0500002, 0.0100003 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -492,7 +492,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a4" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, -4.00539, 0.0500002, 0.0100003 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, -3.99734, 0.0500002, 0.0100003 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -506,7 +506,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a5" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 0.01, 0.0500002, 4.00834 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, 0.01, 0.0500002, 4.00834 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -520,7 +520,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a1" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 2.01769, 0.0500002, 2.00917 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, 2.01367, 0.0500002, 2.00917 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -534,7 +534,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a6" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, -1.99769, 0.0500002, 2.00917 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, -1.99367, 0.0500002, 2.00917 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -548,7 +548,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a8" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, 0.01, 0.0500002, -3.98834 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, 0.01, 0.0500002, -3.98834 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -562,7 +562,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a2" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 1.39714e-05, -3.61993e-06, -3.46181e-06, -1.07261e-05, -1, -1.3912e-05, 1.04124, -1.11684e-05, 2.01769, 0.0500002, -1.98917 )
+transform = Transform( 1.04357, 1.33134e-05, -5.58896e-13, 0, -4.5514e-08, -1, -1.3912e-05, 1.04124, -4.37114e-08, 2.01367, 0.0500002, -1.98917 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
@@ -576,7 +576,7 @@ pixel_size = 0.015
 texture = ExtResource( 32 )
 
 [node name="a9" type="Sprite3D" parent="selectedPos/gridOverlay"]
-transform = Transform( 1.04567, 0, 0, 0, -4.37114e-08, -1, 0, 1.04124, -4.55138e-08, -1.99769, 0.0500002, -1.98917 )
+transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, -1.99367, 0.0500002, -1.98917 )
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 opacity = 0.25
 pixel_size = 0.015
