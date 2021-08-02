@@ -17,10 +17,6 @@ onready var tileMenu = $tileMenu
 func _ready():
 	o.out("Loaded Scene")
 
-#Runs every frame
-func _process(delta):
-	$FPS/fps.text = str(Engine.get_frames_per_second())
-
 #Hides/shows navigation bar
 func _on_hideButton_button_down():
 	if navHidden:

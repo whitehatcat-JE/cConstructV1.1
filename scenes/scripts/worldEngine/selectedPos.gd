@@ -1,6 +1,7 @@
 extends Spatial
 
 var curAim = Vector3()
+var gridLocked = false
 
 # Terrain Selector
 func updateAim(newAim):
@@ -43,6 +44,11 @@ func rotateGridCursor(clockwise:bool=true):
 # Scales the grid
 func scaleGrid(size):
 	$gridOverlay.scale = Vector3(size, size, size)
+
 # Adjust rotation of Flora
 func rotateSpray():
 	$floraDisplay.rotate_y(deg2rad(90))
+
+# Locks/Unlocks object grid resizing
+func _on_lockObjGrid_toggled(button_pressed):
+	gridLocked = button_pressed

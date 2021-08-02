@@ -52,6 +52,12 @@ size = Vector3( 500, 0.1, 500 )
 [sub_resource type="BoxShape" id=6]
 extents = Vector3( 250, 0.05, 250 )
 
+[sub_resource type="DynamicFont" id=11]
+size = 64
+outline_size = 4
+use_filter = true
+font_data = ExtResource( 2 )
+
 [sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 2 )
 
@@ -88,12 +94,6 @@ tracks/1/keys = {
 
 [sub_resource type="DynamicFont" id=10]
 size = 40
-outline_size = 4
-use_filter = true
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=11]
-size = 64
 outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
@@ -618,6 +618,36 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="ySelector/selectionPlane"]
 shape = SubResource( 6 )
 
+[node name="FPS" type="Control" parent="."]
+rect_scale = Vector2( 1.8, 1.8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fps" type="Label" parent="FPS"]
+margin_right = 152.0
+margin_bottom = 81.0
+rect_scale = Vector2( 0.175, 0.175 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "127"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="unit" type="Label" parent="FPS"]
+margin_top = 12.0
+margin_right = 116.0
+margin_bottom = 93.0
+rect_scale = Vector2( 0.1, 0.1 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "FPS"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="GUI" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
@@ -768,6 +798,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="lockObjGrid" type="CheckBox" parent="GUI/options"]
+margin_left = 940.977
+margin_top = 68.0
+margin_right = 1152.98
+margin_bottom = 276.0
+rect_scale = Vector2( 0.1, 0.1 )
+custom_icons/checked = ExtResource( 20 )
+custom_icons/unchecked = ExtResource( 21 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="output" type="Control" parent="GUI"]
 margin_left = 20.0
 margin_top = -38.664
@@ -832,36 +875,6 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "<"
 flat = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="FPS" type="Control" parent="GUI"]
-rect_scale = Vector2( 1.8, 1.8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="fps" type="Label" parent="GUI/FPS"]
-margin_right = 152.0
-margin_bottom = 81.0
-rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 11 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "127"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="unit" type="Label" parent="GUI/FPS"]
-margin_top = 12.0
-margin_right = 116.0
-margin_bottom = 93.0
-rect_scale = Vector2( 0.1, 0.1 )
-custom_fonts/font = SubResource( 11 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "FPS"
-align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -2336,12 +2349,13 @@ environment = ExtResource( 14 )
 
 [node name="sun" type="DirectionalLight" parent="sky"]
 transform = Transform( 0.997564, -0.0501786, 0.0484568, 0.0180543, 0.856714, 0.515476, -0.0673795, -0.513346, 0.855533, 0, 4.1, 0 )
+shadow_enabled = true
 shadow_bias = 1.0
 directional_shadow_blend_splits = true
 directional_shadow_max_distance = 250.0
 
 [node name="tent" parent="." instance=ExtResource( 34 )]
-transform = Transform( -0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, 3.9, 0.8, 16.2 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 52.55, 0.8, -34.25 )
 
 [node name="apple" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.85, 1.6997, 4.55 )
@@ -2369,84 +2383,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000296831, -9.53674e-07 
 mesh = SubResource( 26 )
 material/0 = SubResource( 27 )
 
-[node name="apple2" type="Area" parent="."]
-transform = Transform( 0.848048, 0, -0.529919, 0, 1, 0, 0.529919, 0, 0.848048, -0.25, 1.4497, 3.9 )
-monitoring = false
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionShape" type="CollisionShape" parent="apple2"]
-visible = false
-shape = SubResource( 23 )
-
-[node name="mesh" type="MeshInstance" parent="apple2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000296831, 9.53674e-07 )
-mesh = ExtResource( 31 )
-material/0 = SubResource( 24 )
-
-[node name="outline" type="MeshInstance" parent="apple2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000296831, 9.53674e-07 )
-visible = false
-mesh = ExtResource( 31 )
-material/0 = SubResource( 25 )
-
-[node name="MeshInstance" type="MeshInstance" parent="apple2/outline"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000296831, -9.53674e-07 )
-mesh = SubResource( 26 )
-material/0 = SubResource( 27 )
-
-[node name="apple3" type="Area" parent="."]
-transform = Transform( 0.0697564, 0, 0.997564, 0, 1, 0, -0.997564, 0, 0.0697564, -0.85, 1.4497, 6.1 )
-monitoring = false
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionShape" type="CollisionShape" parent="apple3"]
-visible = false
-shape = SubResource( 23 )
-
-[node name="mesh" type="MeshInstance" parent="apple3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000296831, 9.53674e-07 )
-mesh = ExtResource( 31 )
-material/0 = SubResource( 24 )
-
-[node name="outline" type="MeshInstance" parent="apple3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000296831, 9.53674e-07 )
-visible = false
-mesh = ExtResource( 31 )
-material/0 = SubResource( 25 )
-
-[node name="MeshInstance" type="MeshInstance" parent="apple3/outline"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000296831, -9.53674e-07 )
-mesh = SubResource( 26 )
-material/0 = SubResource( 27 )
-
-[node name="apple4" type="Area" parent="."]
-transform = Transform( 0.587785, 0, 0.809017, 0, 1, 0, -0.809017, 0, 0.587785, -0.85, 1.5997, 5.2 )
-monitoring = false
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionShape" type="CollisionShape" parent="apple4"]
-visible = false
-shape = SubResource( 23 )
-
-[node name="mesh" type="MeshInstance" parent="apple4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000296831, 9.53674e-07 )
-mesh = ExtResource( 31 )
-material/0 = SubResource( 24 )
-
-[node name="outline" type="MeshInstance" parent="apple4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000296831, 9.53674e-07 )
-visible = false
-mesh = ExtResource( 31 )
-material/0 = SubResource( 25 )
-
-[node name="MeshInstance" type="MeshInstance" parent="apple4/outline"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000296831, -9.53674e-07 )
-mesh = SubResource( 26 )
-material/0 = SubResource( 27 )
-
 [connection signal="objHide" from="GUI" to="." method="_on_GUI_objHide"]
 [connection signal="objVisible" from="GUI" to="." method="_on_GUI_objVisible"]
 [connection signal="button_down" from="GUI/options/exitButton" to="GUI" method="_on_exitButton_button_down"]
@@ -2458,6 +2394,7 @@ material/0 = SubResource( 27 )
 [connection signal="button_down" from="GUI/options/objectMode" to="." method="_on_objectMode_button_down"]
 [connection signal="button_down" from="GUI/options/playerMode" to="." method="_on_playerMode_button_down"]
 [connection signal="toggled" from="GUI/options/lockTerrainMenu" to="." method="_on_lockTerrainMenu_toggled"]
+[connection signal="toggled" from="GUI/options/lockObjGrid" to="selectedPos" method="_on_lockObjGrid_toggled"]
 [connection signal="button_down" from="GUI/output/hideOutput" to="GUI/output" method="_on_hideOutput_button_down"]
 [connection signal="value_changed" from="GUI/terrainMenu/heightSlider" to="." method="_on_heightSlider_value_changed"]
 [connection signal="toggled" from="GUI/terrainMenu/pivot/autoPlace" to="." method="_on_autoPlace_toggled"]

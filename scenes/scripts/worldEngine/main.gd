@@ -14,12 +14,12 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT:float = 1.0 ### <----- HERE ###
+var RENDERMULT:float = 2.0 ### <----- HERE ###
 var MAXSTAIRS = 3
 
 #	Flora
 var FLORASPACING = 16
-var FLORARENDERDIS:float = 3.0 * RENDERMULT
+var FLORARENDERDIS:float = 1.5 * RENDERMULT
 
 #	Objects
 var OBJECTRENDERDIS:float = 48.0 * RENDERMULT
@@ -135,6 +135,9 @@ func _ready():
 
 # Runs every frame
 func _process(delta):
+	#Updates FPS Counter
+	$FPS/fps.text = str(Engine.get_frames_per_second())
+	
 	# World loading
 	var camLoc = $Camera.global_transform.origin
 	curLoc = Vector2(camLoc.x, camLoc.z)
@@ -774,7 +777,7 @@ func objectProcess():
 	# Input recognition
 	if Input.is_action_pressed("inWorld"):
 		# Grid size adjustments (NEED TO RE-DESIGN THIS)
-		if Input.is_action_pressed("control"):
+		if Input.is_action_pressed("control") and !selectedPos.gridLocked:
 			if Input.is_action_just_released("scroll_down") and W.objGridLoc >= 0.1:
 				W.objGridLoc -= 0.1
 				selectedPos.scaleGrid(W.objGridLoc / 2.0)
@@ -1070,6 +1073,10 @@ func changeObject(objectName):
 		largest = newSize.y
 	if newSize.z > largest:
 		largest = newSize.z
+	
+	if !selectedPos.gridLocked:
+		W.objGridLoc = round(largest*10.0)/10.0
+		selectedPos.scaleGrid(W.objGridLoc / 2.0)
 	
 	$Camera/objDisplayPoint/mainDisplay.scale = Vector3(0.1, 0.1, 0.1) / Vector3(largest, largest, largest)
 	

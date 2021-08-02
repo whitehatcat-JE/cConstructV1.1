@@ -81,6 +81,10 @@ func walk(delta):
 		acceleration = curAcc
 	
 	var target = direction * PLAYERSPEED
+	
+	if Input.is_action_pressed("crouch"):
+		target = direction * PLAYERSPEED * 0.5
+	
 	velocity = velocity.linear_interpolate(target, acceleration * delta)
 	
 	if !$floorCheck.is_colliding():
