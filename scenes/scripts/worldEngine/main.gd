@@ -14,7 +14,7 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT:float = 2.0 ### <----- HERE ###
+var RENDERMULT:float = 1.0 ### <----- HERE ###
 var MAXSTAIRS = 3
 
 #	Flora
@@ -111,7 +111,7 @@ onready var objectOptionsMenu = $GUI/objMenu
 var floraMatrixRetrieve = "SELECT MatrixID FROM floraMatrices WHERE FloraID = ? and XPos = ? and ZPos = ?;"
 var floraMatrixPositionRetrieve = "SELECT * FROM floraMatrices WHERE XPos > ? AND XPos < ? AND ZPos > ? AND ZPos < ?;"
 var floraMatrixAdd = "INSERT INTO floraMatrices (FloraID, XPos, ZPos) VALUES (?, ?, ?);"
-var floraAdd = "INSERT INTO flora (MatrixID, XDev, YDev, ZDev, AttachedAxis, Rot, Scale) VALUES (?, ?, ?, ?, ?, ?, ?);"
+var floraAdd = "INSERT INTO flora (MatrixID, XDev, YDev, ZDev, AttachedAxis, Rot, Scale) VALUES (?, round(?, 1), round(?, 1), round(?, 1), ?, ?, round(?, 2));"
 var floraSelect = "SELECT * FROM flora WHERE MatrixID = ?;"
 var floraDelete = """SELECT flora.MatrixID, UniqueID, XDev + XPos * ? AS XPosition, YDev AS YPosition, ZDev + ZPos * ? AS ZPosition FROM flora
 LEFT JOIN floraMatrices WHERE flora.MatrixID = floraMatrices.MatrixID 
@@ -119,7 +119,7 @@ AND XPosition > ? AND XPosition < ?
 AND ZPosition > ? AND ZPosition < ?;"""
 var floraIndividualDelete = "DELETE FROM flora WHERE UniqueID = ?"
 
-var objectAdd = "INSERT INTO objects (structureID, posX, posY, posZ, rotation) VALUES (?, ?, ?, ?, ?);"
+var objectAdd = "INSERT INTO objects (structureID, posX, posY, posZ, rotation) VALUES (?, round(?, 1), round(?, 1), round(?, 1), round(?, 2));"
 var objectRemove = "DELETE FROM objects WHERE objectID = ?;"
 var objectRetrieve = "SELECT * FROM objects WHERE posX < ? AND posX > ? AND posZ < ? AND posZ > ?;"
 var latestObjectRetrieve = "SELECT objectID FROM objects WHERE objectID=(SELECT max(objectID) FROM objects);"

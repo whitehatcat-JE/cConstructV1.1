@@ -52,20 +52,20 @@ size = Vector3( 500, 0.1, 500 )
 [sub_resource type="BoxShape" id=6]
 extents = Vector3( 250, 0.05, 250 )
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=7]
 size = 64
 outline_size = 4
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=9]
 outline_size = 2
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
@@ -92,7 +92,7 @@ tracks/1/keys = {
 "values": [ ">", "<" ]
 }
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=11]
 size = 40
 outline_size = 4
 use_filter = true
@@ -628,7 +628,7 @@ __meta__ = {
 margin_right = 152.0
 margin_bottom = 81.0
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "127"
 __meta__ = {
@@ -640,7 +640,7 @@ margin_top = 12.0
 margin_right = 116.0
 margin_bottom = 93.0
 rect_scale = Vector2( 0.1, 0.1 )
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "FPS"
 align = 1
@@ -668,7 +668,7 @@ margin_top = -0.25
 margin_right = 1018.0
 margin_bottom = 26.75
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "X"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -680,7 +680,7 @@ margin_top = -0.25
 margin_right = 991.0
 margin_bottom = 26.75
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -697,7 +697,7 @@ margin_right = 66.0
 margin_bottom = 27.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -712,7 +712,7 @@ margin_right = 22.0
 margin_bottom = 63.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -727,7 +727,7 @@ margin_top = 36.0
 margin_right = 1019.0
 margin_bottom = 63.0
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -743,7 +743,7 @@ margin_top = 36.18
 margin_right = 991.0
 margin_bottom = 63.18
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -759,7 +759,7 @@ margin_top = 36.18
 margin_right = 961.579
 margin_bottom = 63.18
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -775,7 +775,7 @@ margin_top = 36.0
 margin_right = 931.0
 margin_bottom = 63.0
 rect_pivot_offset = Vector2( 16, 16.25 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -822,7 +822,7 @@ __meta__ = {
 }
 
 [node name="outputTransitions" type="AnimationPlayer" parent="GUI/output"]
-anims/shrinkOutput = SubResource( 9 )
+anims/shrinkOutput = SubResource( 10 )
 
 [node name="outputWindow" type="Sprite" parent="GUI/output"]
 self_modulate = Color( 0.54902, 0.54902, 0.54902, 0.384314 )
@@ -854,7 +854,7 @@ margin_top = 1.54601
 margin_right = 1238.0
 margin_bottom = 321.546
 rect_scale = Vector2( 0.175, 0.175 )
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 clip_text = true
 max_lines_visible = 5
@@ -870,7 +870,7 @@ margin_bottom = -1.0
 rect_rotation = -89.9999
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "<"
@@ -898,7 +898,7 @@ margin_top = -13.0
 margin_right = 265.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Entity Creator"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -946,7 +946,7 @@ margin_top = -13.0
 margin_right = 657.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Quest System"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -958,7 +958,7 @@ margin_top = -13.0
 margin_right = 793.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 88, 16 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Spawn Nodes"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1490,7 +1490,7 @@ margin_bottom = 559.0
 rect_rotation = -180.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -1575,7 +1575,7 @@ margin_bottom = 611.0
 rect_rotation = 89.9999
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -1592,7 +1592,7 @@ margin_bottom = 455.0
 rect_rotation = -89.9999
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -1841,7 +1841,7 @@ margin_bottom = 611.0
 rect_rotation = 89.9999
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -1858,7 +1858,7 @@ margin_bottom = 455.0
 rect_rotation = -89.9999
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -2053,7 +2053,7 @@ margin_right = 262.0
 margin_bottom = 75.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "1"
@@ -2068,7 +2068,7 @@ margin_right = 262.0
 margin_bottom = 107.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "2"
@@ -2084,7 +2084,7 @@ margin_right = 262.0
 margin_bottom = 139.0
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "3"
@@ -2154,7 +2154,7 @@ margin_bottom = 611.0
 rect_rotation = 89.9999
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -2171,7 +2171,7 @@ margin_bottom = 455.0
 rect_rotation = -89.9999
 rect_pivot_offset = Vector2( 88, 16 )
 focus_mode = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = ">"
@@ -2349,7 +2349,6 @@ environment = ExtResource( 14 )
 
 [node name="sun" type="DirectionalLight" parent="sky"]
 transform = Transform( 0.997564, -0.0501786, 0.0484568, 0.0180543, 0.856714, 0.515476, -0.0673795, -0.513346, 0.855533, 0, 4.1, 0 )
-shadow_enabled = true
 shadow_bias = 1.0
 directional_shadow_blend_splits = true
 directional_shadow_max_distance = 250.0
