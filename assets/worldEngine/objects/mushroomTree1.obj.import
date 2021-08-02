@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/mushroomTree1.obj-171b84de49fd0b5222c8a1880063c54e.mesh"
+
+[deps]
+
+files=[ "res://.import/mushroomTree1.obj-171b84de49fd0b5222c8a1880063c54e.mesh" ]
+
+source_file="res://assets/worldEngine/objects/mushroomTree1.obj"
+dest_files=[ "res://.import/mushroomTree1.obj-171b84de49fd0b5222c8a1880063c54e.mesh", "res://.import/mushroomTree1.obj-171b84de49fd0b5222c8a1880063c54e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
