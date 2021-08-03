@@ -86,7 +86,7 @@ var fCamLoc = Vector3(1000000, 0, 1000000)
 onready var currentFloraID = W.floraIDFiles.keys()[0]
 
 #	Object Engine
-var loadedObjects = {} # ObjectNode:ObjectID
+#var loadedObjects = {} # ObjectNode:ObjectID
 onready var currentObjectID = W.objectIDFiles.keys()[0]
 
 #	Asset loading
@@ -794,6 +794,18 @@ func objectProcess():
 		if Input.is_action_just_pressed("delete"):
 			deleteObject()
 
+# MOVE TO TOP WHEN DONE DESIGNING
+var OBJECT_MULTIMESH_MAX:int = 10
+var OBJECT_DISTANCE_MAX:float = 10.0
+
+var bodies:Dictionary = {} # StructureID : {"collision":StaticBodyBaseplate, "activeCount":int, "preloaded":bool}
+
+var loadedObjects:Dictionary = {} # ObjectID : StaticBodyInstance
+var queuedObjects:Array = [] # Position In Queue (ObjectID), sorted by player range
+
+var loadedMultiMeshes:Dictionary = {} # StructureID : [MultiMeshObjectA, MultiMeshObjectB...]
+var multiMeshData:Dictionary = {} # MultiMeshObject : {"centralPoint":transform, "count":int, "objects":[ObjID_A, ObjID_B...], "activeObjects":[ObjID_A, ObjID_B...]}
+
 ### OBJECT-WORLD MANAGEMENT ###
 # Loads/Removes structures in a given region
 func updateStructures(coords:Vector3 = Vector3()):
@@ -804,21 +816,70 @@ func reloadStructure(structureID:int):
 	pass
 
 # Loads object into world
-func loadObj(objID:int, structureID:int, posX:float, posY:float, posZ:float, rot:float):
-	pass
+func loadObj(objID:int, structureID:int, transf:Transform):
+	# Checks if object already loaded
+	var isLoaded:bool = false
+	var structureExists:bool = false
+	# If structure already in scene
+	if structureID in loadedMultiMeshes:
+		structureExists = true
+		# Fetches all multiMeshInstances of structure
+		var structureMultiMeshes:Array = loadedMultiMeshes[structureID] 
+		# Finds any objID matches in multiMeshInstances
+		for multiMesh in structureMultiMeshes:
+			if objID in multiMeshData[multiMesh]["objects"]:
+				isLoaded = true
+				multiMeshData[multiMesh]["activeObjects"].append(objID) # Records objID as in active use
+				break
+	
+	# Adds object into scene if doesn't exist
+	if !isLoaded:
+		# Creates staticbody for object
+		var objBody:Object
+		if structureID in bodies:
+			objBody = bodies[structureID]["collision"]
+			bodies[structureID]["activeCount"] += 1
+		else:
+			objBody = self.add_child(W.objectIDFiles[structureID].instance()).create_trimesh_shape()
+			# Stores new body in bodies
+			bodies[structureID] = {"collision":objBody, "activeCount":1, "preloaded":false}
+		
+		# Duplicates & positions body
+		var newBody:Object = objBody.duplicate()
+		newBody.transform = transf
+		
+		# Adds new object to existing multiMesh
+		## IF POSSIBLE ##
+		if structureExists:
+			var multiData:Dictionary = multiMeshData[loadedMultiMeshes[structureID][-1]]
+			if multiData["count"] < OBJECT_MULTIMESH_MAX and multiData["centralPoint"].distance_to(transf) < OBJECT_DISTANCE_MAX:
+				var targetMulti:Object = loadedMultiMeshes[structureID][-1]
+				multiMeshData[targetMulti]["count"] += 1
+				multiMeshData[targetMulti]["objects"].append(objID)
+				multiMeshData[targetMulti]["active"].append(objID)
+				targetMulti.visible_instance_count += 1
+				targetMulti.set_instance_transform(targetMulti.visible_instance_count-1, transf)
+				return
+		## ELSE ##
+		# Creates new multiMeshInstance for object
+		# Generates base multiMesh
+		var newMulti = MultiMeshInstance.new()
+		newMulti.multimesh = MultiMesh.new()
+		newMulti.multimesh.transform_format = MultiMesh.TRANSFORM_3D
+		self.add_child(newMulti)
+		# Applies structure particulars to multiMesh
+		newMulti.multimesh.mesh = W.objectIDFiles[structureID]
+		newMulti.material_override = load("res://materials/magicaMat.tres")
+		newMulti.multimesh.instance_count = OBJECT_MULTIMESH_MAX
+		newMulti.multimesh.visible_instance_count = 1
+		# Stores multi in relevant dictionaries
+		loadedMultiMeshes[structureID] = newMulti
+		multiMeshData[newMulti] = {"centralPoint":transf, "count":1, "objects":[objID], "activeObjects":[objID]}
+		# Adds original object to newMulti
+		newMulti.set_instance_transform(0, transf)
 
 # Drops object from world
 func dropObj(objID:int):
-	pass
-
-# Duplicates/Creates collision
-# Returns the generated staticBody
-func generateCol(mesh:Object, transf:Transform):
-	# Stores collision-mesh relationship for dropCol() method use
-	pass
-
-# Removes/Drops collision
-func dropCol(col:Object):
 	pass
 
 ### OBJECT-ENGINE MANAGEMENT ###
