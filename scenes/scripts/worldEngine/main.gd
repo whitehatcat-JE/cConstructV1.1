@@ -802,6 +802,7 @@ var bodies:Dictionary = {} # StructureID : {"collision":StaticBodyBaseplate, "ac
 
 var loadedObjects:Dictionary = {} # ObjectID : StaticBodyInstance
 var queuedObjects:Array = [] # Position In Queue (ObjectID), sorted by player range
+var queuedObjectsData:Dictionary = {} # ObjectID : DB ObjectData
 
 var loadedMultiMeshes:Dictionary = {} # StructureID : [MultiMeshObjectA, MultiMeshObjectB...]
 var multiMeshData:Dictionary = {} # MultiMeshObject : {"centralPoint":transform, "count":int, "objects":[ObjID_A, ObjID_B...], "activeObjects":[ObjID_A, ObjID_B...]}
@@ -811,9 +812,23 @@ var multiMeshData:Dictionary = {} # MultiMeshObject : {"centralPoint":transform,
 func updateStructures(coords:Vector3 = Vector3()):
 	pass
 
+func loadNewStructures(neededObjects):
+	for obj in neededObjects:
+		if !(obj["objID"] in loadedObjects):
+			queuedObjectsData[obj["objID"]] = obj
+			queuedObjects.append(obj["objID"])
+			sortObjQueue()
+
+func sortObjQueue():
+	pass
+
 # Reloads all object of given structure (Used to update DB changes)
 func reloadStructure(structureID:int):
-	pass
+	# Removes all existing instances of structure
+	for multiMesh in loadedMultiMeshes[structureID]:
+		for body in multiMeshData[multiMesh]: body.queue_free();
+		multiMeshData.erase(multiMesh)
+	loadedMultiMeshes.erase(structureID)
 
 # Loads object into world
 func loadObj(objID:int, structureID:int, transf:Transform):
