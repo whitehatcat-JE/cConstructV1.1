@@ -7,14 +7,14 @@ enum {
 	DETAILS
 }
 
-# Constants
+# Constants ###RENAME TO UPPER_ CONVENTION###
 var UPDATEDIS = 5 # Distance before new world parts are loaded
 var fUPDATEDIS = 1 # Distance before flora is updated
 
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT:float = 1.0 ### <----- HERE ###
+var RENDERMULT:float = 3.0 ### <----- HERE ###
 var MAXSTAIRS = 3
 
 #	Flora
@@ -22,7 +22,9 @@ var FLORASPACING = 16
 var FLORARENDERDIS:float = 1.5 * RENDERMULT
 
 #	Objects
-var OBJECTRENDERDIS:float = 48.0 * RENDERMULT
+var OBJECT_RENDER_DIS:float = 48.0 * RENDERMULT
+var OBJECT_DISTANCE_MAX:float = 10.0
+var OBJECT_MULTIMESH_MAX:int = 10
 
 # Variable declarations
 #	Terrain
@@ -86,8 +88,17 @@ var fCamLoc = Vector3(1000000, 0, 1000000)
 onready var currentFloraID = W.floraIDFiles.keys()[0]
 
 #	Object Engine
-#var loadedObjects = {} # ObjectNode:ObjectID
 onready var currentObjectID = W.objectIDFiles.keys()[0]
+
+var bodies:Dictionary = {} # StructureID : {"collision":StaticBodyBaseplate, "activeCount":int, "preloaded":bool}
+
+var loadedObjects:Dictionary = {} # ObjectID : StaticBodyInstance
+var loadedObjectStructures:Dictionary = {} # ObjectID : StructureID
+var queuedObjects:Array = [] # Position In Queue (ObjectID), sorted by player range
+var queuedObjectsData:Dictionary = {} # ObjectID : DB ObjectData
+
+var loadedMultiMeshes:Dictionary = {} # StructureID : [MultiMeshObjectA, MultiMeshObjectB...]
+var multiMeshData:Dictionary = {} # MultiMeshObject : {"centralPoint":transform, "count":int, "objects":[ObjID_A, ObjID_B...], "activeObjects":[ObjID_A, ObjID_B...]}
 
 #	Asset loading
 var terrainHandler = "res://scenes/terrainPieceHandler.tscn"
@@ -123,6 +134,7 @@ var objectAdd = "INSERT INTO objects (structureID, posX, posY, posZ, rotation) V
 var objectRemove = "DELETE FROM objects WHERE objectID = ?;"
 var objectRetrieve = "SELECT * FROM objects WHERE posX < ? AND posX > ? AND posZ < ? AND posZ > ?;"
 var latestObjectRetrieve = "SELECT objectID FROM objects WHERE objectID=(SELECT max(objectID) FROM objects);"
+var objectsInStructure = "SELECT * FROM objects WHERE structureID = ?;"
 
 ### UNIVERSIAL CODE ###
 # Runs when scene is created
@@ -200,7 +212,22 @@ func updateWorld():
 	
 	# Load objects
 	if int(cam.translation.x) % 16 == 0 or int(cam.translation.z) % 16 == 0:
-		updateObjects(retrieveObjects(cam.translation))
+		updateStructures(retrieveObjects(cam.translation))
+	
+	if len(queuedObjects) > 0:
+		var newObjID:int = queuedObjects.pop_front()
+		var newObjData:Dictionary = queuedObjectsData[newObjID]
+		var newStructureID:int = newObjData["structureID"]
+		var newObjTransform:Transform = transform
+		
+		newObjTransform.origin.x = newObjData["posX"]
+		newObjTransform.origin.y = newObjData["posY"]
+		newObjTransform.origin.z = newObjData["posZ"]
+		newObjTransform.rotated(Vector3(0, 1, 0), float(newObjData["rotation"]))
+		
+		queuedObjectsData.erase(newObjID)
+		
+		loadObj(newObjID, newStructureID, newObjTransform)
 
 ### TERRAIN MODE METHODS ###
 # Terrain script for each frame
@@ -794,47 +821,75 @@ func objectProcess():
 		if Input.is_action_just_pressed("delete"):
 			deleteObject()
 
-# MOVE TO TOP WHEN DONE DESIGNING
-var OBJECT_MULTIMESH_MAX:int = 10
-var OBJECT_DISTANCE_MAX:float = 10.0
-
-var bodies:Dictionary = {} # StructureID : {"collision":StaticBodyBaseplate, "activeCount":int, "preloaded":bool}
-
-var loadedObjects:Dictionary = {} # ObjectID : StaticBodyInstance
-var queuedObjects:Array = [] # Position In Queue (ObjectID), sorted by player range
-var queuedObjectsData:Dictionary = {} # ObjectID : DB ObjectData
-
-var loadedMultiMeshes:Dictionary = {} # StructureID : [MultiMeshObjectA, MultiMeshObjectB...]
-var multiMeshData:Dictionary = {} # MultiMeshObject : {"centralPoint":transform, "count":int, "objects":[ObjID_A, ObjID_B...], "activeObjects":[ObjID_A, ObjID_B...]}
-
 ### OBJECT-WORLD MANAGEMENT ###
 # Loads/Removes structures in a given region
-func updateStructures(coords:Vector3 = Vector3()):
-	pass
+func updateStructures(requiredObjects:Array):
+	# Queues new objects
+	queueNewObjects(requiredObjects)
+	# Deletes old objects
+	# Gets all requiredObjects ids
+	var requiredIDs:Array = []
+	for obj in requiredObjects:
+		requiredIDs.append(obj["objectID"])
+	# Removes queued objects no longer required
+	for obj in queuedObjects.duplicate():
+		if !(obj in requiredIDs):
+			queuedObjects.erase(obj)
+			queuedObjectsData.erase(obj)
+	# Removes existing objects
+	for obj in loadedObjects.duplicate():
+		if !(obj in requiredIDs): dropObj(obj);
 
-func loadNewStructures(neededObjects):
+# Adds all non-existing objects given to queue
+func queueNewObjects(neededObjects:Array):
 	for obj in neededObjects:
-		if !(obj["objID"] in loadedObjects):
-			queuedObjectsData[obj["objID"]] = obj
-			queuedObjects.append(obj["objID"])
-			sortObjQueue()
+		# Checks that object doesn't already exist
+		if !(obj["objectID"] in loadedObjects or obj["objectID"] in queuedObjects):
+			# Add object to queue
+			queuedObjectsData[obj["objectID"]] = obj
+			queuedObjects.append(obj["objectID"])
+	sortObjQueue()
 
+# Sorts all objects in queue by distance to camera
 func sortObjQueue():
-	pass
+	# Temp Queue Variables
+	var newQueue:Dictionary = {} # Dis : [ObjID_A, ObjID_B...]
+	# Fills Temp Queue Variables with object data
+	for obj in queuedObjects:
+		var dis:float = round(sqrt(camLoc.x - float(queuedObjectsData[obj]["posX"])) + sqrt(camLoc.y - float(queuedObjectsData[obj]["posZ"])))
+		if dis in newQueue: newQueue[dis].append(obj);
+		else: newQueue[dis] = [obj];
+	
+	# Applies Temp Queue to actual queue
+	var queueDistances:Array = newQueue.keys()
+	queueDistances.sort()
+	var newOrder:Array = []
+	for pos in queueDistances:
+		for obj in newQueue[pos]:
+			newOrder.append(obj)
+	queuedObjects = newOrder
 
 # Reloads all object of given structure (Used to update DB changes)
 func reloadStructure(structureID:int):
 	# Removes all existing instances of structure
 	for multiMesh in loadedMultiMeshes[structureID]:
-		for body in multiMeshData[multiMesh]: body.queue_free();
+		for body in multiMeshData[multiMesh]: 
+			bodies[body].queue_free()
+			bodies.erase(body)
 		multiMeshData.erase(multiMesh)
 	loadedMultiMeshes.erase(structureID)
+	# Load any new objects
+	queueNewObjects(W.db.query_with_args(objectsInStructure, [structureID]))
 
 # Loads object into world
 func loadObj(objID:int, structureID:int, transf:Transform):
 	# Checks if object already loaded
 	var isLoaded:bool = false
 	var structureExists:bool = false
+	
+	# Stores objectID - StructureID relationship
+	loadedObjectStructures[objID] = structureID
+	
 	# If structure already in scene
 	if structureID in loadedMultiMeshes:
 		structureExists = true
@@ -852,28 +907,36 @@ func loadObj(objID:int, structureID:int, transf:Transform):
 		# Creates staticbody for object
 		var objBody:Object
 		if structureID in bodies:
-			objBody = bodies[structureID]["collision"]
+			objBody = bodies[structureID]["collision"].duplicate()
+			self.add_child(objBody)
 			bodies[structureID]["activeCount"] += 1
 		else:
-			objBody = self.add_child(W.objectIDFiles[structureID].instance()).create_trimesh_shape()
+			var newMesh:Object = MeshInstance.new()
+			self.add_child(newMesh)
+			newMesh.mesh = W.objectIDFiles[structureID]
+			newMesh.create_trimesh_collision()
+			objBody = newMesh.get_child(0)
+			newMesh.remove_child(objBody)
+			self.add_child(objBody)
+			newMesh.queue_free()
 			# Stores new body in bodies
 			bodies[structureID] = {"collision":objBody, "activeCount":1, "preloaded":false}
 		
-		# Duplicates & positions body
-		var newBody:Object = objBody.duplicate()
-		newBody.transform = transf
+		# Positions body
+		objBody.transform = transf
+		loadedObjects[objID] = objBody
 		
 		# Adds new object to existing multiMesh
 		## IF POSSIBLE ##
 		if structureExists:
 			var multiData:Dictionary = multiMeshData[loadedMultiMeshes[structureID][-1]]
-			if multiData["count"] < OBJECT_MULTIMESH_MAX and multiData["centralPoint"].distance_to(transf) < OBJECT_DISTANCE_MAX:
+			if multiData["count"] < OBJECT_MULTIMESH_MAX and multiData["centralPoint"].origin.distance_to(transf.origin) < OBJECT_DISTANCE_MAX:
 				var targetMulti:Object = loadedMultiMeshes[structureID][-1]
 				multiMeshData[targetMulti]["count"] += 1
 				multiMeshData[targetMulti]["objects"].append(objID)
-				multiMeshData[targetMulti]["active"].append(objID)
-				targetMulti.visible_instance_count += 1
-				targetMulti.set_instance_transform(targetMulti.visible_instance_count-1, transf)
+				multiMeshData[targetMulti]["activeObjects"].append(objID)
+				targetMulti.multimesh.visible_instance_count += 1
+				targetMulti.multimesh.set_instance_transform(targetMulti.multimesh.visible_instance_count-1, transf)
 				return
 		## ELSE ##
 		# Creates new multiMeshInstance for object
@@ -888,14 +951,32 @@ func loadObj(objID:int, structureID:int, transf:Transform):
 		newMulti.multimesh.instance_count = OBJECT_MULTIMESH_MAX
 		newMulti.multimesh.visible_instance_count = 1
 		# Stores multi in relevant dictionaries
-		loadedMultiMeshes[structureID] = newMulti
+		if structureID in loadedMultiMeshes: loadedMultiMeshes[structureID].append(newMulti);
+		else: loadedMultiMeshes[structureID] = [newMulti];
 		multiMeshData[newMulti] = {"centralPoint":transf, "count":1, "objects":[objID], "activeObjects":[objID]}
 		# Adds original object to newMulti
-		newMulti.set_instance_transform(0, transf)
+		newMulti.multimesh.set_instance_transform(0, transf)
 
 # Drops object from world
 func dropObj(objID:int):
-	pass
+	var structureMultiMeshes:Array = loadedMultiMeshes[loadedObjectStructures[objID]]
+	var parentMultiMesh:Object
+	for multiMesh in structureMultiMeshes:
+		if objID in multiMeshData[multiMesh]["activeObjects"]:
+			parentMultiMesh = multiMesh
+			break
+	multiMeshData[parentMultiMesh]["activeObjects"].erase(objID)
+	multiMeshData[parentMultiMesh]["count"] -= 1
+	# Removes body from world
+	var collisionUsed:Dictionary = bodies[loadedObjectStructures[objID]]
+	bodies[loadedObjectStructures[objID]]["activeCount"] -= 1
+	if collisionUsed["activeCount"] == 0 or collisionUsed["collision"] != loadedObjects[objID]:
+		loadedObjects[objID].queue_free()
+		if collisionUsed["activeCount"] == 0:
+			bodies.erase(loadedObjectStructures[objID])
+	# Removes object from scene
+	loadedObjectStructures.erase(objID)
+	loadedObjects.erase(objID)
 
 ### OBJECT-ENGINE MANAGEMENT ###
 # Adds object to DB
@@ -905,6 +986,17 @@ func addObj(structureID:int, posX:float, posY:float, posZ:float, rot:float):
 # Removes object from DB
 func deleteObj(objID:int):
 	pass
+
+# Retrieves all objects that should be loaded from db
+func retrieveObjects(loc:Vector3):
+	# Widens boundaries to object rendering constant
+	var xMax:float = loc.x + OBJECT_RENDER_DIS
+	var xMin:float = loc.x - OBJECT_RENDER_DIS
+	var zMax:float = loc.z + OBJECT_RENDER_DIS
+	var zMin:float = loc.z - OBJECT_RENDER_DIS
+	# Retrieves objects and returns array
+	var allObjects:Array = W.db.fetch_array_with_args(objectRetrieve, [xMax, xMin, zMax, zMin])
+	return allObjects
 
 ## OLD OBJECT CODE, NEED TO RETIRE
 # Deletes any objects delete ray is colliding with ### CONFUSING NAMING ###
@@ -953,17 +1045,6 @@ func loadObject(rot:Vector3, pos:Vector3, file:Object, id:int, collision:bool=tr
 func removeObject(obj:Object):
 	loadedObjects.erase(obj) # Remove from loaded objects list
 	obj.queue_free() # Remove from scene
-
-# Retrieves all objects that should be loaded from db
-func retrieveObjects(loc:Vector3):
-	# Widens boundaries to object rendering constant
-	var xMax:float = loc.x + OBJECTRENDERDIS
-	var xMin:float = loc.x - OBJECTRENDERDIS
-	var zMax:float = loc.z + OBJECTRENDERDIS
-	var zMin:float = loc.z - OBJECTRENDERDIS
-	# Retrieves objects and returns array
-	var allObjects:Array = W.db.fetch_array_with_args(objectRetrieve, [xMax, xMin, zMax, zMin])
-	return allObjects
 
 # Adds and removes objects based on given object array
 func updateObjects(requiredObjects:Array):
