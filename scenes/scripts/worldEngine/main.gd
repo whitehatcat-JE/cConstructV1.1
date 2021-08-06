@@ -794,43 +794,6 @@ func objectProcess():
 		if Input.is_action_just_pressed("delete"):
 			deleteObject()
 
-### OBJECT-WORLD MANAGEMENT ###
-# Loads/Removes structures in a given region
-func updateStructures(coords:Vector3 = Vector3()):
-	pass
-
-# Reloads all object of given structure (Used to update DB changes)
-func reloadStructure(structureID:int):
-	pass
-
-# Loads object into world
-func loadObj(objID:int, structureID:int, posX:float, posY:float, posZ:float, rot:float):
-	pass
-
-# Drops object from world
-func dropObj(objID:int):
-	pass
-
-# Duplicates/Creates collision
-# Returns the generated staticBody
-func generateCol(mesh:Object, transf:Transform):
-	# Stores collision-mesh relationship for dropCol() method use
-	pass
-
-# Removes/Drops collision
-func dropCol(col:Object):
-	pass
-
-### OBJECT-ENGINE MANAGEMENT ###
-# Adds object to DB
-func addObj(structureID:int, posX:float, posY:float, posZ:float, rot:float):
-	pass
-
-# Removes object from DB
-func deleteObj(objID:int):
-	pass
-
-## OLD OBJECT CODE, NEED TO RETIRE
 # Deletes any objects delete ray is colliding with ### CONFUSING NAMING ###
 func deleteObject():
 	if deleteCast.is_colliding(): # Replace with collision ray
