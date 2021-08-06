@@ -73,6 +73,7 @@ var sortedStairData = {}
 var terrainQueue = {}
 var terrainQueueOrder = []
 
+
 var terrainLoaded = {}
 
 #	Flora Engine
@@ -89,6 +90,8 @@ onready var currentFloraID = W.floraIDFiles.keys()[0]
 var loadedObjects = {} # ObjectNode:ObjectID
 onready var currentObjectID = W.objectIDFiles.keys()[0]
 
+var queuedObjects = {}
+var objectQueueOrder= []
 #	Asset loading
 var terrainHandler = "res://scenes/terrainPieceHandler.tscn"
 
@@ -201,6 +204,11 @@ func updateWorld():
 	# Load objects
 	if int(cam.translation.x) % 16 == 0 or int(cam.translation.z) % 16 == 0:
 		updateObjects(retrieveObjects(cam.translation))
+	
+	if len(objectQueueOrder) > 0:
+		var newID:int = objectQueueOrder.pop_front()
+		loadObject(queuedObjects[newID]["rotation"], queuedObjects[newID]["position"], queuedObjects[newID]["file"], newID)
+		queuedObjects.erase(newID)
 
 ### TERRAIN MODE METHODS ###
 # Terrain script for each frame
@@ -794,6 +802,29 @@ func objectProcess():
 		if Input.is_action_just_pressed("delete"):
 			deleteObject()
 
+# Queue Objects
+func queueObject(rot:Vector3, pos:Vector3, file:Object, id:int):
+	queuedObjects[id] = {"rotation":rot, "position":pos, "file":file}
+	updateObjectQueue()
+
+# Update object queue order
+func updateObjectQueue():
+	objectQueueOrder.clear()
+	var objDistances:Dictionary = {} # Distance : [ObjID_A, ObjID_B...]
+	# Calculate distances
+	for obj in queuedObjects.keys():
+		var pos:Vector3 = queuedObjects[obj]["position"]
+		var dis:float = sqrt(pow(pos.x - camLoc.x, 2)) + sqrt(pow(pos.z - camLoc.y, 2))
+		
+		if dis in objDistances: objDistances[dis].append(obj);
+		else: objDistances[dis] = [obj];
+	# Sort distances
+	var distances:Array = objDistances.keys()
+	distances.sort()
+	for dis in distances:
+		for obj in objDistances[dis]:
+			objectQueueOrder.append(obj)
+
 # Deletes any objects delete ray is colliding with ### CONFUSING NAMING ###
 func deleteObject():
 	if deleteCast.is_colliding(): # Replace with collision ray
@@ -858,27 +889,27 @@ func updateObjects(requiredObjects:Array):
 	var allowedObjectIDs:Array = []
 	var addObjectQueue:Array = []
 	var deleteObjectQueue:Array = []
-	# Finds objects that need to be generated/removed
+	# Finds objects that need to be generated
 	for obj in requiredObjects:
 		allowedObjectIDs.append(obj["objectID"])
 		if !(obj["objectID"] in loadedObjects.values()):
 			addObjectQueue.append(obj)
-	# Adds all required objects
-	for obj in addObjectQueue:
-		# Retrieve object information
-		var rot:Vector3 = Vector3(0, obj["rotation"], 0)
-		var pos:Vector3 = Vector3(obj["posX"], obj["posY"], obj["posZ"])
-		var file:Object = W.objectIDFiles[obj["structureID"]]
-		var id:int = obj["objectID"]
-		# Generate object
-		loadObject(rot, pos, file, id)
-	# Selects removing objects
+			# Retrieve object information
+			var rot:Vector3 = Vector3(0, obj["rotation"], 0)
+			var pos:Vector3 = Vector3(obj["posX"], obj["posY"], obj["posZ"])
+			var file:Object = W.objectIDFiles[obj["structureID"]]
+			var id:int = obj["objectID"]
+			# Queue new object
+			queueObject(rot, pos, file, id)
+	# Removes already loaded objects
 	for obj in loadedObjects:
 		if !(loadedObjects[obj] in allowedObjectIDs):
-			deleteObjectQueue.append(obj)
-	# Removes selected objects
-	for obj in deleteObjectQueue:
-		removeObject(obj)
+			removeObject(obj)
+	# Removes expired queue objects
+	for obj in queuedObjects:
+		if !(obj in allowedObjectIDs):
+			queuedObjects.erase(obj)
+			objectQueueOrder.erase(obj)
 
 # Playtest script for each frame
 func playtestProcess():
