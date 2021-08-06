@@ -14,7 +14,7 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT:float = 1.0 ### <----- HERE ###
+var RENDERMULT:float = 3.0 ### <----- HERE ###
 var MAXSTAIRS = 3
 
 #	Flora
@@ -135,6 +135,35 @@ func _ready():
 	
 	# Node updates
 	heightSlider.value = MAXHEIGHT
+	
+	# Force load needed objects
+	# Load terrain
+	camLoc = Vector2(cam.translation.x, cam.translation.z)
+	updateTerrain(fetchTerrain())
+	updateTerrainQueue()
+	
+	while len(terrainQueue) > 0:
+		addTerrain(terrainQueue[terrainQueueOrder[0]])
+		terrainQueue.erase(terrainQueueOrder.pop_front())
+	
+	# Load flora
+	fCamLoc = cam.translation
+	updateFlora(fCamLoc)
+	updateFloraPositions()
+	
+	while len(floraMatricesQueue) > 0:
+		var newMatrixID = floraMatricesQueuePositions.pop_front()
+		var newMatrix = loadMatrix(newMatrixID, floraMatricesQueue[newMatrixID][0], floraMatricesQueue[newMatrixID][1])
+		floraMatricesLoaded[newMatrixID] = newMatrix
+		floraMatricesQueue.erase(newMatrixID)
+	
+	# Load objects
+	updateObjects(retrieveObjects(cam.translation))
+	
+	while len(objectQueueOrder) > 0:
+		var newID:int = objectQueueOrder.pop_front()
+		loadObject(queuedObjects[newID]["rotation"], queuedObjects[newID]["position"], queuedObjects[newID]["file"], newID)
+		queuedObjects.erase(newID)
 
 # Runs every frame
 func _process(delta):
@@ -176,6 +205,17 @@ func updateWorld():
 		updateTerrain(fetchTerrain())
 		updateTerrainQueue()
 	
+	# Load flora
+	if pow(fCamLoc.x - cam.translation.x, 2) > floraRenderPause or pow(fCamLoc.z - cam.translation.z, 2) > floraRenderPause:
+		fCamLoc = cam.translation
+		updateFlora(fCamLoc)
+		updateFloraPositions()
+	
+	# Load objects
+	if int(cam.translation.x) % 16 == 0 or int(cam.translation.z) % 16 == 0:
+		updateObjects(retrieveObjects(cam.translation))
+	
+	# Generate queued items
 	if len(terrainQueue) > 0:
 		for x in range(round(len(terrainQueueOrder)/100) + 2):
 			if len(terrainQueue) > 0:
@@ -184,13 +224,11 @@ func updateWorld():
 			else:
 				break
 	
-	# Load flora
-	if pow(fCamLoc.x - cam.translation.x, 2) > floraRenderPause or pow(fCamLoc.z - cam.translation.z, 2) > floraRenderPause:
-		fCamLoc = cam.translation
-		updateFlora(fCamLoc)
-		updateFloraPositions()
+	if len(objectQueueOrder) > 0:
+		var newID:int = objectQueueOrder.pop_front()
+		loadObject(queuedObjects[newID]["rotation"], queuedObjects[newID]["position"], queuedObjects[newID]["file"], newID)
+		queuedObjects.erase(newID)
 		
-	
 	if len(floraMatricesQueue) > 0:
 		for matrixCount in range(round(len(floraMatricesQueuePositions)/50) + 1):
 			if len(floraMatricesQueuePositions) > 0:
@@ -200,15 +238,6 @@ func updateWorld():
 				floraMatricesQueue.erase(newMatrixID)
 			else:
 				break
-	
-	# Load objects
-	if int(cam.translation.x) % 16 == 0 or int(cam.translation.z) % 16 == 0:
-		updateObjects(retrieveObjects(cam.translation))
-	
-	if len(objectQueueOrder) > 0:
-		var newID:int = objectQueueOrder.pop_front()
-		loadObject(queuedObjects[newID]["rotation"], queuedObjects[newID]["position"], queuedObjects[newID]["file"], newID)
-		queuedObjects.erase(newID)
 
 ### TERRAIN MODE METHODS ###
 # Terrain script for each frame
@@ -688,7 +717,7 @@ func loadMatrix(matrixID, position, floraID):
 	floraMatricesLoaded[matrixID] = newFlora
 	
 	newFlora.multimesh.mesh = W.floraIDFiles[floraID]
-	newFlora.material_override = load("res://assets/japaneseTown/japaneseMat.tres") # NEED TO CHANGE
+	newFlora.material_override = W.generalMat
 	newFlora.multimesh.instance_count = len(flora)
 	newFlora.translation = position
 	
@@ -851,16 +880,15 @@ func placeObject():
 	loadObject(rot, position, objMesh, newID)
 
 # Loads object into world
-func loadObject(rot:Vector3, pos:Vector3, file:Object, id:int, collision:bool=true):
+func loadObject(rot:Vector3, pos:Vector3, file:Object, id:int):
 	# Create mesh node
 	var newObj:Object = MeshInstance.new()
 	# Apply mesh and material to object
 	newObj.mesh = file
-	newObj.material_override = load("res://materials/magicaMat.tres")
+	newObj.material_override = W.generalMat
 	self.add_child(newObj)
-	# Generate precise collision
-	if collision:
-		newObj.create_trimesh_collision()
+	# Generate collision
+	newObj.create_trimesh_collision()
 	# Position into world
 	newObj.global_transform.origin = pos
 	newObj.rotation = rot

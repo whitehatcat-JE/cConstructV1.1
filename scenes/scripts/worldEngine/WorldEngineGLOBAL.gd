@@ -28,6 +28,9 @@ var COLORFOLDER = "res://materials/"
 var OBJTYPE = ".obj"
 var OBJFOLDER = "res://assets/worldEngine/objects/"
 
+# Materials
+onready var generalMat = preload("res://materials/magicaMat.tres")
+
 ### UNIVERSIAL CONSTRANTS/VARIABLES ###
 # Constants
 var DEFMODE = MODETERRAIN
