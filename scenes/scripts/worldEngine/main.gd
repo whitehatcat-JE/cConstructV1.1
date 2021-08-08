@@ -14,7 +14,7 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT:float = 3.0 ### <----- HERE ###
+var RENDERMULT:float = 2.0 ### <----- HERE ###
 var MAXSTAIRS = 3
 
 #	Flora
@@ -261,74 +261,77 @@ func terrainProcess():
 		if !terrainMenuLocked: terrainMenuPivot.rotation_degrees = cam.rotation_degrees.y + 90;
 		terrainMenu.switchDisabled(false)
 	
-	if Input.is_action_just_pressed("place") and Input.is_action_pressed("inWorld"):
-		var sP = selectedPos.global_transform.origin
-		var pieceData = [
-			height, 
-			round(sP.x*10.0)/10.0, round(sP.y*10.0)/10.0, round(sP.z*10.0)/10.0,
-			colorIndex(transMenuColor), 
-			colorIndex(tileMenuColor), 
-			colorIndex(detailMenuColor),
-			cliffA, cliffB, cliffC, cliffD,
-			ledgeA, ledgeB, ledgeC, ledgeD,
-			transA, transB, transC, transD
-		]
-		W.db.query_with_args(
-			"""INSERT INTO terrain (height, posX, posY, posZ, colorIDA, colorIDB, colorIDC,
-				cliffA, cliffB, cliffC, cliffD, ledgeA, ledgeB, ledgeC, ledgeD,
-				transA, transB, transC, transD) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);""",
-			 pieceData)
-		var newID = 0
-		for id in W.db.fetch_array("SELECT MAX(terrainID) FROM terrain"):
-			newID = id[newID]
+	if Input.is_action_pressed("inWorld"):
+		if (Input.is_action_just_pressed("place") or selectedPos.movedGrid) and Input.is_action_pressed("place"):
+			selectedPos.movedGrid = false
+			var sP = selectedPos.global_transform.origin
+			var pieceData = [
+				height, 
+				round(sP.x*10.0)/10.0, round(sP.y*10.0)/10.0, round(sP.z*10.0)/10.0,
+				colorIndex(transMenuColor), 
+				colorIndex(tileMenuColor), 
+				colorIndex(detailMenuColor),
+				cliffA, cliffB, cliffC, cliffD,
+				ledgeA, ledgeB, ledgeC, ledgeD,
+				transA, transB, transC, transD
+			]
+			W.db.query_with_args(
+				"""INSERT INTO terrain (height, posX, posY, posZ, colorIDA, colorIDB, colorIDC,
+					cliffA, cliffB, cliffC, cliffD, ledgeA, ledgeB, ledgeC, ledgeD,
+					transA, transB, transC, transD) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);""",
+				 pieceData)
+			var newID = 0
+			for id in W.db.fetch_array("SELECT MAX(terrainID) FROM terrain"):
+				newID = id[newID]
+			
+			if stairsA > 0:
+				W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+				[newID, 0, stairsA])
+			if stairsB > 0:
+				W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+				[newID, 1, stairsB])
+			if stairsC > 0:
+				W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+				[newID, 2, stairsC])
+			if stairsD > 0:
+				W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+				[newID, 3, stairsD])
+			if oStairsA > 0:
+				W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+				[newID, 4, oStairsA])
+			if oStairsB > 0:
+				W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+				[newID, 5, oStairsB])
+			if oStairsC > 0:
+				W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+				[newID, 6, oStairsC])
+			if oStairsD > 0:
+				W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
+				[newID, 7, oStairsD])
+			
+			var newPiece = generateTerrain()
+			
+			#Appends to xMatrix
+			if pieceData[1] in tXMatrix:
+				tXMatrix[pieceData[1]][newID] = newPiece
+			else:
+				tXMatrix[pieceData[1]] = {newID:newPiece}
+			#Appends to zMatrix
+			if pieceData[3] in tZMatrix:
+				tZMatrix[pieceData[3]][newID] = newPiece
+			else:
+				tZMatrix[pieceData[3]] = {newID:newPiece}
 		
-		if stairsA > 0:
-			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
-			[newID, 0, stairsA])
-		if stairsB > 0:
-			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
-			[newID, 1, stairsB])
-		if stairsC > 0:
-			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
-			[newID, 2, stairsC])
-		if stairsD > 0:
-			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
-			[newID, 3, stairsD])
-		if oStairsA > 0:
-			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
-			[newID, 4, oStairsA])
-		if oStairsB > 0:
-			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
-			[newID, 5, oStairsB])
-		if oStairsC > 0:
-			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
-			[newID, 6, oStairsC])
-		if oStairsD > 0:
-			W.db.query_with_args("INSERT INTO terrainStairs (terrainID, stairType, stairCount) VALUES (?,?,?)", 
-			[newID, 7, oStairsD])
-		
-		var newPiece = generateTerrain()
-		
-		#Appends to xMatrix
-		if pieceData[1] in tXMatrix:
-			tXMatrix[pieceData[1]][newID] = newPiece
-		else:
-			tXMatrix[pieceData[1]] = {newID:newPiece}
-		#Appends to zMatrix
-		if pieceData[3] in tZMatrix:
-			tZMatrix[pieceData[3]][newID] = newPiece
-		else:
-			tZMatrix[pieceData[3]] = {newID:newPiece}
-	
-	if Input.is_action_just_pressed("delete") and Input.is_action_pressed("inWorld"):
-		if deleteCast.is_colliding():
-			var delObj = deleteCast.get_collider().get_parent().get_parent()
-			var xPos = round(delObj.global_transform.origin.x*10)/10
-			var zPos = round(delObj.global_transform.origin.z*10)/10
-			W.db.query_with_args("DELETE FROM terrain WHERE posX == ? AND posZ == ?", 
-				[xPos, zPos]
-			)
-			delObj.queue_free()
+		if (Input.is_action_just_pressed("delete") or selectedPos.movedGrid) and Input.is_action_pressed("delete"):
+			selectedPos.movedGrid = false
+			if deleteCast.is_colliding():
+				var delObj = deleteCast.get_collider().get_parent().get_parent()
+				var xPos = round(delObj.global_transform.origin.x*10)/10
+				var zPos = round(delObj.global_transform.origin.z*10)/10
+				W.db.query_with_args("DELETE FROM terrain WHERE posX = ? AND posZ = ?", 
+					[xPos, zPos]
+				)
+				delObj.queue_free()
 
 # Creates requested terrain piece
 func generateTerrain( # Required Variables

@@ -1,13 +1,19 @@
 extends Spatial
 
-var curAim = Vector3()
-var gridLocked = false
+var curAim:Vector3 = Vector3()
+var gridLocked:bool = false
+
+var movedGrid:bool = false
+var previousTrans:Vector3 = Vector3()
 
 # Terrain Selector
 func updateAim(newAim):
 	self.translation.x = round(newAim.x / W.gridLock) * W.gridLock + W.xOffset
 	self.translation.y = round(newAim.y / W.gridLock) * W.gridLock + W.yOffset
 	self.translation.z = round(newAim.z / W.gridLock) * W.gridLock + W.zOffset
+	if previousTrans != self.translation:
+		movedGrid = true
+		previousTrans = self.translation
 	curAim = newAim
 
 # Flora Selector
