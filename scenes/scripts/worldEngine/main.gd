@@ -14,7 +14,7 @@ var fUPDATEDIS = 1 # Distance before flora is updated
 #	Terrain
 var MAXHEIGHT = 8
 var MINHEIGHT = 0
-var RENDERMULT:float = 2.0 ### <----- HERE ###
+export var RENDERMULT:float = 2.0 ### <----- HERE ###
 var MAXSTAIRS = 3
 
 #	Flora
@@ -62,7 +62,7 @@ var curLoc = Vector2()
 var camLoc = Vector2(1000000, 1000000)
 var preLoc = Vector2(1000000, 1000000)
 var renderPause = 10.0
-var renderDis = 64.0 * RENDERMULT
+var renderDis = 56.0 * RENDERMULT
 
 var tXMatrix = {}
 var tZMatrix = {}
