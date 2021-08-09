@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/scripts/worldEngine/itemManager/sceneManagement.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/worldEngine/items/genericGun.png" type="Texture" id=5]
 [ext_resource path="res://assets/GUI/itemFrame.png" type="Texture" id=6]
 [ext_resource path="res://assets/GUI/addIcon.png" type="Texture" id=7]
+[ext_resource path="res://scenes/scripts/worldEngine/itemManager/itemCollectionInterface.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -115,6 +116,7 @@ scale = Vector2( 0.32, 0.32 )
 texture = ExtResource( 3 )
 
 [node name="itemCollectionInterface" type="Control" parent="."]
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -720,3 +722,25 @@ __meta__ = {
 [connection signal="button_down" from="sceneManagement/backButton" to="sceneManagement" method="_on_backButton_button_down"]
 [connection signal="button_down" from="sceneManagement/exitButton" to="sceneManagement" method="_on_exitButton_button_down"]
 [connection signal="button_down" from="sceneManagement/reloadButton" to="sceneManagement" method="_on_reloadButton_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item" to="itemCollectionInterface" method="_on_item_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item2" to="itemCollectionInterface" method="_on_item2_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item3" to="itemCollectionInterface" method="_on_item3_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item4" to="itemCollectionInterface" method="_on_item4_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item5" to="itemCollectionInterface" method="_on_item5_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item6" to="itemCollectionInterface" method="_on_item6_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item7" to="itemCollectionInterface" method="_on_item7_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item8" to="itemCollectionInterface" method="_on_item8_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item9" to="itemCollectionInterface" method="_on_item9_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item10" to="itemCollectionInterface" method="_on_item10_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item11" to="itemCollectionInterface" method="_on_item11_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item12" to="itemCollectionInterface" method="_on_item12_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item13" to="itemCollectionInterface" method="_on_item13_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item14" to="itemCollectionInterface" method="_on_item14_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item15" to="itemCollectionInterface" method="_on_item15_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item16" to="itemCollectionInterface" method="_on_item16_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item17" to="itemCollectionInterface" method="_on_item17_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item18" to="itemCollectionInterface" method="_on_item18_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item19" to="itemCollectionInterface" method="_on_item19_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item20" to="itemCollectionInterface" method="_on_item20_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item21" to="itemCollectionInterface" method="_on_item21_button_down"]
+[connection signal="button_down" from="itemCollectionInterface/items/item22" to="itemCollectionInterface" method="_on_item22_button_down"]
