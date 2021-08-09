@@ -127,6 +127,10 @@ var objectRemove = "DELETE FROM objects WHERE objectID = ?;"
 var objectRetrieve = "SELECT * FROM objects WHERE posX < ? AND posX > ? AND posZ < ? AND posZ > ?;"
 var latestObjectRetrieve = "SELECT objectID FROM objects WHERE objectID=(SELECT max(objectID) FROM objects);"
 
+### UNIMPLEMENTED SQL ###
+# Deletes all empty floraMatrices
+# DELETE FROM floraMatrices WHERE (SELECT COUNT(*) FROM flora WHERE flora.MatrixID = floraMatrices.MatrixID) = 0;
+
 ### UNIVERSIAL CODE ###
 # Runs when scene is created
 func _ready():

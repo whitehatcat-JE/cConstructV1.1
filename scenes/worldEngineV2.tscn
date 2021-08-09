@@ -268,7 +268,6 @@ tracks/1/keys = {
 
 [node name="worldEngineV2" type="Spatial"]
 script = ExtResource( 6 )
-RENDERMULT = 1.0
 
 [node name="WorldEngineGLOBAL" type="Node" parent="."]
 script = ExtResource( 1 )
@@ -1279,7 +1278,7 @@ __meta__ = {
 
 [node name="sceneMenu" type="Control" parent="GUI"]
 margin_left = 135.0
-margin_right = 175.0
+margin_right = 135.0
 margin_bottom = 40.0
 script = ExtResource( 17 )
 __meta__ = {
@@ -2378,6 +2377,7 @@ directional_shadow_max_distance = 250.0
 [connection signal="toggled" from="GUI/options/lockTerrainMenu" to="." method="_on_lockTerrainMenu_toggled"]
 [connection signal="toggled" from="GUI/options/lockObjGrid" to="selectedPos" method="_on_lockObjGrid_toggled"]
 [connection signal="button_down" from="GUI/output/hideOutput" to="GUI/output" method="_on_hideOutput_button_down"]
+[connection signal="button_down" from="GUI/navigation/itemSelect" to="GUI" method="_on_itemSelect_button_down"]
 [connection signal="value_changed" from="GUI/terrainMenu/heightSlider" to="." method="_on_heightSlider_value_changed"]
 [connection signal="toggled" from="GUI/terrainMenu/pivot/autoPlace" to="." method="_on_autoPlace_toggled"]
 [connection signal="toggled" from="GUI/terrainMenu/pivot/cliffA" to="." method="_on_cliffA_toggled"]

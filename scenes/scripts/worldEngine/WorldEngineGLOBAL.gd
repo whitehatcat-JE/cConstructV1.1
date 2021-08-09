@@ -136,7 +136,7 @@ func _ready():
 	var floraExisting = db.fetch_array(floraSQLCheck)
 	
 	for file in floraFiles:
-		if !(".import" in file):
+		if ".obj" in file and !(".import" in file):
 			var newFloraName = ""
 			var endFile = false
 			for letter in file:
@@ -169,14 +169,14 @@ func _ready():
 	var objectExisting = db.fetch_array(objectSQLCheck)
 	
 	for file in objectFiles:
-		if !(".import" in file):
+		if ".obj" in file and !(".import" in file):
 			var newObjectName = ""
 			var endFile = false
 			for letter in file:
 				if !endFile:
 					if letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890":
 						newObjectName += " "
-					elif letter == "-":
+					elif letter in "-.":
 						endFile = true
 					if !endFile:
 						newObjectName += letter

@@ -73,3 +73,8 @@ func _on_hideSceneMenu_button_down():
 		$sceneMenu/sceneTransition.play("hideSceneSettings")
 	
 	sceneHidden = !sceneHidden
+
+
+
+func _on_itemSelect_button_down():
+	get_tree().change_scene("res://scenes/itemsManager.tscn")

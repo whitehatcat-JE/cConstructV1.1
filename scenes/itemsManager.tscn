@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scenes/scripts/worldEngine/itemManager/sceneManagement.gd" type="Script" id=2]
+[ext_resource path="res://assets/GUI/reloadIcon.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 1 )
+
+[node name="itemsManager" type="Control"]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sceneManagement" type="Control" parent="."]
+rect_pivot_offset = Vector2( -24, 56 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="backButton" type="Button" parent="sceneManagement"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 55.0
+margin_bottom = 31.0
+rect_pivot_offset = Vector2( 88, 16 )
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = "<- Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="exitButton" type="Button" parent="sceneManagement"]
+margin_left = 935.0
+margin_top = -5.75
+margin_right = 1010.0
+margin_bottom = 84.25
+rect_scale = Vector2( 0.3, 0.3 )
+rect_pivot_offset = Vector2( 88, 16 )
+custom_fonts/font = SubResource( 2 )
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="reloadButton" type="Button" parent="sceneManagement"]
+margin_left = 968.0
+margin_top = 5.0
+margin_right = 991.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( 16, 16.25 )
+custom_fonts/font = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="reloadIcon" type="Sprite" parent="sceneManagement/reloadButton"]
+position = Vector2( 12, 13.25 )
+scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 3 )
+
+[node name="itemInterface" type="Control" parent="."]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="itemCollectionInterface" type="Control" parent="."]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_down" from="sceneManagement/backButton" to="sceneManagement" method="_on_backButton_button_down"]
+[connection signal="button_down" from="sceneManagement/exitButton" to="sceneManagement" method="_on_exitButton_button_down"]
+[connection signal="button_down" from="sceneManagement/reloadButton" to="sceneManagement" method="_on_reloadButton_button_down"]

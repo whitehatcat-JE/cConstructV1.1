@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/mesaRocks1-0.obj-b91ebcb41e96f59683690a11dc79566e.mesh"
+
+[deps]
+
+files=[ "res://.import/mesaRocks1-0.obj-b91ebcb41e96f59683690a11dc79566e.mesh" ]
+
+source_file="res://assets/worldEngine/flora/mesaRocks1-0.obj"
+dest_files=[ "res://.import/mesaRocks1-0.obj-b91ebcb41e96f59683690a11dc79566e.mesh", "res://.import/mesaRocks1-0.obj-b91ebcb41e96f59683690a11dc79566e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
