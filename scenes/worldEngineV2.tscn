@@ -357,7 +357,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.97, 0 )
 script = ExtResource( 16 )
 
 [node name="terrainDisplay" type="MeshInstance" parent="selectedPos"]
-visible = false
 mesh = SubResource( 3 )
 material/0 = null
 
@@ -386,6 +385,7 @@ pixel_size = 0.015
 texture = ExtResource( 28 )
 
 [node name="gridOverlay" type="Spatial" parent="selectedPos"]
+visible = false
 
 [node name="imageUp" type="Sprite3D" parent="selectedPos/gridOverlay"]
 transform = Transform( 1.04357, 0, 0, 0, -4.5514e-08, -1, 0, 1.04124, -4.37114e-08, 0.01, 0.0500002, 0.0100003 )

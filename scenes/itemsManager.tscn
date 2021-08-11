@@ -53,10 +53,20 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="itemListBar" type="Sprite" parent="."]
+[node name="itemListBackdrop" type="Sprite" parent="."]
 self_modulate = Color( 0.572549, 0.847059, 1, 1 )
 position = Vector2( -224, 301.414 )
 scale = Vector2( 140, 564 )
+texture = ExtResource( 4 )
+offset = Vector2( 2.1, 0.0319149 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="iconSelectionBackdrop2" type="Sprite" parent="."]
+self_modulate = Color( 0.270588, 0.678431, 0.901961, 1 )
+position = Vector2( -412.8, 127.915 )
+scale = Vector2( 508, 128 )
 texture = ExtResource( 4 )
 offset = Vector2( 2.1, 0.0319149 )
 __meta__ = {
@@ -715,6 +725,35 @@ __meta__ = {
 }
 
 [node name="itemInterface" type="Control" parent="."]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="icon" type="Control" parent="itemInterface"]
+margin_left = 580.0
+margin_top = 128.0
+margin_right = 580.0
+margin_bottom = 128.0
+rect_pivot_offset = Vector2( -216, 92 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="selectedIcon" type="Sprite" parent="itemInterface/icon"]
+position = Vector2( -260, 4.00001 )
+scale = Vector2( 6, 6 )
+texture = ExtResource( 5 )
+
+[node name="frame" type="Sprite" parent="itemInterface/icon/selectedIcon"]
+texture = ExtResource( 6 )
+
+[node name="searchBar2" type="LineEdit" parent="itemInterface/icon"]
+margin_left = -176.0
+margin_top = -56.0
+margin_right = -4.0
+margin_bottom = -32.0
+clear_button_enabled = true
+placeholder_text = "search"
 __meta__ = {
 "_edit_use_anchors_": false
 }
