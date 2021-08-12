@@ -889,13 +889,20 @@ func placeObject():
 # Loads object into world
 func loadObject(rot:Vector3, pos:Vector3, file:Object, id:int):
 	# Create mesh node
-	var newObj:Object = MeshInstance.new()
+	var newObj:Object
 	# Apply mesh and material to object
-	newObj.mesh = file
-	newObj.material_override = W.generalMat
-	self.add_child(newObj)
-	# Generate collision
-	newObj.create_trimesh_collision()
+	if !(file in W.loadedObjectCollisions):
+		newObj = MeshInstance.new()
+		newObj.mesh = file
+		newObj.material_override = W.generalMat
+		self.add_child(newObj)
+		# Generate collision
+		newObj.create_trimesh_collision()
+		W.loadedObjectCollisions[file] = newObj
+		W.loadedObjectCount[file] = 1
+	else:
+		newObj = W.loadedObjectCollisions[file].duplicate()
+		W.loadedObjectCount[file] += 1
 	# Position into world
 	newObj.global_transform.origin = pos
 	newObj.rotation = rot

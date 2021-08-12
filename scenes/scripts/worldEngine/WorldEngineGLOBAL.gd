@@ -77,6 +77,9 @@ var objectFileNames = {}
 var objectNameIDs = {}
 var objectIDFiles = {}
 
+var loadedObjectCollisions = {}
+var loadedObjectCount = {}
+
 var objGridLoc = DEFOBJGRIDLOC
 
 ### DATABASE LOADING ###
