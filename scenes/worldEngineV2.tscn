@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -14,11 +14,9 @@
 [ext_resource path="res://assets/GUI/plantIcon.png" type="Texture" id=12]
 [ext_resource path="res://assets/GUI/objectIcon.png" type="Texture" id=13]
 [ext_resource path="res://assets/skies/sky_2.tres" type="Environment" id=14]
-[ext_resource path="res://scenes/scripts/worldEngine/ySelector.gd" type="Script" id=15]
 [ext_resource path="res://scenes/scripts/worldEngine/selectedPos.gd" type="Script" id=16]
 [ext_resource path="res://scenes/scripts/worldEngine/sceneMenu.gd" type="Script" id=17]
 [ext_resource path="res://assets/GUI/sprayRange.png" type="Texture" id=18]
-[ext_resource path="res://scenes/scripts/worldEngine/terrainMenu.gd" type="Script" id=19]
 [ext_resource path="res://assets/GUI/lock.png" type="Texture" id=20]
 [ext_resource path="res://assets/GUI/unlocked.png" type="Texture" id=21]
 [ext_resource path="res://scenes/scripts/worldEngine/colorOptions.gd" type="Script" id=22]
@@ -40,7 +38,8 @@
 [sub_resource type="SpatialMaterial" id=2]
 albedo_texture = ExtResource( 27 )
 
-[sub_resource type="SphereMesh" id=3]
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 3.2, 0.025, 3.2 )
 
 [sub_resource type="SpatialMaterial" id=4]
 flags_transparent = true
@@ -357,6 +356,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.97, 0 )
 script = ExtResource( 16 )
 
 [node name="terrainDisplay" type="MeshInstance" parent="selectedPos"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6, 0 )
 mesh = SubResource( 3 )
 material/0 = null
 
@@ -579,7 +579,6 @@ pixel_size = 0.005
 texture = ExtResource( 33 )
 
 [node name="ySelector" type="Spatial" parent="."]
-script = ExtResource( 15 )
 
 [node name="selectionPlane" type="Area" parent="ySelector"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0 )
@@ -993,288 +992,6 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Item Designer"
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="terrainMenu" type="Control" parent="GUI"]
-visible = false
-margin_left = 980.0
-margin_top = 250.0
-margin_right = 1020.0
-margin_bottom = 290.0
-script = ExtResource( 19 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="heightSlider" type="VSlider" parent="GUI/terrainMenu"]
-margin_left = -384.0
-margin_top = 190.0
-margin_right = -368.0
-margin_bottom = 358.0
-rect_rotation = 90.0
-max_value = 8.0
-value = 8.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="pivot" type="Node2D" parent="GUI/terrainMenu"]
-position = Vector2( -468, 54 )
-
-[node name="autoPlace" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 0, 0.345098, 1, 1 )
-margin_left = -12.0
-margin_top = -12.0
-margin_right = 12.0
-margin_bottom = 12.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="cliffA" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = -28.0
-margin_top = -44.0
-margin_right = -4.0
-margin_bottom = -20.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="cliffB" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = 20.399
-margin_top = 4.0
-margin_right = 44.399
-margin_bottom = 28.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="cliffC" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = 4.0
-margin_top = 20.0
-margin_right = 28.0
-margin_bottom = 44.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="cliffD" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 0.0313726, 1, 0, 1 )
-margin_left = -44.0
-margin_top = -28.0
-margin_right = -20.0
-margin_bottom = -4.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ledgeA" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 1, 0, 0, 1 )
-margin_left = 4.0
-margin_top = -44.0
-margin_right = 28.0
-margin_bottom = -20.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ledgeB" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 1, 0, 0, 1 )
-margin_left = 20.0
-margin_top = -28.0
-margin_right = 44.0
-margin_bottom = -4.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ledgeC" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 1, 0, 0, 1 )
-margin_left = -28.444
-margin_top = 20.0
-margin_right = -4.444
-margin_bottom = 44.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ledgeD" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 1, 0, 0, 1 )
-margin_left = -44.0
-margin_top = 4.0
-margin_right = -20.0
-margin_bottom = 28.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="transA" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = -28.0
-margin_top = -28.0
-margin_right = -4.0
-margin_bottom = -4.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="transB" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = 4.0
-margin_top = -28.0
-margin_right = 28.0
-margin_bottom = -4.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="transC" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = -28.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = 28.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="transD" type="CheckBox" parent="GUI/terrainMenu/pivot"]
-modulate = Color( 0.313726, 0.313726, 0.313726, 1 )
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 28.0
-margin_bottom = 28.0
-focus_mode = 0
-enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="stairsA" type="VSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = 784.002
-margin_top = 627.998
-margin_right = 800.002
-margin_bottom = 707.998
-rect_rotation = 180.0
-rect_pivot_offset = Vector2( -388, -252 )
-max_value = 3.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="stairsB" type="HSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = 836.002
-margin_top = 743.998
-margin_right = 916.002
-margin_bottom = 759.998
-rect_rotation = 180.0
-rect_pivot_offset = Vector2( -440, -368 )
-max_value = 3.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="stairsC" type="VSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = 784.002
-margin_top = 795.998
-margin_right = 800.002
-margin_bottom = 875.998
-rect_rotation = 180.0
-rect_pivot_offset = Vector2( -388, -420 )
-max_value = 3.0
-value = 3.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="stairsD" type="HSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = 668.002
-margin_top = 743.998
-margin_right = 748.002
-margin_bottom = 759.998
-rect_rotation = 180.0
-rect_pivot_offset = Vector2( -272, -368 )
-max_value = 3.0
-value = 3.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="oStairsA" type="VSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = 402.592
-margin_top = 797.306
-margin_right = 418.592
-margin_bottom = 877.306
-rect_rotation = 225.0
-rect_pivot_offset = Vector2( -388, -252 )
-max_value = 3.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="oStairsB" type="HSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = 454.592
-margin_top = 913.306
-margin_right = 534.592
-margin_bottom = 929.306
-rect_rotation = 225.0
-rect_pivot_offset = Vector2( -440, -368 )
-max_value = 3.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="oStairsC" type="VSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = 402.592
-margin_top = 965.306
-margin_right = 418.592
-margin_bottom = 1045.31
-rect_rotation = 225.0
-rect_pivot_offset = Vector2( -388, -420 )
-max_value = 3.0
-value = 3.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="oStairsD" type="HSlider" parent="GUI/terrainMenu/pivot"]
-margin_left = 286.592
-margin_top = 913.306
-margin_right = 366.592
-margin_bottom = 929.306
-rect_rotation = 225.0
-rect_pivot_offset = Vector2( -272, -368 )
-max_value = 3.0
-value = 3.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -2381,28 +2098,6 @@ directional_shadow_max_distance = 250.0
 [connection signal="toggled" from="GUI/options/lockObjGrid" to="selectedPos" method="_on_lockObjGrid_toggled"]
 [connection signal="button_down" from="GUI/output/hideOutput" to="GUI/output" method="_on_hideOutput_button_down"]
 [connection signal="button_down" from="GUI/navigation/itemSelect" to="GUI" method="_on_itemSelect_button_down"]
-[connection signal="value_changed" from="GUI/terrainMenu/heightSlider" to="." method="_on_heightSlider_value_changed"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/autoPlace" to="." method="_on_autoPlace_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/cliffA" to="." method="_on_cliffA_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/cliffB" to="." method="_on_cliffB_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/cliffC" to="." method="_on_cliffC_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/cliffD" to="." method="_on_cliffD_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/ledgeA" to="." method="_on_ledgeA_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/ledgeB" to="." method="_on_ledgeB_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/ledgeC" to="." method="_on_ledgeC_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/ledgeD" to="." method="_on_ledgeD_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/transA" to="." method="_on_transA_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/transB" to="." method="_on_transB_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/transC" to="." method="_on_transC_toggled"]
-[connection signal="toggled" from="GUI/terrainMenu/pivot/transD" to="." method="_on_transD_toggled"]
-[connection signal="value_changed" from="GUI/terrainMenu/pivot/stairsA" to="." method="_on_stairsA_value_changed"]
-[connection signal="value_changed" from="GUI/terrainMenu/pivot/stairsB" to="." method="_on_stairsB_value_changed"]
-[connection signal="value_changed" from="GUI/terrainMenu/pivot/stairsC" to="." method="_on_stairsC_value_changed"]
-[connection signal="value_changed" from="GUI/terrainMenu/pivot/stairsD" to="." method="_on_stairsD_value_changed"]
-[connection signal="value_changed" from="GUI/terrainMenu/pivot/oStairsA" to="." method="_on_oStairsA_value_changed"]
-[connection signal="value_changed" from="GUI/terrainMenu/pivot/oStairsB" to="." method="_on_oStairsB_value_changed"]
-[connection signal="value_changed" from="GUI/terrainMenu/pivot/oStairsC" to="." method="_on_oStairsC_value_changed"]
-[connection signal="value_changed" from="GUI/terrainMenu/pivot/oStairsD" to="." method="_on_oStairsD_value_changed"]
 [connection signal="changeCoords" from="GUI/sceneMenu" to="." method="_on_sceneMenu_changeCoords"]
 [connection signal="text_entered" from="GUI/sceneMenu/offsetDisInput" to="GUI/sceneMenu" method="_on_renderDisInput_text_entered"]
 [connection signal="toggled" from="GUI/sceneMenu/invertCheck" to="GUI/sceneMenu" method="_on_invertCheck_toggled"]
