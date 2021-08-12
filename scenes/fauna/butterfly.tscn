@@ -55,6 +55,7 @@ transform = Transform( -5.32148e-08, 1, 2.3379e-08, -0.926387, -4.04937e-08, -0.
 
 [node name="wingImg" type="Sprite3D" parent="body/leftWing"]
 transform = Transform( 0, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 1, 4.37114e-08, 0, 0, -0.06, -0.08 )
+shaded = true
 texture = ExtResource( 2 )
 
 [node name="rightWing" type="Spatial" parent="body"]
@@ -62,10 +63,12 @@ transform = Transform( -5.32148e-08, 1, -2.3379e-08, -0.926387, -4.04937e-08, 0.
 
 [node name="wingImg" type="Sprite3D" parent="body/rightWing"]
 transform = Transform( -4.37114e-08, -4.37114e-08, 1, -4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, 0, -0.06, 0.08 )
+shaded = true
 texture = ExtResource( 2 )
 
 [node name="flapAnim" type="AnimationPlayer" parent="body"]
 autoplay = "butterflyFlap"
 playback_speed = 1.5
 anims/butterflyFlap = SubResource( 1 )
+
 [connection signal="timeout" from="body/changeAim" to="." method="_on_changeAim_timeout"]
