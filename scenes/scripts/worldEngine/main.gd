@@ -168,6 +168,7 @@ func _ready():
 		var newID:int = objectQueueOrder.pop_front()
 		loadObject(queuedObjects[newID]["rotation"], queuedObjects[newID]["position"], queuedObjects[newID]["file"], newID)
 		queuedObjects.erase(newID)
+	
 
 # Runs every frame
 func _process(delta):
