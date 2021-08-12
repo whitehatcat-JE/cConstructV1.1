@@ -78,7 +78,7 @@ var objectNameIDs = {}
 var objectIDFiles = {}
 
 var loadedObjectCollisions = {}
-var loadedObjectCount = {}
+var loadedObjectFiles = {}
 
 var objGridLoc = DEFOBJGRIDLOC
 

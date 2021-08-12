@@ -898,11 +898,12 @@ func loadObject(rot:Vector3, pos:Vector3, file:Object, id:int):
 		self.add_child(newObj)
 		# Generate collision
 		newObj.create_trimesh_collision()
-		W.loadedObjectCollisions[file] = newObj
-		W.loadedObjectCount[file] = 1
+		W.loadedObjectCollisions[file] = [newObj]
 	else:
-		newObj = W.loadedObjectCollisions[file].duplicate()
-		W.loadedObjectCount[file] += 1
+		newObj = W.loadedObjectCollisions[file][0].duplicate()
+		self.add_child(newObj)
+		W.loadedObjectCollisions[file].append(newObj)
+	W.loadedObjectFiles[newObj] = file
 	# Position into world
 	newObj.global_transform.origin = pos
 	newObj.rotation = rot
@@ -911,6 +912,10 @@ func loadObject(rot:Vector3, pos:Vector3, file:Object, id:int):
 
 # Removes given object from world ### CONFUSING NAMING ###
 func removeObject(obj:Object):
+	W.loadedObjectCollisions[W.loadedObjectFiles[obj]].erase(obj)
+	if len(W.loadedObjectCollisions[W.loadedObjectFiles[obj]]) == 0:
+		W.loadedObjectCollisions.erase(W.loadedObjectFiles[obj])
+	W.loadedObjectFiles.erase(obj)
 	loadedObjects.erase(obj) # Remove from loaded objects list
 	obj.queue_free() # Remove from scene
 
