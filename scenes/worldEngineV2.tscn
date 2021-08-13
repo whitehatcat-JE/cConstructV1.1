@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=2]
+[gd_scene load_steps=73 format=2]
 
 [ext_resource path="res://scenes/scripts/worldEngine/WorldEngineGLOBAL.gd" type="Script" id=1]
 [ext_resource path="res://menu/Righteous-Regular.ttf" type="DynamicFontData" id=2]
@@ -36,6 +36,7 @@
 [ext_resource path="res://assets/GUI/inventoryIcon.png" type="Texture" id=34]
 [ext_resource path="res://assets/worldEngine/objects/lantern.obj" type="ArrayMesh" id=35]
 [ext_resource path="res://materials/magicaMat.tres" type="Material" id=36]
+[ext_resource path="res://assets/worldEngine/objects/weepingTree1-0.obj" type="ArrayMesh" id=37]
 
 [sub_resource type="SphereMesh" id=1]
 
@@ -2581,9 +2582,9 @@ environment = ExtResource( 14 )
 
 [node name="sun" type="DirectionalLight" parent="sky"]
 transform = Transform( 0.940348, -0.189732, 0.282396, 0.0882947, 0.937713, 0.336004, -0.328558, -0.291027, 0.898528, -20.13, 29.06, 0 )
-light_color = Color( 0.309804, 0.396078, 0.54902, 1 )
+light_color = Color( 0.407843, 0.490196, 0.639216, 1 )
 shadow_enabled = true
-shadow_color = Color( 0.054902, 0.12549, 0.262745, 1 )
+shadow_color = Color( 0.0784314, 0.168627, 0.345098, 1 )
 shadow_bias = 1.0
 directional_shadow_mode = 0
 directional_shadow_blend_splits = true
@@ -2593,7 +2594,7 @@ directional_shadow_max_distance = 250.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 70.6, 18.9, -76.4 )
 
 [node name="mesh" type="MeshInstance" parent="lantern"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.451246, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
 cast_shadow = 0
 mesh = ExtResource( 35 )
 material/0 = ExtResource( 36 )
@@ -2605,7 +2606,7 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 24 )
 
 [node name="lantern2" type="Spatial" parent="."]
@@ -2624,7 +2625,7 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern2"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 25 )
 
 [node name="lantern3" type="Spatial" parent="."]
@@ -2643,7 +2644,7 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern3"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 26 )
 
 [node name="lantern4" type="Spatial" parent="."]
@@ -2662,7 +2663,7 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern4"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 27 )
 
 [node name="lantern5" type="Spatial" parent="."]
@@ -2681,7 +2682,7 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern5"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 28 )
 
 [node name="lantern6" type="Spatial" parent="."]
@@ -2700,7 +2701,7 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern6"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 29 )
 
 [node name="lantern7" type="Spatial" parent="."]
@@ -2719,7 +2720,7 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern7"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 30 )
 
 [node name="lantern8" type="Spatial" parent="."]
@@ -2738,7 +2739,7 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern8"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 31 )
 
 [node name="lantern9" type="Spatial" parent="."]
@@ -2757,7 +2758,7 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern9"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 32 )
 
 [node name="lantern10" type="Spatial" parent="."]
@@ -2776,7 +2777,7 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern10"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 33 )
 
 [node name="lantern11" type="Spatial" parent="."]
@@ -2795,7 +2796,7 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern11"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 34 )
 
 [node name="lantern12" type="Spatial" parent="."]
@@ -2814,8 +2815,14 @@ omni_range = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="lantern12"]
 autoplay = "floatingAnim"
-playback_speed = 0.1
+playback_speed = 0.15
 anims/floatingAnim = SubResource( 35 )
+
+[node name="weepingTree1-0" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 79.3, 33.9, -114.2 )
+visible = false
+mesh = ExtResource( 37 )
+material/0 = ExtResource( 36 )
 
 [connection signal="objHide" from="GUI" to="." method="_on_GUI_objHide"]
 [connection signal="objVisible" from="GUI" to="." method="_on_GUI_objVisible"]
